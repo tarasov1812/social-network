@@ -1,0 +1,257 @@
+/* Download fonts */
+
+@font-face{
+    font-family: 'Lato Light';
+    font-weight: 300;
+    src: url("fonts/Lato-Light.ttf");
+}
+
+@font-face{
+    font-family: 'Lato Regular';
+    font-weight: 400;
+    src: url("fonts/Lato-Regular.ttf");
+}
+
+@font-face{
+    font-family: 'Lato';
+    font-weight: 700;
+    src: url("fonts/Lato-Bold.ttf");
+}
+
+@font-face{
+    font-family: 'Lato Black';
+    font-weight: 900;
+    src: url("fonts/Lato-Black.ttf");
+}
+
+/* Reset settings */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Lato Regular';
+}
+
+/* Section header */
+
+.header {
+    height: 528px;
+}
+
+.white-space {
+    height: 24px;
+}
+
+.logo {
+    margin: 0 auto;
+    width: 36px;
+    height: 38px;
+    background-image: url("img/logo.svg");
+}
+
+.slogan {
+    margin: 22px 16px 0;
+    height: 116px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+}
+
+h1{ 
+    font-family: 'Lato Black';
+    font-size: 32px;
+    line-height: 38px;
+}
+
+.buttons {
+    margin: 24px 16px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+}
+
+.login {
+    padding:14px 0;
+    font-family: Lato;
+    font-size: 18px;
+    background-color: #0057FF;
+    color: #FFFFFF;
+    border-radius: 10px;
+    border: 1px solid #0057FF;
+}
+
+.sign-up {
+    margin-top: 16px;
+    padding:14px 0;
+    font-size: 18px;
+    background-color: #FFFFFF;
+    color: #0057FF;
+    border: 1px solid #0057FF;
+    border-radius: 10px;
+}
+
+.banner-login{
+    height: 160px;
+    background-image: url("img/banner-login.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Section statistic */
+
+.statistics {
+    height: 457px;
+    background-color: #0057FF;
+}
+
+.blue-space {
+    height: 32px;
+}
+
+.statistic {
+    margin-top: 32px;
+    height: 107px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.first-statistic{
+    margin-top: 0;
+}
+
+.statistic p {
+    font-family: 'Lato Light';
+    font-size: 18px;
+}
+
+.statistic span {
+    font-family: 'Lato Light';
+    font-size: 48px;
+}
+
+/* Section all-messages */
+
+.all-messages h2 {
+    padding: 42px 0 8px 16px;
+    font-size: 24px;
+    font-family: 'Lato Black';
+}
+
+.post-all{
+    margin: 16px 16px 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.avatar1 {
+    background-size: cover;
+    background-image: url("img/travolta.png");
+    border-radius: 50%;
+    min-width: 52px;
+    height: 52px;
+}
+
+.avatar2 {
+    background-size: cover;
+    background-image: url("img/elon.png");
+    border-radius: 50%;
+    min-width: 52px;
+    height: 52px;
+}
+
+.avatar3 {
+    background-size: cover;
+    background-image: url("img/alexandr.jpeg");
+    border-radius: 50%;
+    min-width: 52px;
+    height: 52px;
+}
+
+.avatar4 {
+    background-size: cover;
+    background-image: url("img/uma_thurman.png");
+    border-radius: 50%;
+    min-width: 52px;
+    height: 52px;
+}
+
+.post {
+    width: 100%;
+}
+
+.nick-name-date {
+    display: flex;
+    justify-content: space-between;
+}
+
+.name-nick::first-line {
+    color:#1D1E22;
+    font-family: 'Lato Black';
+    font-size: 14px;
+}
+
+.name-nick {
+    color:#ABACB1;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.date {
+    text-align: right;
+    color: #ABACB1;
+    font-size: 10px;
+    line-height: 10px;
+}
+
+.message {
+    padding: 5px 0;
+    color:#1D1E22;
+    line-height: 18px;
+}
+
+.attached-picture {
+    border-radius: 10px;
+    margin-top: 10px;
+    height: 171px;
+    background-image: url("img/game.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.counters {
+    display: flex;
+    justify-content: space-between;
+    max-width: 205px;
+    height: 24px;
+    margin-bottom: 16px;
+}
+
+.counters span {
+    color:#B1B1B1;
+    font-size: 14px;
+    padding-left: 12px;
+}
+
+hr {
+    border: 1px solid #E9E9E9;
+}
+
+/* Section call */
+
+.call h3 {
+    padding: 15px 0 24px 0;
+    margin: 0 20px;
+    font-family: 'Lato Black';
+    font-size: 32px;
+    line-height: 38px;
+    text-align: center;
+}
+
+.last-button {
+
+}
