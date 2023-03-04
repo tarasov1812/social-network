@@ -1,0 +1,20 @@
+{
+  "name": "twitter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "npx mocha tests",
+    "lint": "npx eslint ."
+  },
+  "author": "Alkesandr Tarasov",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "eslint": "^8.35.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-mocha": "^10.1.0",
+    "mocha": "^10.2.0"
+  }
+}
