@@ -9,6 +9,8 @@ export default function posSize(message) {
   const domens = ['.com', '.org', '.net', '.gov', '.edu', '.es', '.ru', '.de', '.uk', '.nl'];
   // create array of words if the message for checking if the word has a link
   const arrayMessage = message.split(' ');
+  // count all spaces in the string
+  let space = 0;
   // check every word of the message
   for (let i = 0; i < arrayMessage.length; i += 1) {
     // if a word has a domain attribute, this word will be removed from the array
@@ -16,18 +18,30 @@ export default function posSize(message) {
       if (arrayMessage[i] === undefined) {
         break;
       } else if (arrayMessage[i].endsWith(domens[j])) {
-        arrayMessage.splice(i);
+        if (arrayMessage.length > 1) {
+          space += 1;
+        }
+        arrayMessage.splice(i, 1);
       } else if (arrayMessage[i].startsWith('https://')) {
-        arrayMessage.splice(i);
+        if (arrayMessage.length > 1) {
+          space += 1;
+        }
+        arrayMessage.splice(i, 1);
       } else if (arrayMessage[i].startsWith('http://')) {
-        arrayMessage.splice(i);
+        if (arrayMessage.length > 1) {
+          space += 1;
+        }
+        arrayMessage.splice(i, 1);
       } else if (arrayMessage[i].startsWith('www.')) {
-        arrayMessage.splice(i);
+        if (arrayMessage.length > 1) {
+          space += 1;
+        }
+        arrayMessage.splice(i, 1);
       }
     }
   }
   // create a string from the modified array
   const newMessage = arrayMessage.join(' ');
   // return length of the string
-  return newMessage.length;
+  return newMessage.length + space;
 }
