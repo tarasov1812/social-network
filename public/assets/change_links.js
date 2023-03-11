@@ -3,7 +3,7 @@
  * @param {*} message - user message
  * @returns new message with html code instead of links
  */
-export default function change_likns(message) {
+export default function changeLikns(message) {
   // dictionary of top-10 most populars domens
   const domens = ['.com', '.org', '.net', '.gov', '.edu', '.es', '.ru', '.de', '.uk', '.nl'];
   // create array of words if the message for checking if the word has a link
