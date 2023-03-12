@@ -8,29 +8,25 @@ export default function changeLikns(message) {
   const domens = ['.com', '.org', '.net', '.gov', '.edu', '.es', '.ru', '.de', '.uk', '.nl'];
   // create array of words if the message for checking if the word has a link
   const arrayMessage = message.split(' ');
+  // create a new array to push a values we need
+  const copyArrayMessage = [];
   // check every word of the message
-  for (let i = 0; i < arrayMessage.length; i += 1) {
+  arrayMessage.forEach((word) => {
     // if a word has a domain attribute, this word will be replaced by html code instead of links
-    for (let j = 0; j < domens.length; j += 1) {
-      if (arrayMessage[i] === undefined) {
-        break;
-      } else if (arrayMessage[i].endsWith(domens[j])) {
-        arrayMessage[i] = `<a href="${arrayMessage[i]}">${arrayMessage[i]}</a>`;
-        break;
-      } else if (arrayMessage[i].startsWith('https://')) {
-        arrayMessage[i] = `<a href="${arrayMessage[i]}">${arrayMessage[i]}</a>`;
-        break;
-      } else if (arrayMessage[i].startsWith('http://')) {
-        arrayMessage[i] = `<a href="${arrayMessage[i]}">${arrayMessage[i]}</a>`;
-        break;
-      } else if (arrayMessage[i].startsWith('www.')) {
-        arrayMessage[i] = `<a href="${arrayMessage[i]}">${arrayMessage[i]}</a>`;
-        break;
-      }
+    if (domens.some((domain) => word.endsWith(domain))) {
+      copyArrayMessage.push(`<a href="${word}">${word}</a>`);
+    } else if (word.startsWith('https://')) {
+      copyArrayMessage.push(`<a href="${word}">${word}</a>`);
+    } else if (word.startsWith('http://')) {
+      copyArrayMessage.push(`<a href="${word}">${word}</a>`);
+    } else if (word.startsWith('www.')) {
+      copyArrayMessage.push(`<a href="${word}">${word}</a>`);
+    } else {
+      copyArrayMessage.push(word);
     }
-  }
+  });
   // create a string from the modified array
-  const newMessage = arrayMessage.join(' ');
+  const newMessage = copyArrayMessage.join(' ');
   // return length of the string
   return newMessage;
 }
