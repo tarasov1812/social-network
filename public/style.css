@@ -37,10 +37,33 @@
 
 .header {
     height: 528px;
+    display: flex;
+    flex-direction: column;
+}
+
+@media only screen and (min-width: 800px) {
+    .header {
+        flex-direction: row;
+        justify-content: center;
+        height: 640px;
+    }
+}
+
+@media only screen and (min-width: 800px) {
+    .header-login {
+        height: 640px;
+        width: 640px;
+    }
 }
 
 .white-space {
     height: 24px;
+}
+
+@media only screen and (min-width: 800px) {
+    .white-space {
+       height: 42px;
+    }
 }
 
 .logo {
@@ -48,6 +71,15 @@
     width: 36px;
     height: 38px;
     background-image: url("img/logo.svg");
+}
+
+@media only screen and (min-width: 800px) {
+    .logo {
+        margin-left: 64px;
+        width: 42px;
+        height: 44px;
+        background-image: url("img/biglogo.svg");
+    }
 }
 
 .slogan {
@@ -59,10 +91,26 @@
     
 }
 
+@media only screen and (min-width: 800px) {
+    .slogan {
+        margin: 32px 0 0 64px;
+        width: 420px;
+        height: 232px;
+        text-align: left;
+    }
+}
+
 h1{ 
     font-family: 'Lato Black';
     font-size: 32px;
     line-height: 38px;
+}
+
+@media only screen and (min-width: 800px) {
+    h1 {
+        font-size: 48px;
+        line-height: 58px;
+    }
 }
 
 .buttons {
@@ -70,6 +118,13 @@ h1{
     height: 120px;
     display: flex;
     flex-direction: column;
+}
+
+@media only screen and (min-width: 800px) {
+    .buttons {
+        margin: 32px 0 0 64px;
+        width: 260px;
+    }
 }
 
 .login {
@@ -99,6 +154,14 @@ h1{
     background-repeat: no-repeat;
     background-position: center;
 }
+
+@media only screen and (min-width: 800px) {
+    .banner-login {
+        height: 640px;
+        width: 640px;
+    }
+}
+
 
 /* Section statistic */
 
