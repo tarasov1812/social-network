@@ -26,6 +26,7 @@
 
 /* Reset settings */
 
+
 * {
     margin: 0;
     padding: 0;
@@ -33,9 +34,16 @@
     font-family: 'Lato Regular';
 }
 
+@media only screen and (min-width: 800px) {
+    main {
+        background-color: #E5E5E5;
+    }
+}
+
 /* Section header */
 
 .header {
+    background-color: #FFFFFF;
     height: 528px;
     display: flex;
     flex-direction: column;
@@ -197,49 +205,84 @@ h1{
 
 /* Section all-messages */
 
+@media only screen and (min-width: 800px) {
+    .whitewashing {
+        height: 318px;
+        bottom: 0;
+        width: 100%;
+        position: absolute;
+        background: linear-gradient(rgba(244, 245, 246, 0), rgba(244, 245, 246, 1));
+    }
+}
+
+@media only screen and (min-width: 800px) {
+    .all-messages{
+        position: relative;
+    }
+}
+
+@media only screen and (min-width: 800px) {
+    .all-posts{
+        margin-left: 180px;
+        height: 901px;
+        width: 632px;
+        background-color: #FFFFFF;
+        border-radius: 10px;
+    }
+}
+
 .all-messages h2 {
     padding: 42px 0 8px 16px;
     font-size: 24px;
-    font-family: 'Lato Black';
+    font-family: 'Lato';
+}
+
+@media only screen and (min-width: 800px) {
+    .all-messages h2{
+        margin-left: 180px;
+        padding-top: 64px;
+        padding-bottom: 24px;
+        font-size: 36px;
+        background-color: #E5E5E5;
+    }
 }
 
 .post-all{
-    margin: 16px 16px 0;
+    padding-top: 16px;
+    margin: 0 16px 0;
     display: flex;
     justify-content: space-between;
     gap: 16px;
 }
 
-.avatar1 {
+.avatar {
     background-size: cover;
-    background-image: url("img/travolta.png");
     border-radius: 50%;
     min-width: 52px;
     height: 52px;
+}
+
+@media only screen and (min-width: 800px) {
+    .avatar{
+        min-width: 64px;
+        height: 64px;
+    }
+}
+
+.avatar1 {
+    background-image: url("img/travolta.png");
 }
 
 .avatar2 {
-    background-size: cover;
     background-image: url("img/elon.png");
-    border-radius: 50%;
-    min-width: 52px;
-    height: 52px;
 }
 
 .avatar3 {
-    background-size: cover;
     background-image: url("img/alexandr.jpeg");
-    border-radius: 50%;
-    min-width: 52px;
-    height: 52px;
 }
 
 .avatar4 {
-    background-size: cover;
     background-image: url("img/uma_thurman.png");
-    border-radius: 50%;
-    min-width: 52px;
-    height: 52px;
 }
 
 .post {
@@ -251,23 +294,56 @@ h1{
     justify-content: space-between;
 }
 
-.name-nick::first-line {
+.name-nick {
+    display: flex;
+    flex-direction: column;
+}
+
+@media only screen and (min-width: 800px) {
+    .name-nick{
+        flex-direction: row;
+    }
+}
+
+.name {
     color:#1D1E22;
     font-family: 'Lato Black';
     font-size: 14px;
 }
 
-.name-nick {
+@media only screen and (min-width: 800px) {
+    .name{
+        margin-right: 16px;
+        font-size: 16px;
+    }
+}
+
+.nick {
     color:#ABACB1;
     font-size: 14px;
     line-height: 18px;
 }
 
+@media only screen and (min-width: 800px) {
+    .nick{
+        font-size: 16px;
+    }
+}
+
 .date {
+    display: flex;
+    flex-direction: column;
     text-align: right;
     color: #ABACB1;
     font-size: 10px;
     line-height: 10px;
+}
+
+@media only screen and (min-width: 800px) {
+    .date{
+        flex-direction: row;
+        font-size: 14px;
+    }
 }
 
 .message {
@@ -286,12 +362,24 @@ h1{
     background-position: center;
 }
 
+@media only screen and (min-width: 800px) {
+    .attached-picture {
+        height: 342px;
+    }
+}
+
 .counters {
     display: flex;
     justify-content: space-between;
     max-width: 205px;
     height: 24px;
     margin-bottom: 16px;
+}
+
+@media only screen and (min-width: 800px) {
+    .counters {
+        max-width: 270px;
+    }
 }
 
 .counters span {
@@ -304,13 +392,19 @@ hr {
     border: 1px solid #E9E9E9;
 }
 
+@media only screen and (min-width: 800px) {
+    hr {
+        border: 0px solid #FFFFFF;
+    }
+}
+
 /* Section call */
 
 @media only screen and (min-width: 800px) {
     .call {
-        background-color: #E5E5E5;
         height: 300px;
         text-align: center;
+        background-color: rgba(244, 245, 246, 1);
     }
 }
 
