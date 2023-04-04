@@ -110,6 +110,7 @@ h1{
     h1 {
         font-size: 48px;
         line-height: 58px;
+        font-family: 'Lato';
     }
 }
 
@@ -161,7 +162,6 @@ h1{
         width: 640px;
     }
 }
-
 
 /* Section statistic */
 
@@ -306,6 +306,14 @@ hr {
 
 /* Section call */
 
+@media only screen and (min-width: 800px) {
+    .call {
+        background-color: #E5E5E5;
+        height: 300px;
+        text-align: center;
+    }
+}
+
 .call h3 {
     padding: 15px 0 24px 0;
     margin: 0 20px;
@@ -315,6 +323,38 @@ hr {
     text-align: center;
 }
 
-.last-button {
-
+@media only screen and (min-width: 800px) {
+    .call h3 {
+        margin: 0 auto;
+        padding: 0 0 32px 0;
+        width: 640px;
+        font-family: 'Lato';
+        font-size: 48px;
+        line-height: 58px;
+    }
 }
+
+@media only screen and (min-width: 800px) {
+    .register {
+        margin: 0 auto;
+        flex-direction: row;
+        width: 536px;
+    }
+}
+
+@media only screen and (min-width: 800px) {
+    .register .sign-up{
+        height: 52px;
+        width: 260px;
+        margin: 0;
+    }
+}
+
+@media only screen and (min-width: 800px) {
+    .register .login{
+        height: 52px;
+        width: 260px;
+        margin: 0 16px 0 0;
+    }
+}
+
