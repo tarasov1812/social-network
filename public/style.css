@@ -221,10 +221,21 @@ h1{
     }
 }
 
+@media only screen and (max-width: 800px) {
+    .post-all:nth-of-type(3){
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 800px) {
+    .post-all:nth-of-type(1){
+        display: none;
+    }
+}
+
 @media only screen and (min-width: 800px) {
     .all-posts{
         margin-left: 180px;
-        height: 901px;
         width: 632px;
         background-color: #FFFFFF;
         border-radius: 10px;
@@ -403,6 +414,7 @@ hr {
 @media only screen and (min-width: 800px) {
     .call {
         height: 300px;
+        padding-top: 26px;
         text-align: center;
         background-color: rgba(244, 245, 246, 1);
     }
@@ -451,4 +463,3 @@ hr {
         margin: 0 16px 0 0;
     }
 }
-
