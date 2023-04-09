@@ -179,9 +179,9 @@ h1{
     background-color: #0057FF;
 }
 
-@media only screen and (min-width: 960px) {
+@media only screen and (min-width: 800px) {
     .statistics {
-        margin-left: 180px;
+        margin: 0 auto;
         max-width: 960px;
         flex-direction: row;
         justify-content: space-between;
@@ -194,7 +194,7 @@ h1{
     margin-top: 36px;
 }
 
-@media only screen and (min-width: 960px) {
+@media only screen and (min-width: 800px) {
     .statistic:nth-of-type(1) {
         margin: 32px 0px 64px 80px;
     }
@@ -204,7 +204,7 @@ h1{
     margin-bottom: 36px;
 }
 
-@media only screen and (min-width: 960px) {
+@media only screen and (min-width: 800px) {
     .statistic:nth-of-type(3) {
         margin: 32px 80px 64px 0px;
     }
@@ -220,7 +220,7 @@ h1{
     color: #FFFFFF;
 }
 
-@media only screen and (min-width: 960px) {
+@media only screen and (min-width: 800px) {
     .statistic {
         margin: 32px 80px 64px;
         height: 144px;
@@ -239,11 +239,18 @@ h1{
     font-size: 48px;
 }
 
-@media only screen and (min-width: 960px) {
+@media only screen and (min-width: 800px) {
     .statistic span{
         font-family: 'Lato Light';
         font-size: 72px;
     }
+}
+
+/* tags-and-posts div */
+
+.tags-and-posts {
+    width: 960px;
+    margin: 0 auto;
 }
 
 /* Section all-messages */
@@ -276,9 +283,15 @@ h1{
     }
 }
 
+/* @media only screen and (min-width: 800px) {
+    .post-all:nth-of-type(2){
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+    }
+} */
+
 @media only screen and (min-width: 800px) {
     .all-posts{
-        margin-left: 180px;
         width: 632px;
         background-color: #FFFFFF;
         border-radius: 10px;
@@ -293,9 +306,7 @@ h1{
 
 @media only screen and (min-width: 800px) {
     .all-messages h2{
-        margin-left: 180px;
-        padding-top: 64px;
-        padding-bottom: 24px;
+        padding: 64px 0 24px;
         font-size: 36px;
         background-color: #E5E5E5;
     }
