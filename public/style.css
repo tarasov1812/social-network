@@ -248,9 +248,11 @@ h1{
 
 /* tags-and-posts div */
 
-.tags-and-posts {
+@media only screen and (min-width: 800px) {
+    .tags-and-posts{
     width: 960px;
     margin: 0 auto;
+    }
 }
 
 /* Section all-messages */
