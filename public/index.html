@@ -8,10 +8,28 @@
     <link href="style.css" rel="stylesheet" type="text/css">
     <title>Twitter</title>
     <script crossorigin src="./assets/index.js" type="module"></script>
+    <script crossorigin src="./assets/modal.js" type="module"></script>
 </head>
 
 <body>
+    <!-- Modal  -->
+    <div id="mod">
+    <form class="sign-in-form" id="myModal">
+        <div class="registration-and-close">
+            <span class="registration">Registration</span>
+            <span class="close-button">&times;</span>
+        </div>
+
+        <input class="input input-nick" type="text" name="nick" placeholder="Choose your nickname">
+        <input class="input input-email" type="email" name="emaal" placeholder="E-mail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+        <input class="input input-password" type="text" name="passowrd" placeholder="Password">
+        <input class="input input-repeat-passowrd" type="text" name="repeat-passowrd" placeholder="Repeat passowrd">
+        <button class="button registration-button">Sign up</button>
+    </form>
+    </div>
+
     <main>
+        <!-- <div class="main"></div> -->
         <!-- header section-->
         <section class="header">
             <div class="header-login">
@@ -49,203 +67,204 @@
         <!-- all-messages section-->
         <section class="all-messages">
             <div class="whitewashing"></div>
-            
+
 
             <!-- POST_1 -->
             <div class="tags-and-posts">
-            <h2>Last messages</h2> 
-            <div class="all-posts">           
-                <div class="post-all">
-                    <div class="avatar avatar1"></div>
-                    <div class="post">
-                        <div class="nick-name-date">
-                            <div class="name-nick">
-                                <span class="name">Vinsent Vega</span>
-                                <span class="nick">@roizmangbn</span>
+                <h2>Last messages</h2>
+                <div class="all-posts">
+                    <div class="post-all">
+                        <div class="avatar avatar1"></div>
+                        <div class="post">
+                            <div class="nick-name-date">
+                                <div class="name-nick">
+                                    <span class="name">Vinsent Vega</span>
+                                    <span class="nick">@roizmangbn</span>
+                                </div>
+                                <div class="date">
+                                    <span class="time">28 minutes</span>
+                                    <span class="ago">&nbsp ago</span>
+                                </div>
                             </div>
-                            <div class="date">
-                                <span class="time">28 minutes</span>
-                                <span class="ago">&nbsp ago</span>
+                            <div class="message">
+                                <p>Things are a little different for them there.
+                                    I mean, they have it exactly the same as here, just a little different.</p>
+                            </div>
+                            <div class="counters">
+                                <div class="repost">
+                                    <img src="img/repost.svg">
+                                    <span>21</span>
+                                </div>
+                                <div class="like">
+                                    <img src="img/like.svg">
+                                    <span>23</span>
+                                </div>
+                                <div class="share">
+                                    <img src="img/share.svg">
+                                    <span>9</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="message">
-                            <p>Things are a little different for them there.
-                                I mean, they have it exactly the same as here, just a little different.</p>
+                    </div>
+                    <hr>
+
+                    <!-- POST_2 -->
+                    <div class="post-all">
+                        <div class="avatar avatar2"></div>
+                        <div class="post">
+                            <div class="nick-name-date">
+                                <div class="name-nick">
+                                    <span class="name">Elon Musk</span>
+                                    <span class="nick">@elonmusk</span>
+                                </div>
+                                <div class="date">
+                                    <span class="time">12 hours</span>
+                                    <span class="ago">&nbsp ago</span>
+                                </div>
+                            </div>
+                            <div class="message">
+                                <p>Has anyone seen web3? I can’t find it.</p>
+                            </div>
+                            <div class="counters">
+                                <div class="repost">
+                                    <img src="img/repost.svg">
+                                    <span>21</span>
+                                </div>
+                                <div class="like">
+                                    <img src="img/like.svg">
+                                    <span>23</span>
+                                </div>
+                                <div class="share">
+                                    <img src="img/share.svg">
+                                    <span>9</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="counters">
-                            <div class="repost">
-                                <img src="img/repost.svg">
-                                <span>21</span>
+                    </div>
+                    <hr>
+
+                    <!-- POST_2.1 -->
+                    <div class="post-all">
+                        <div class="avatar avatar3"></div>
+                        <div class="post">
+                            <div class="nick-name-date">
+                                <div class="name-nick">
+                                    <span class="name">Alexandr</span>
+                                    <span class="nick">@sportsru</span>
+                                </div>
+                                <div class="date">
+                                    <span class="time">2 hours</span>
+                                    <span class="ago">&nbsp ago</span>
+                                </div>
                             </div>
-                            <div class="like">
-                                <img src="img/like.svg">
-                                <span>23</span>
+                            <div class="message">
+                                <p>I played table tennis. Very tired. The training was mainly on footwork.</p>
                             </div>
-                            <div class="share">
-                                <img src="img/share.svg">
-                                <span>9</span>
+                            <div class="counters">
+                                <div class="repost">
+                                    <img src="img/repost.svg">
+                                    <span>23</span>
+                                </div>
+                                <div class="like">
+                                    <img src="img/like.svg">
+                                    <span>53</span>
+                                </div>
+                                <div class="share">
+                                    <img src="img/share.svg">
+                                    <span>4</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <!-- POST_3 -->
+                    <div class="post-all">
+                        <div class="avatar avatar3"></div>
+                        <div class="post">
+                            <div class="nick-name-date">
+                                <div class="name-nick">
+                                    <span class="name">Alexandr</span>
+                                    <span class="nick">@sportsru</span>
+                                </div>
+                                <div class="date">
+                                    <span class="time">2 hours</span>
+                                    <span class="ago">&nbsp ago</span>
+                                </div>
+                            </div>
+                            <div class="message">
+                                <p>I attach photos from the last match. I'm playing better every day.
+                                    A couple more years and you can go to the Olympics!</p>
+                                <div class="attached-picture"></div>
+                            </div>
+                            <div class="counters">
+                                <div class="repost">
+                                    <img src="img/repost.svg">
+                                    <span>21</span>
+                                </div>
+                                <div class="like">
+                                    <img src="img/like.svg">
+                                    <span>23</span>
+                                </div>
+                                <div class="share">
+                                    <img src="img/share.svg">
+                                    <span>9</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <!-- POST_4 -->
+                    <div class="post-all">
+                        <div class="avatar avatar4"></div>
+                        <div class="post">
+                            <div class="nick-name-date">
+                                <div class="name-nick">
+                                    <span class="name">Mia Wallace</span>
+                                    <span class="nick">@mia</span>
+                                </div>
+                                <div class="date">
+                                    <span class="time">1 day</span>
+                                    <span class="ago">&nbsp ago</span>
+                                </div>
+                            </div>
+                            <div class="message">
+                                <p>There are three tomatoes walking down the street: dad is a tomato,
+                                    mom is a tomato and a child is a tomato. The tomato child begins to
+                                    lag behind. The tomato dad gets angry, runs up to the tomato child,
+                                    crushes the soft-boiled... and says: "Catch up, ketchup!"</p>
+                            </div>
+                            <div class="counters">
+                                <div class="repost">
+                                    <img src="img/repost.svg">
+                                    <span>21</span>
+                                </div>
+                                <div class="like">
+                                    <img src="img/like.svg">
+                                    <span>23</span>
+                                </div>
+                                <div class="share">
+                                    <img src="img/share.svg">
+                                    <span>9</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <hr>
-
-                <!-- POST_2 -->
-                <div class="post-all">
-                    <div class="avatar avatar2"></div>
-                    <div class="post">
-                        <div class="nick-name-date">
-                            <div class="name-nick">
-                                <span class="name">Elon Musk</span>
-                                <span class="nick">@elonmusk</span>
-                            </div>
-                            <div class="date">
-                                <span class="time">12 hours</span>
-                                <span class="ago">&nbsp ago</span>
-                            </div>
-                        </div>
-                        <div class="message">
-                            <p>Has anyone seen web3? I can’t find it.</p>
-                        </div>
-                        <div class="counters">
-                            <div class="repost">
-                                <img src="img/repost.svg">
-                                <span>21</span>
-                            </div>
-                            <div class="like">
-                                <img src="img/like.svg">
-                                <span>23</span>
-                            </div>
-                            <div class="share">
-                                <img src="img/share.svg">
-                                <span>9</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-
-                <!-- POST_2.1 -->
-                <div class="post-all">
-                    <div class="avatar avatar3"></div>
-                    <div class="post">
-                        <div class="nick-name-date">
-                            <div class="name-nick">
-                                <span class="name">Alexandr</span>
-                                <span class="nick">@sportsru</span>
-                            </div>
-                            <div class="date">
-                                <span class="time">2 hours</span>
-                                <span class="ago">&nbsp ago</span>
-                            </div>
-                        </div>
-                        <div class="message">
-                            <p>I played table tennis. Very tired. The training was mainly on footwork.</p>
-                        </div>
-                        <div class="counters">
-                            <div class="repost">
-                                <img src="img/repost.svg">
-                                <span>23</span>
-                            </div>
-                            <div class="like">
-                                <img src="img/like.svg">
-                                <span>53</span>
-                            </div>
-                            <div class="share">
-                                <img src="img/share.svg">
-                                <span>4</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-
-                <!-- POST_3 -->
-                <div class="post-all">
-                    <div class="avatar avatar3"></div>
-                    <div class="post">
-                        <div class="nick-name-date">
-                            <div class="name-nick">
-                                <span class="name">Alexandr</span>
-                                <span class="nick">@sportsru</span>
-                            </div>
-                            <div class="date">
-                                <span class="time">2 hours</span>
-                                <span class="ago">&nbsp ago</span>
-                            </div>
-                        </div>
-                        <div class="message">
-                            <p>I attach photos from the last match. I'm playing better every day.
-                                A couple more years and you can go to the Olympics!</p>
-                            <div class="attached-picture"></div>
-                        </div>
-                        <div class="counters">
-                            <div class="repost">
-                                <img src="img/repost.svg">
-                                <span>21</span>
-                            </div>
-                            <div class="like">
-                                <img src="img/like.svg">
-                                <span>23</span>
-                            </div>
-                            <div class="share">
-                                <img src="img/share.svg">
-                                <span>9</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-
-                <!-- POST_4 -->
-                <div class="post-all">
-                    <div class="avatar avatar4"></div>
-                    <div class="post">
-                        <div class="nick-name-date">
-                            <div class="name-nick">
-                                <span class="name">Mia Wallace</span>
-                                <span class="nick">@mia</span>
-                            </div>
-                            <div class="date">
-                                <span class="time">1 day</span>
-                                <span class="ago">&nbsp ago</span>
-                            </div>
-                        </div>
-                        <div class="message">
-                            <p>There are three tomatoes walking down the street: dad is a tomato,
-                                mom is a tomato and a child is a tomato. The tomato child begins to
-                                lag behind. The tomato dad gets angry, runs up to the tomato child,
-                                crushes the soft-boiled... and says: "Catch up, ketchup!"</p>
-                        </div>
-                        <div class="counters">
-                            <div class="repost">
-                                <img src="img/repost.svg">
-                                <span>21</span>
-                            </div>
-                            <div class="like">
-                                <img src="img/like.svg">
-                                <span>23</span>
-                            </div>
-                            <div class="share">
-                                <img src="img/share.svg">
-                                <span>9</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>               
             </div>
-            </div>              
         </section>
-        </div>
-             
+        
+
         <!-- Call Section -->
-        <section class="call">            
+        <section class="call">
             <h3>Register and find out about everything first</h3>
             <div class="buttons register">
                 <button class="login">Login</button>
                 <button class="sign-up">Sign up</button>
             </div>
         </section>
+        </div>
     </main>
 </body>
 
