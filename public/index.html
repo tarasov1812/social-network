@@ -9,6 +9,7 @@
     <title>Twitter</title>
     <script crossorigin src="./assets/index.js" type="module"></script>
     <script crossorigin src="./assets/modal.js" type="module"></script>
+    <script src="./assets/modal_validate_email.js"></script>
 </head>
 
 <body>
@@ -21,7 +22,7 @@
         </div>
 
         <input class="input input-nick" type="text" name="nick" placeholder="Choose your nickname">
-        <input class="input input-email" type="email" name="emaal" placeholder="E-mail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+        <input class="input input-email" type="email" name="email" id="email" placeholder="E-mail" onblur="modalValidateEmail()" oninput="modalValidateEmail()">
         <input class="input input-password" type="text" name="passowrd" placeholder="Password">
         <input class="input input-repeat-passowrd" type="text" name="repeat-passowrd" placeholder="Repeat passowrd">
         <button class="button registration-button">Sign up</button>
@@ -29,7 +30,6 @@
     </div>
 
     <main>
-        <!-- <div class="main"></div> -->
         <!-- header section-->
         <section class="header">
             <div class="header-login">
