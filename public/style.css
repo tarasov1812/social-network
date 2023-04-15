@@ -584,6 +584,21 @@ hr {
     font-size: 11px;
 }
 
+.input-email {
+    margin-bottom: 4px;
+}
+
+.input-password {
+    margin-top: 9px;
+}
+
+#invalid-email{
+    color: #E40060;
+    margin-left: 33px;
+    font-size: 9px;
+    visibility: hidden;
+}
+
 .registration-button {
     height: 50px;
     width: -webkit-fill-available;
