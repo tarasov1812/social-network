@@ -566,16 +566,10 @@ hr {
     padding: 18px;
 }
 
-.input-nick{
+.input-nick, .input-email{
     padding-top: 0px;
     padding-bottom: 33px;
-    color: #000000;
-}
-
-.input-email{
-    padding-top: 0px;
-    padding-bottom: 33px;
-    color: #000000;
+    color: #555555;
 }
 
 .input-email::placeholder, .input-nick::placeholder {
