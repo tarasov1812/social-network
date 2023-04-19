@@ -1,3 +1,5 @@
-import postSize from './post_size.js';
+import modalValidateEmail from './modal_validate_email.js';
 
-alert(postSize('Hello world!'));
+const email = document.getElementById('email');
+email.onblur = modalValidateEmail;
+email.oninput = modalValidateEmail;

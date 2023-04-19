@@ -9,20 +9,22 @@
     <title>Twitter</title>
     <script crossorigin src="./assets/index.js" type="module"></script>
     <script crossorigin src="./assets/modal.js" type="module"></script>
-    <script src="./assets/modal_validate_email.js"></script>
 </head>
 
 <body>
     <!-- Modal  -->
     <div id="mod">
     <form class="sign-in-form" id="myModal">
+        <div class="line"></div>
         <div class="registration-and-close">
             <span class="registration">Registration</span>
             <span class="close-button">&times;</span>
         </div>
-
-        <input class="input input-nick" type="text" name="nick" placeholder="Choose your nickname">
-        <input class="input input-email" type="email" name="email" id="email" placeholder="E-mail" onblur="modalValidateEmail()" oninput="modalValidateEmail()">
+        <span class="nick-span">Choose your nick name</span>
+        <input class="input input-nick" type="text" name="nick">
+        <span class="email-span">Your email</span>
+        <input class="input input-email" type="email" name="email" id="email">
+        
         <div id="invalid-email">Email is not valid</div>
         <input class="input input-password" type="password" name="passowrd" placeholder="Password">
         <input class="input input-repeat-passowrd" type="password" name="repeat-password" placeholder="Repeat password">
