@@ -1,5 +1,5 @@
 // Get the modal
-const modal = document.getElementById('mod');
+const modal = document.getElementById('modal-sign-in');
 // Get the modal form
 const modalForm = document.getElementById('myModal');
 
@@ -10,7 +10,7 @@ const btn2 = document.getElementsByClassName('sign-up')[1];
 // Get the <span> (x) element that closes the modal
 const span = document.getElementsByClassName('close-button')[0];
 
-// When the user clicks the button, open the modalr
+// When the user clicks the button, open the modal
 btn1.onclick = function () {
   modalForm.style.visibility = 'visible';
   modal.style.visibility = 'visible';

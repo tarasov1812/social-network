@@ -1,5 +1,5 @@
-import modalValidateEmail from './modal_validate_email.js';
+// import modalValidateEmail from './modal_validate_email.js';
 
-const email = document.getElementById('email');
-email.onblur = modalValidateEmail;
-email.oninput = modalValidateEmail;
+// const email = document.getElementById('email');
+// email.onblur = modalValidateEmail;
+// email.oninput = modalValidateEmail;
