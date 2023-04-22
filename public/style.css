@@ -111,7 +111,7 @@
     width: -webkit-fill-available;
     border-radius: 10px;
     border: 1px solid rgba(223, 223, 223, 1);
-    margin: 12px 15px;
+    margin: -3px 17px 4px;
     color: #555555;
     font-size: 18px;
     padding: 18px 15px;
@@ -119,19 +119,21 @@
 
 @media only screen and (min-width: 800px) {
     .input {
-        margin: 12px 17px;
+        margin: -6px 17px 4px;
     }
+}
+
+.input-password {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.input-repeat-passoword {
+    margin-top: 12px;
 }
 
 .input::placeholder {
     color: #B1B1B1;
-}
-
-.input-nick, .input-email, .input-pwd{
-    padding-top: 23px;
-    padding-bottom: 7px;
-    margin-top: -3px;
-
 }
 
 .nick-span, .email-span, .password-span {
@@ -139,7 +141,7 @@
     color: #B1B1B1;
     font-size: 9px;
     position: relative;
-    top: 15px;
+    top: 10px;
 }
 
 @media only screen and (min-width: 800px) {
@@ -148,15 +150,7 @@
     }
 }
 
-.input-email, .input-password{
-    margin-bottom: 4px;
-}
-
-.input-password {
-    margin-top: 9px;
-}
-
-#invalid-email{
+#invalid-email, #invalid-nick-name, #invalid-password {
     color: #E40060;
     margin-left: 33px;
     font-size: 9px;
@@ -169,7 +163,7 @@
     background-color: #0057FF;
     color: #FFFFFF;
     border-radius: 10px;
-    margin: 12px 18px 15px;
+    margin: 9px 18px 15px;
     font-size: 18px;
     font-family: 'Lato';
     border: none;
@@ -267,7 +261,10 @@
     visibility: hidden;
 }
 
-.input-pwd {
+.input-pwd{
+    padding-top: 23px;
+    padding-bottom: 7px;
+    margin-top: -3px;
     margin-bottom: 4px;
 }
 
