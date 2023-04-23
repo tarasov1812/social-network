@@ -776,6 +776,7 @@ hr {
 .channel-logo {
     width: 48px;
     height: 48px;
+    background-size: cover;
     border-radius: 50%;
 }
 
@@ -799,15 +800,15 @@ hr {
 }
 
 .channel1 {
-    background-image: url("img/habr.jpg");
+    background-image: url("img/habr.png");
 }
 
 .channel2 {
-    background-image: url("img/match.jpg");
+    background-image: url("img/match.png");
 }
 
 .channel3 {
-    background-image: url("img/pm.jpg");
+    background-image: url("img/pm.png");
 }
 
 .read {
