@@ -1,0 +1,86 @@
+{
+  "static": {
+    "users": 20,
+    "messages": 556,
+    "todayMessages": 58
+  }, 
+  "lastMessages": [
+    {
+      "id": 1,
+      "author": "Elon Musk",
+      "nickName": "@elonmusk",
+      "content": "Has anyone seen web3? I can’t find it.",
+      "time": "12 hours ago",
+      "reposts": 21,
+      "likes": 21,
+      "shares": 9
+    },
+    {
+      "id": 2,
+      "author": "Alexandr",
+      "nickName": "@sportsru",
+      "content": "I played table tennis. Very tired. The training was mainly on footwork.",
+      "time": "2 hours ago",
+      "reposts": 23,
+      "likes": 53,
+      "shares": 4
+    },
+    {
+      "id": 3,
+      "author": "Alexandr",
+      "nickName": "@sportsru",
+      "content": "I attach photos from the last match. I'm playing better every day. A couple more years and you can go to the Olympics!",
+      "time": "2 hours ago",
+      "reposts": 21,
+      "likes": 23,
+      "shares": 5
+    },
+    {
+      "id": 4,
+      "author": "Mia Wallace",
+      "nickName": "@mia",
+      "content": "here are three tomatoes walking down the street: dad is a tomato, mom is a tomato and a child is a tomato. The tomato child begins to lag behind. The tomato dad gets angry, runs up to the tomato child, crushes the soft-boiled... and says: \"Catch up, ketchup!\"",
+      "time": "1 day",
+      "reposts": 21,
+      "likes": 23,
+      "shares": 9
+    }
+  ],
+  "topics": [
+    {
+      "tag": "#javascript",
+      "messages": "2 941 messages"
+    },
+    {
+      "tag": "#python3",
+      "messages": "29 718 messages"
+    },
+    {
+      "tag": "#ruby",
+      "messages": "958 messages"
+    },
+    {
+      "tag": "#how_to_start_programming",
+      "messages": "4 185 messages"
+    },
+    {
+      "tag": "#help_me_with_my_code",
+      "messages": "482 messages"
+    }
+  ],
+  "blogs": [
+    {
+      "id": 1,
+      "channelName": "Habr",
+      "channalNick": "@habr_popsci"
+    },
+    { "id": 2,
+      "channelName": "Match TV",
+      "channalNick": "@MatchTV"
+    },
+    { "id": 3,
+      "channelName": "Pop Mechanica",
+      "channalNick": "@PopMechanica"
+    }
+  ]
+}

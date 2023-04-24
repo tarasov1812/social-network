@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <!-- Modal  -->
+    <!-- MODALS  -->
     <!-- modal sing-in -->
     <div id="modal-sign-in">
         <form class="sign-in-form" id="myModal">
@@ -24,15 +24,16 @@
                 <span class="close-button">&times;</span>
             </div>
             <span class="nick-span">Choose your nick name</span>
-            <input class="input input-nick" type="text" name="nick">
+            <input class="input input-nick" id="nick-name" type="text" name="nick">
+            <div id="invalid-nick-name">The field should not be empty</div>
             <span class="email-span">Your email</span>
             <input class="input input-email" type="email" name="email" id="email">
-
             <div id="invalid-email">Email is not valid</div>
-            <input class="input input-password" type="password" name="passowrd" placeholder="Password">
-            <input class="input input-repeat-passowrd" type="password" name="repeat-password"
+            <input class="input input-password" type="password" id="password" name="passowrd" placeholder="Password">
+            <input class="input input-repeat-passoword" type="password" id="repeat-password" name="repeat-password"
                 placeholder="Repeat password">
-            <button class="button form-button">Sign up</button>
+            <div id="invalid-password">The field should not be empty</div>
+            <button class="button form-button" id="registration-button" type="button">Sign up</button>
         </form>
     </div>
     <!-- modal login -->
@@ -46,9 +47,9 @@
             <span class="nick-span">Put your nick name or your email</span>
             <input class="input input-nick" type="email" name="nick-email">
             <span class="password-span">Your password</span>
-            <input class="input input-pwd" type="password" name="password" id="password">
+            <input class="input input-pwd" type="password" name="password">
             <div id="invalid-password">Password is not valid</div>
-            <button class="button form-button">Login</button>
+            <button class="button form-button" type="button">Login</button>
         </form>
     </div>
 

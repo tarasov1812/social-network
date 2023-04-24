@@ -1,0 +1,38 @@
+{
+  "picturesMessage": [
+    {
+      "messageId": 1,
+      "urlAvatar": "img/elon.png",
+      "urlMessagePic": ""
+    },
+    {
+      "messageId": 2,
+      "urlAvatar": "img/alexandr.jpeg",
+      "urlMessagePic": ""
+    },
+    {
+      "messageId": 3,
+      "urlAvatar": "img/alexandr.jpeg",
+      "urlMessagePic": "img/game.jpeg"
+    },
+    {
+      "messageId": 3,
+      "urlAvatar": "img/uma_thurman.png",
+      "urlMessagePic": ""
+    }
+  ],
+  "picturesChannel": [
+    {
+      "channelId": 1,
+      "url": "img/habr.png"
+    },
+    {
+      "channelId": 2,
+      "url": "img/match.png"
+    },
+    {
+      "channelId": 3,
+      "url": "img/pm.png"
+    }
+  ]
+}
