@@ -12,11 +12,16 @@
     },
     {
       "messageId": 3,
+      "urlAvatar": "img/travolta.png",
+      "urlMessagePic": ""
+    },
+    {
+      "messageId": 4,
       "urlAvatar": "img/alexandr.jpeg",
       "urlMessagePic": "img/game.jpeg"
     },
     {
-      "messageId": 3,
+      "messageId": 5,
       "urlAvatar": "img/uma_thurman.png",
       "urlMessagePic": ""
     }
