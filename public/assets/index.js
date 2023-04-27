@@ -40,3 +40,22 @@ rPwd.onblur = function () {
 // Validation all values of the form after click on the button
 const regButton = document.getElementById('registration-button');
 regButton.onclick = formValidation;
+
+// JSON fetch
+fetch('./data.json')
+  .then((response) => response.json())
+  .then((data) => {
+    const { users } = data.static;
+    const { messages } = data.static;
+    const { todayMessages } = data.static;
+
+    const usersCountElement = document.getElementById('usersRegistred');
+    usersCountElement.innerHTML = `${users}`;
+
+    const messagesTotalElement = document.getElementById('messagesTotal');
+    messagesTotalElement.innerHTML = `${messages}`;
+
+    const messagesTodayElement = document.getElementById('messagesToday');
+    messagesTodayElement.innerHTML = `${todayMessages}`;
+  })
+  .catch((error) => console.error(error));
