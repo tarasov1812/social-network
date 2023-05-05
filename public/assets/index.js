@@ -1,6 +1,7 @@
 import modalValidateEmail from './modal_validate_email.js';
 import modalValidateInput from './modal_validate_input.js';
 import formValidation from './form_validation.js';
+import timeConverter from './time_converter.js';
 
 // Validate email of the Registration form
 const email = document.getElementById('email');
@@ -67,6 +68,7 @@ loadStatistic();
 // JSON fetch messages
 const grayMessages = document.getElementById('gray-messages');
 const amoutOfMessagesToShow = 5;
+
 function loadMessages() {
   // Load date from data.json
   fetch('./data.json')
@@ -91,7 +93,7 @@ function loadMessages() {
                                         <span class="nick">${data.lastMessages[i].nickName}</span>
                                     </div>
                                     <div class="date">
-                                        <span class="time">${data.lastMessages[i].time}</span>
+                                        <span class="time">${timeConverter(data.lastMessages[i].time)}</span>
                                         <span class="ago">&nbsp ago</span>
                                     </div>
                                 </div>
@@ -192,3 +194,23 @@ function loadChannels() {
 setTimeout(() => {
   loadChannels();
 }, 3000);
+
+// Twitter timer
+const startTime = new Date();
+
+function updateTime() {
+  // calculate timeDiff
+  const currentTime = new Date();
+  const timeDiff = Math.floor((currentTime - startTime) / (60 * 1000));
+
+  // update time element
+  const timeElements = document.getElementsByClassName('time');
+  Array.from(timeElements).forEach((timeElement) => {
+    const messageTime = parseInt(timeElement.innerHTML, 10);
+    const formattedTime = timeConverter(messageTime + timeDiff);
+    timeElement.textContent = formattedTime;
+  });
+}
+
+// update every minute
+setInterval(updateTime, 60 * 1000);
