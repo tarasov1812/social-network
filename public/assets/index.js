@@ -199,17 +199,23 @@ setTimeout(() => {
 const startTime = new Date();
 
 function updateTime() {
-  // calculate timeDiff
-  const currentTime = new Date();
-  const timeDiff = Math.floor((currentTime - startTime) / (60 * 1000));
-
-  // update time element
-  const timeElements = document.getElementsByClassName('time');
-  Array.from(timeElements).forEach((timeElement) => {
-    const messageTime = parseInt(timeElement.innerHTML, 10);
-    const formattedTime = timeConverter(messageTime + timeDiff);
-    timeElement.textContent = formattedTime;
-  });
+  fetch('./data.json')
+    .then((response) => response.json())
+    .then((data) => {
+      const allMessages = data.lastMessages;
+      const currentTime = new Date();
+      const timeDiff = Math.floor((currentTime - startTime) / (60 * 1000));
+      // update time element
+      const timeElements = document.getElementsByClassName('time');
+      for (let i = 0; i < timeElements.length; i += 1) {
+        const timeElement = timeElements[i];
+        // get post time from json
+        const messageTime = allMessages[i].time;
+        const formattedTime = timeConverter(messageTime + timeDiff);
+        timeElement.textContent = formattedTime;
+      }
+    })
+    .catch((error) => console.error(error));
 }
 
 // update every minute
