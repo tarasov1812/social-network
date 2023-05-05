@@ -79,10 +79,10 @@ function loadMessages() {
         .then((response) => response.json())
         .then((pictures) => {
           for (let i = 0; i < amoutOfMessagesToShow; i += 1) {
-            const picture = pictures.picturesMessage.find((par) => par.messageId
-            === data.lastMessages[i].id);
-            const pictureUrl = picture ? picture.urlAvatar : '';
-            const postPictureUrl = picture ? picture.urlMessagePic : '';
+            // eslint-disable-next-line max-len
+            const picture = pictures.picturesMessage.find((par) => par.messageId === data.lastMessages[i].id);
+            const pictureUrl = picture.urlAvatar;
+            const postPictureUrl = picture.urlMessagePic;
             const messageHtml = `
                         <div class="post-all">
                             <img class="avatar" src="${pictureUrl}"/>
@@ -170,7 +170,7 @@ function loadChannels() {
           for (let i = 0; i < channelsToShow; i += 1) {
             const picture = pictures.picturesChannel.find((par) => par.channelId
           === blog[i].id);
-            const pictureUrl = picture ? picture.url : '';
+            const pictureUrl = picture.url;
             const interestingChannelsHtml = `
                         <div id ="interesting-channels">
                             <div class="channel">
@@ -217,6 +217,6 @@ function updateTime() {
     })
     .catch((error) => console.error(error));
 }
-
+// переделать на даты
 // update every minute
 setInterval(updateTime, 60 * 1000);
