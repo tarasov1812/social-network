@@ -26,7 +26,6 @@
 
 /* Reset settings */
 
-
 * {
     margin: 0;
     padding: 0;
@@ -485,7 +484,7 @@ button:hover {
 
 /* tags-and-posts div */
 
-@media only screen and (min-width: 800px) {
+@media only screen and (min-width: 960px) {
     .tags-and-posts{
     width: 960px;
     margin: 0 auto;
@@ -498,6 +497,12 @@ button:hover {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+@media only screen and (max-width: 960px) {
+    .posts-tags-channels-all{
+        justify-content: center;
+    }
 }
 
 /* Section all-messages */
@@ -518,18 +523,6 @@ button:hover {
     }
 }
 
-/* @media only screen and (max-width: 800px) {
-    .post-all:nth-of-type(3){
-        display: none;
-    }
-}
-
-@media only screen and (min-width: 800px) {
-    .post-all:nth-of-type(1){
-        display: none;
-    }
-} */
-
 @media only screen and (min-width: 800px) {
     .all-posts{
         width: 632px;
@@ -549,6 +542,13 @@ button:hover {
         padding: 64px 0 24px;
         font-size: 36px;
         background-color: #E5E5E5;
+        text-align: center;
+    }
+}
+
+@media only screen and (min-width: 960px) {
+    .all-messages h2{
+        text-align: left;
     }
 }
 
@@ -578,22 +578,6 @@ button:hover {
 .avatar-gray {
     background-color: #E5E5E5;
 }
-
-/* .avatar1 {
-    background-image: url("img/travolta.png");
-}
-
-.avatar2 {
-    background-image: url("img/elon.png");
-}
-
-.avatar3 {
-    background-image: url("img/alexandr.jpeg");
-}
-
-.avatar4 {
-    background-image: url("img/uma_thurman.png");
-} */
 
 .post {
     width: 100%;
@@ -952,7 +936,6 @@ hr {
 }
 
 /* Loader */
-
   .hidden {
     display: none;
   }

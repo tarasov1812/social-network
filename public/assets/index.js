@@ -68,6 +68,8 @@ loadStatistic();
 // JSON fetch messages
 const grayMessages = document.getElementById('gray-messages');
 const amoutOfMessagesToShow = 5;
+const currentTime = new Date();
+console.log(currentTime);
 
 function loadMessages() {
   // Load date from data.json
@@ -83,6 +85,19 @@ function loadMessages() {
             const picture = pictures.picturesMessage.find((par) => par.messageId === data.lastMessages[i].id);
             const pictureUrl = picture.urlAvatar;
             const postPictureUrl = picture.urlMessagePic;
+            // get time difference from the post time and current time
+            // eslint-disable-next-line max-len
+            let date = timeConverter(Math.floor((currentTime - new Date(data.lastMessages[i].time)) / 1000 / 60));
+            // put string 'age' if date is not 'now'
+            let ago = '&nbspago';
+            // if date is not 'now' cat 'ago' string from return from function timeConverter
+            // and put ago string at the next span
+            // if date is 'now' - don't put 'ago' at the next span
+            if (date.includes('ago')) {
+              date = date.substring(0, date.length - 3);
+            } else {
+              ago = '';
+            }
             const messageHtml = `
                         <div class="post-all">
                             <img class="avatar" src="${pictureUrl}"/>
@@ -93,8 +108,8 @@ function loadMessages() {
                                         <span class="nick">${data.lastMessages[i].nickName}</span>
                                     </div>
                                     <div class="date">
-                                        <span class="time">${timeConverter(data.lastMessages[i].time)}</span>
-                                        <span class="ago">&nbsp ago</span>
+                                        <span class="time">${date}</span>
+                                        <span class="ago">${ago}</span>
                                     </div>
                                 </div>
                                 <div class="message">
@@ -196,27 +211,28 @@ setTimeout(() => {
 }, 3000);
 
 // Twitter timer
-const startTime = new Date();
-
 function updateTime() {
   fetch('./data.json')
     .then((response) => response.json())
     .then((data) => {
       const allMessages = data.lastMessages;
-      const currentTime = new Date();
-      const timeDiff = Math.floor((currentTime - startTime) / (60 * 1000));
-      // update time element
+      const currentTimeUpdate = new Date();
       const timeElements = document.getElementsByClassName('time');
+      const agoStringElements = document.getElementsByClassName('ago');
       for (let i = 0; i < timeElements.length; i += 1) {
         const timeElement = timeElements[i];
+        const agoStringElement = agoStringElements[i];
         // get post time from json
-        const messageTime = allMessages[i].time;
-        const formattedTime = timeConverter(messageTime + timeDiff);
-        timeElement.textContent = formattedTime;
+        const messageTime = new Date(allMessages[i].time);
+        // eslint-disable-next-line max-len
+        const formattedTime = timeConverter(Math.floor((currentTimeUpdate - messageTime) / 60000));
+        // put time without 'ago' word at the time span element
+        timeElement.textContent = formattedTime.substring(0, formattedTime.length - 3);
+        // put word ' ago' at the next span after time span
+        agoStringElement.innerHTML = '&nbsp;ago';
       }
     })
     .catch((error) => console.error(error));
 }
-// переделать на даты
 // update every minute
-setInterval(updateTime, 60 * 1000);
+setInterval(updateTime, 60000);
