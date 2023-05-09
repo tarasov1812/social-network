@@ -1,6 +1,7 @@
 import modalValidateEmail from './modal_validate_email.js';
 import modalValidateInput from './modal_validate_input.js';
 import formValidation from './form_validation.js';
+import timeConverter from './time_converter.js';
 
 // Validate email of the Registration form
 const email = document.getElementById('email');
@@ -67,6 +68,9 @@ loadStatistic();
 // JSON fetch messages
 const grayMessages = document.getElementById('gray-messages');
 const amoutOfMessagesToShow = 5;
+const currentTime = new Date();
+console.log(currentTime);
+
 function loadMessages() {
   // Load date from data.json
   fetch('./data.json')
@@ -77,10 +81,23 @@ function loadMessages() {
         .then((response) => response.json())
         .then((pictures) => {
           for (let i = 0; i < amoutOfMessagesToShow; i += 1) {
-            const picture = pictures.picturesMessage.find((par) => par.messageId
-            === data.lastMessages[i].id);
-            const pictureUrl = picture ? picture.urlAvatar : '';
-            const postPictureUrl = picture ? picture.urlMessagePic : '';
+            // eslint-disable-next-line max-len
+            const picture = pictures.picturesMessage.find((par) => par.messageId === data.lastMessages[i].id);
+            const pictureUrl = picture.urlAvatar;
+            const postPictureUrl = picture.urlMessagePic;
+            // get time difference from the post time and current time
+            // eslint-disable-next-line max-len
+            let date = timeConverter(Math.floor((currentTime - new Date(data.lastMessages[i].time)) / 1000 / 60));
+            // put string 'age' if date is not 'now'
+            let ago = '&nbspago';
+            // if date is not 'now' cat 'ago' string from return from function timeConverter
+            // and put ago string at the next span
+            // if date is 'now' - don't put 'ago' at the next span
+            if (date.includes('ago')) {
+              date = date.substring(0, date.length - 3);
+            } else {
+              ago = '';
+            }
             const messageHtml = `
                         <div class="post-all">
                             <img class="avatar" src="${pictureUrl}"/>
@@ -91,8 +108,8 @@ function loadMessages() {
                                         <span class="nick">${data.lastMessages[i].nickName}</span>
                                     </div>
                                     <div class="date">
-                                        <span class="time">${data.lastMessages[i].time}</span>
-                                        <span class="ago">&nbsp ago</span>
+                                        <span class="time">${date}</span>
+                                        <span class="ago">${ago}</span>
                                     </div>
                                 </div>
                                 <div class="message">
@@ -168,7 +185,7 @@ function loadChannels() {
           for (let i = 0; i < channelsToShow; i += 1) {
             const picture = pictures.picturesChannel.find((par) => par.channelId
           === blog[i].id);
-            const pictureUrl = picture ? picture.url : '';
+            const pictureUrl = picture.url;
             const interestingChannelsHtml = `
                         <div id ="interesting-channels">
                             <div class="channel">
@@ -192,3 +209,30 @@ function loadChannels() {
 setTimeout(() => {
   loadChannels();
 }, 3000);
+
+// Twitter timer
+function updateTime() {
+  fetch('./data.json')
+    .then((response) => response.json())
+    .then((data) => {
+      const allMessages = data.lastMessages;
+      const currentTimeUpdate = new Date();
+      const timeElements = document.getElementsByClassName('time');
+      const agoStringElements = document.getElementsByClassName('ago');
+      for (let i = 0; i < timeElements.length; i += 1) {
+        const timeElement = timeElements[i];
+        const agoStringElement = agoStringElements[i];
+        // get post time from json
+        const messageTime = new Date(allMessages[i].time);
+        // eslint-disable-next-line max-len
+        const formattedTime = timeConverter(Math.floor((currentTimeUpdate - messageTime) / 60000));
+        // put time without 'ago' word at the time span element
+        timeElement.textContent = formattedTime.substring(0, formattedTime.length - 3);
+        // put word ' ago' at the next span after time span
+        agoStringElement.innerHTML = '&nbsp;ago';
+      }
+    })
+    .catch((error) => console.error(error));
+}
+// update every minute
+setInterval(updateTime, 60000);
