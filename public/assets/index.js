@@ -70,6 +70,8 @@ const grayMessages = document.getElementById('gray-messages');
 const amoutOfMessagesToShow = 5;
 const currentTime = new Date();
 console.log(currentTime);
+const currentTime = new Date();
+console.log(currentTime);
 
 function loadMessages() {
   // Load date from posts.json
