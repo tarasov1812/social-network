@@ -69,11 +69,10 @@ loadStatistic();
 const grayMessages = document.getElementById('gray-messages');
 const amoutOfMessagesToShow = 5;
 const currentTime = new Date();
-console.log(currentTime);
 
 function loadMessages() {
-  // Load date from data.json
-  fetch('./data.json')
+  // Load date from posts.json
+  fetch('/posts.json')
     .then((response) => response.json())
     .then((data) => {
       // Load data from picture.json
@@ -82,12 +81,12 @@ function loadMessages() {
         .then((pictures) => {
           for (let i = 0; i < amoutOfMessagesToShow; i += 1) {
             // eslint-disable-next-line max-len
-            const picture = pictures.picturesMessage.find((par) => par.messageId === data.lastMessages[i].id);
+            const picture = pictures.picturesMessage.find((par) => par.messageId === data[i].id);
             const pictureUrl = picture.urlAvatar;
             const postPictureUrl = picture.urlMessagePic;
             // get time difference from the post time and current time
             // eslint-disable-next-line max-len
-            let date = timeConverter(Math.floor((currentTime - new Date(data.lastMessages[i].time)) / 1000 / 60));
+            let date = timeConverter(Math.floor((currentTime - new Date(data[i].time)) / 1000 / 60));
             // put string 'age' if date is not 'now'
             let ago = '&nbspago';
             // if date is not 'now' cat 'ago' string from return from function timeConverter
@@ -104,8 +103,8 @@ function loadMessages() {
                             <div class="post">
                                 <div class="nick-name-date">
                                     <div class="name-nick">
-                                        <span class="name">${data.lastMessages[i].author}</span>
-                                        <span class="nick">${data.lastMessages[i].nickName}</span>
+                                        <span class="name">${data[i].author}</span>
+                                        <span class="nick">${data[i].nickname}</span>
                                     </div>
                                     <div class="date">
                                         <span class="time">${date}</span>
@@ -113,21 +112,21 @@ function loadMessages() {
                                     </div>
                                 </div>
                                 <div class="message">
-                                    <p>${data.lastMessages[i].content}</p>
+                                    <p>${data[i].content}</p>
                                     <img class="attached-picture" src="${postPictureUrl}"/>
                                 </div>
                                 <div class="counters">
                                     <div class="repost">
                                         <img src="img/repost.svg">
-                                        <span>${data.lastMessages[i].reposts}</span>
+                                        <span>${data[i].reposts}</span>
                                     </div>
                                     <div class="like">
                                         <img src="img/like.svg">
-                                        <span>${data.lastMessages[i].likes}</span>
+                                        <span>${data[i].likes}</span>
                                     </div>
                                     <div class="share">
                                         <img src="img/share.svg">
-                                        <span>${data.lastMessages[i].shares}</span>
+                                        <span>${data[i].shares}</span>
                                     </div>
                                 </div>
                             </div>
@@ -192,7 +191,7 @@ function loadChannels() {
                                 <img class="channel-logo" src="${pictureUrl}"/>
                                 <div class="channel-name-and-nick">
                                     <span class="channel-name">${blog[i].channelName}</span>
-                                    <span class="channel-nick">>${blog[i].channelNick}</span>
+                                    <span class="channel-nick">${blog[i].channelNick}</span>
                                 </div>
                                 <button class="read">Read</button>
                             </div>

@@ -82,15 +82,15 @@
     {
       "id": 1,
       "channelName": "Habr",
-      "channalNick": "@habr_popsci"
+      "channelNick": "@habr_popsci"
     },
     { "id": 2,
       "channelName": "Match TV",
-      "channalNick": "@MatchTV"
+      "channelNick": "@MatchTV"
     },
     { "id": 3,
       "channelName": "Pop Mechanica",
-      "channalNick": "@PopMechanica"
+      "channelNick": "@PopMechanica"
     }
   ]
 }
