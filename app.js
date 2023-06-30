@@ -6,6 +6,7 @@ const { Pool } = pkg;
 
 const app = express();
 app.use(express.static('public'));
+app.use(express.json());
 
 const port = process.env.PORT || 3000;
 
@@ -20,7 +21,9 @@ const pool = new Pool({
   },
 });
 
-const query = `
+// get posts
+app.get('/posts.json', (req, res) => {
+  const query = `
   SELECT
     posts.id,
     authors.author,
@@ -35,14 +38,85 @@ const query = `
   JOIN
     authors ON posts.author_id = authors.id;
 `;
-
-app.get('/posts.json', (req, res) => {
   pool.query(query, (error, results) => {
     if (error) {
       console.error('Error executing query', error);
       res.status(500).json({ error: 'Internal server error' });
     } else {
       res.json(results.rows);
+    }
+  });
+});
+
+// creae post
+app.post('/posts.json', (req, res) => {
+  const {
+    author_id, content,
+  } = req.body;
+
+  const insertQuery = `
+    INSERT INTO posts (author_id, content, time, reposts, likes, shares)
+    VALUES ($1, $2, $3, $4, $5, $6)
+  `;
+  const currentDate = Date.now();
+  const formattedDate = new Date(currentDate).toISOString().slice(0, -5);
+
+  const insertValues = [author_id, content, formattedDate, 0, 0, 0];
+
+  pool.query(insertQuery, insertValues, (error, result) => {
+    if (error) {
+      console.error('Error executing query', error);
+      res.status(500).json({ error: 'Internal server error' });
+    } else {
+      res.set('Content-Type', 'application/json');
+      res.json({ message: 'Post added successfully' });
+    }
+  });
+});
+
+// delete post
+app.delete('/posts.json/:id', (req, res) => {
+  const postId = req.params.id;
+
+  const deleteQuery = `
+    DELETE FROM posts
+    WHERE id = $1
+  `;
+
+  const deleteValues = [postId];
+
+  pool.query(deleteQuery, deleteValues, (error, result) => {
+    if (error) {
+      console.error('Error executing query', error);
+      res.status(500).json({ error: 'Internal server error' });
+    } else {
+      res.set('Content-Type', 'application/json');
+      res.json({ message: 'Post deleted successfully' });
+    }
+  });
+});
+
+// update post
+app.put('/posts.json/:id', (req, res) => {
+  const postId = req.params.id;
+
+  const { content } = req.body;
+
+  const updateQuery = `
+    UPDATE posts
+    SET content = $1
+    WHERE id = $2
+  `;
+
+  const updateValues = [content, postId];
+
+  pool.query(updateQuery, updateValues, (error, result) => {
+    if (error) {
+      console.error('Error executing query', error);
+      res.status(500).json({ error: 'Internal server error' });
+    } else {
+      res.set('Content-Type', 'application/json');
+      res.json({ message: 'Post updated successfully' });
     }
   });
 });
