@@ -51,6 +51,7 @@ app.get('/posts.json', (req, res) => {
 // creae post
 app.post('/posts.json', (req, res) => {
   const {
+    // eslint-disable-next-line camelcase
     author_id, content,
   } = req.body;
 
@@ -61,9 +62,10 @@ app.post('/posts.json', (req, res) => {
   const currentDate = Date.now();
   const formattedDate = new Date(currentDate).toISOString().slice(0, -5);
 
+  // eslint-disable-next-line camelcase
   const insertValues = [author_id, content, formattedDate, 0, 0, 0];
 
-  pool.query(insertQuery, insertValues, (error, result) => {
+  pool.query(insertQuery, insertValues, (error) => {
     if (error) {
       console.error('Error executing query', error);
       res.status(500).json({ error: 'Internal server error' });
@@ -85,7 +87,7 @@ app.delete('/posts.json/:id', (req, res) => {
 
   const deleteValues = [postId];
 
-  pool.query(deleteQuery, deleteValues, (error, result) => {
+  pool.query(deleteQuery, deleteValues, (error) => {
     if (error) {
       console.error('Error executing query', error);
       res.status(500).json({ error: 'Internal server error' });
@@ -110,7 +112,7 @@ app.put('/posts.json/:id', (req, res) => {
 
   const updateValues = [content, postId];
 
-  pool.query(updateQuery, updateValues, (error, result) => {
+  pool.query(updateQuery, updateValues, (error) => {
     if (error) {
       console.error('Error executing query', error);
       res.status(500).json({ error: 'Internal server error' });
