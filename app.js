@@ -79,7 +79,6 @@ app.post('/posts.json', (req, res) => {
 // delete post
 app.delete('/posts.json/:id', (req, res) => {
   const postId = req.params.id;
-
   const deleteQuery = `
     DELETE FROM posts
     WHERE id = $1
@@ -120,6 +119,50 @@ app.put('/posts.json/:id', (req, res) => {
       res.set('Content-Type', 'application/json');
       res.json({ message: 'Post updated successfully' });
     }
+  });
+});
+
+// create user
+app.post('/createUser', (req, res) => {
+  const { nickname, author, password } = req.body;
+
+  const checkUserQuery = `
+    SELECT COUNT(*) AS count
+    FROM authors
+    WHERE nickname = $1
+  `;
+
+  pool.query(checkUserQuery, [nickname], (error, result) => {
+    if (error) {
+      console.error('Error executing query', error);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
+    }
+
+    const userCount = result.rows[0].count;
+
+    if (userCount > 0) {
+      res.status(400).json({ error: 'User already exists' });
+      return;
+    }
+
+    const insertQuery = `
+      INSERT INTO authors (nickname, author, password)
+      VALUES ($1, $2, $3)
+    `;
+
+    const insertValues = [nickname, author, password];
+
+    // eslint-disable-next-line no-shadow
+    pool.query(insertQuery, insertValues, (error) => {
+      if (error) {
+        console.error('Error executing query', error);
+        res.status(500).json({ error: 'Internal server error' });
+      } else {
+        res.set('Content-Type', 'application/json');
+        res.json({ message: 'User created successfully' });
+      }
+    });
   });
 });
 
