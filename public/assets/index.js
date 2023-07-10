@@ -235,3 +235,45 @@ function updateTime() {
 }
 // update every minute
 setInterval(updateTime, 60000);
+
+// Create user
+const registrationButton = document.getElementById('registration-button');
+
+registrationButton.addEventListener('click', () => {
+  // Get the modal
+  const modal = document.getElementById('modal-sign-in');
+
+  const nickname = `@${document.getElementById('nick-name').value}`;
+  const author = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const repeatPassword = document.getElementById('repeat-password').value;
+
+  const userData = {
+    nickname,
+    author,
+    password,
+    repeatPassword,
+  };
+
+  if (nickname !== '' && author !== '' && password !== '' && password === repeatPassword) {
+    fetch('/createUser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.message);
+        // When the user clicks on sign-up, close the modal
+        registrationButton.onclick = function () {
+          modal.style.visibility = 'hidden';
+          modal.style.opacity = 0;
+        };
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
+});
