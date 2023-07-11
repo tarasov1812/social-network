@@ -277,3 +277,41 @@ registrationButton.addEventListener('click', () => {
       });
   }
 });
+
+// Login
+const loginButton = document.getElementById('login-button');
+
+loginButton.addEventListener('click', () => {
+  // Get the modal
+  const modal = document.getElementById('modal-login');
+
+  const nickname = document.getElementById('login-authorization').value;
+  const password = document.getElementById('login-password').value;
+
+  const userData = {
+    nickname,
+    password,
+  };
+
+  if (nickname !== '' && password !== '') {
+    fetch('/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.message);
+        // When the user clicks on sign-up, close the modal
+        loginButton.onclick = function () {
+          modal.style.visibility = 'hidden';
+          modal.style.opacity = 0;
+        };
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
+});
