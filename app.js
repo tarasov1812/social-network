@@ -166,6 +166,55 @@ app.post('/createUser', (req, res) => {
   });
 });
 
+// login
+app.post('/login', (req, res) => {
+  const { nickname, password } = req.body;
+
+  const checkUserQuery = `
+    SELECT COUNT(*) AS count
+    FROM authors
+    WHERE nickname = $1
+  `;
+
+  pool.query(checkUserQuery, [nickname], (error, result) => {
+    if (error) {
+      console.error('Error executing query', error);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
+    }
+
+    const userCount = result.rows[0].count;
+
+    if (userCount > 0) {
+      const passwordQuery = `
+        SELECT password
+        FROM authors
+        WHERE nickname = $1
+      `;
+
+      const insertValues = [nickname];
+      // eslint-disable-next-line no-shadow
+      pool.query(passwordQuery, insertValues, (error, result) => {
+        if (error) {
+          console.error('Error executing query', error);
+          res.status(500).json({ error: 'Internal server error' });
+          return;
+        }
+
+        const resultPassword = result.rows[0].password;
+
+        if (password === resultPassword) {
+          res.status(200).json({ message: 'Successful login' });
+        } else {
+          res.status(400).json({ error: 'Password is not correct' });
+        }
+      });
+    } else {
+      res.status(404).json({ error: 'User doesn\'t exist' });
+    }
+  });
+});
+
 // Read content of index.html
 const html = fs.readFileSync('public/index.html', 'utf8');
 
