@@ -1,6 +1,7 @@
 import express from 'express';
 import fs from 'fs';
 import pkg from 'pg';
+import crypto from 'crypto';
 
 const { Pool } = pkg;
 
@@ -213,6 +214,46 @@ app.post('/login', (req, res) => {
       res.status(404).json({ error: 'User doesn\'t exist' });
     }
   });
+});
+
+// Generate token
+
+// eslint-disable-next-line consistent-return
+app.post('/generate-token', async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ error: 'Email is required' });
+  }
+
+  const token = crypto.randomUUID();
+
+  // Save token in data base
+  try {
+    // Search author's id by email
+    const authorIdQuery = `
+      SELECT id FROM authors WHERE author = $1
+    `;
+    const authorIdResult = await pool.query(authorIdQuery, [email]);
+    const authorId = authorIdResult.rows[0].id;
+
+    // Insert token and author_id in sessions
+    const insertQuery = `
+      INSERT INTO sessions (author_id, token)
+      VALUES ($1, $2)
+    `;
+    await pool.query(insertQuery, [authorId, token]);
+
+    // Save token in cookie
+    // Cookie will expire in 7 days
+    const expiresDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    res.cookie('email', email, { expires: expiresDate });
+    res.cookie('token', token, { expires: expiresDate });
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 // Read content of index.html
