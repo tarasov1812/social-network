@@ -2,11 +2,13 @@ import express from 'express';
 import fs from 'fs';
 import pkg from 'pg';
 import crypto from 'crypto';
+import cookieParser from 'cookie-parser';
 
 const { Pool } = pkg;
 
 const app = express();
 app.use(express.static('public'));
+app.use(cookieParser());
 app.use(express.json());
 
 const port = process.env.PORT || 3000;
@@ -271,10 +273,36 @@ const html = fs.readFileSync('public/index.html', 'utf8');
 // Route to send index.html
 app.get('/', (req, res) => res.type('html').send(html));
 
-app.get('/feed', (req, res) => {
-  // res.ge;
-  // if()
-  res.type('html').send('Access permited');
+// Page feed
+app.get('/feed', async (req, res) => {
+  const { email, token } = req.cookies;
+
+  // Get author_id from table authors with email
+  const authorIdQuery = `
+    SELECT id FROM authors WHERE email = $1
+  `;
+
+  try {
+    const authorIdResult = await pool.query(authorIdQuery, [email]);
+    const authorId = authorIdResult.rows[0].id;
+
+    const sessionQuery = `
+      SELECT COUNT(*) AS count FROM sessions
+      WHERE author_id = $1 AND token = $2
+    `;
+
+    const sessionResult = await pool.query(sessionQuery, [authorId, token]);
+    const sessionCount = sessionResult.rows[0].count;
+
+    if (sessionCount > 0) {
+      res.type('html').send('Access is allowed');
+    } else {
+      res.type('html').send('Access denied');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).send('Error');
+  }
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

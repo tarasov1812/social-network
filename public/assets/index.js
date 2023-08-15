@@ -263,7 +263,14 @@ registrationButton.addEventListener('click', () => {
       },
       body: JSON.stringify(userData),
     })
-      .then((response) => response.json())
+      // eslint-disable-next-line consistent-return
+      .then((response) => {
+        if (response.ok) {
+          window.location.href = '/feed';
+        } else {
+          return response.json();
+        }
+      })
       .then((data) => {
         console.log(data.message);
         // When the user clicks on sign-up, close the modal
@@ -301,7 +308,14 @@ loginButton.addEventListener('click', () => {
       },
       body: JSON.stringify(userData),
     })
-      .then((response) => response.json())
+      // eslint-disable-next-line consistent-return
+      .then((response) => {
+        if (response.ok) {
+          window.location.href = '/feed';
+        } else {
+          return response.json();
+        }
+      })
       .then((data) => {
         console.log(data.message);
         // When the user clicks on sign-up, close the modal
