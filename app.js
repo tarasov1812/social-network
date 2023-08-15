@@ -1,6 +1,7 @@
 import express from 'express';
 import fs from 'fs';
 import pkg from 'pg';
+import crypto from 'crypto';
 
 const { Pool } = pkg;
 
@@ -124,12 +125,12 @@ app.put('/posts.json/:id', (req, res) => {
 
 // create user
 app.post('/createUser', (req, res) => {
-  const { nickname, author, password } = req.body;
+  const { nickname, email, password } = req.body;
 
   const checkUserQuery = `
     SELECT COUNT(*) AS count
     FROM authors
-    WHERE nickname = $1
+    WHERE email = $1
   `;
 
   pool.query(checkUserQuery, [nickname], (error, result) => {
@@ -147,18 +148,42 @@ app.post('/createUser', (req, res) => {
     }
 
     const insertQuery = `
-      INSERT INTO authors (nickname, author, password)
+      INSERT INTO authors (nickname, email, password)
       VALUES ($1, $2, $3)
     `;
 
-    const insertValues = [nickname, author, password];
+    const insertValues = [nickname, email, password];
 
     // eslint-disable-next-line no-shadow
-    pool.query(insertQuery, insertValues, (error) => {
+    pool.query(insertQuery, insertValues, async (error) => {
       if (error) {
         console.error('Error executing query', error);
         res.status(500).json({ error: 'Internal server error' });
       } else {
+        // Generate token
+        const token = crypto.randomUUID();
+
+        // Save token in data base
+
+        // Search author's id by email
+        const authorIdQuery = `
+            SELECT id FROM authors WHERE email = $1
+            `;
+        const authorIdResult = await pool.query(authorIdQuery, [email]);
+        const authorId = authorIdResult.rows[0].id;
+
+        // Insert token and author_id in sessions
+        const insertQuerySessions = `
+            INSERT INTO sessions (author_id, token)
+            VALUES ($1, $2)
+            `;
+        await pool.query(insertQuerySessions, [authorId, token]);
+
+        // Save token in cookie
+        // Cookie will expire in 7 days
+        const expiresDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+        res.cookie('email', email, { expires: expiresDate });
+        res.cookie('token', token, { expires: expiresDate });
         res.set('Content-Type', 'application/json');
         res.json({ message: 'User created successfully' });
       }
@@ -168,15 +193,15 @@ app.post('/createUser', (req, res) => {
 
 // login
 app.post('/login', (req, res) => {
-  const { nickname, password } = req.body;
+  const { email, password } = req.body;
 
   const checkUserQuery = `
     SELECT COUNT(*) AS count
     FROM authors
-    WHERE nickname = $1
+    WHERE email = $1
   `;
 
-  pool.query(checkUserQuery, [nickname], (error, result) => {
+  pool.query(checkUserQuery, [email], (error, result) => {
     if (error) {
       console.error('Error executing query', error);
       res.status(500).json({ error: 'Internal server error' });
@@ -189,12 +214,12 @@ app.post('/login', (req, res) => {
       const passwordQuery = `
         SELECT password
         FROM authors
-        WHERE nickname = $1
+        WHERE email = $1
       `;
 
-      const insertValues = [nickname];
+      const insertValues = [email];
       // eslint-disable-next-line no-shadow
-      pool.query(passwordQuery, insertValues, (error, result) => {
+      pool.query(passwordQuery, insertValues, async (error, result) => {
         if (error) {
           console.error('Error executing query', error);
           res.status(500).json({ error: 'Internal server error' });
@@ -204,6 +229,31 @@ app.post('/login', (req, res) => {
         const resultPassword = result.rows[0].password;
 
         if (password === resultPassword) {
+          // Generate token
+          const token = crypto.randomUUID();
+
+          // Save token in data base
+
+          // Search author's id by email
+          const authorIdQuery = `
+            SELECT id FROM authors WHERE email = $1
+            `;
+          const authorIdResult = await pool.query(authorIdQuery, [email]);
+          const authorId = authorIdResult.rows[0].id;
+
+          // Insert token and author_id in sessions
+          const insertQuery = `
+            INSERT INTO sessions (author_id, token)
+            VALUES ($1, $2)
+            `;
+          await pool.query(insertQuery, [authorId, token]);
+
+          // Save token in cookie
+          // Cookie will expire in 7 days
+          const expiresDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+          res.cookie('email', email, { expires: expiresDate });
+          res.cookie('token', token, { expires: expiresDate });
+
           res.status(200).json({ message: 'Successful login' });
         } else {
           res.status(400).json({ error: 'Password is not correct' });
@@ -220,5 +270,11 @@ const html = fs.readFileSync('public/index.html', 'utf8');
 
 // Route to send index.html
 app.get('/', (req, res) => res.type('html').send(html));
+
+app.get('/feed', (req, res) => {
+  // res.ge;
+  // if()
+  res.type('html').send('Access permited');
+});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

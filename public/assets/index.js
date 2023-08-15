@@ -4,12 +4,12 @@ import formValidation from './form_validation.js';
 import timeConverter from './time_converter.js';
 
 // Validate email of the Registration form
-const email = document.getElementById('email');
+const emailCheck = document.getElementById('email');
 
-email.onblur = function () {
+emailCheck.onblur = function () {
   modalValidateEmail('email', 'invalid-email', 'myModal');
 };
-email.oninput = function () {
+emailCheck.oninput = function () {
   modalValidateEmail('email', 'invalid-email', 'myModal');
 };
 
@@ -244,18 +244,18 @@ registrationButton.addEventListener('click', () => {
   const modal = document.getElementById('modal-sign-in');
 
   const nickname = `@${document.getElementById('nick-name').value}`;
-  const author = document.getElementById('email').value;
+  const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
   const repeatPassword = document.getElementById('repeat-password').value;
 
   const userData = {
     nickname,
-    author,
+    email,
     password,
     repeatPassword,
   };
 
-  if (nickname !== '' && author !== '' && password !== '' && password === repeatPassword) {
+  if (nickname !== '' && email !== '' && password !== '' && password === repeatPassword) {
     fetch('/createUser', {
       method: 'POST',
       headers: {
@@ -285,15 +285,15 @@ loginButton.addEventListener('click', () => {
   // Get the modal
   const modal = document.getElementById('modal-login');
 
-  const nickname = document.getElementById('login-authorization').value;
+  const email = document.getElementById('login-authorization').value;
   const password = document.getElementById('login-password').value;
 
   const userData = {
-    nickname,
+    email,
     password,
   };
 
-  if (nickname !== '' && password !== '') {
+  if (email !== '' && password !== '') {
     fetch('/login', {
       method: 'POST',
       headers: {
