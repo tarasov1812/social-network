@@ -2,6 +2,7 @@ import modalValidateEmail from './modal_validate_email.js';
 import modalValidateInput from './modal_validate_input.js';
 import formValidation from './form_validation.js';
 import timeConverter from './time_converter.js';
+import modalValidateInputDataBase from './modale_validate_input_dataB.js';
 
 // Validate email of the Registration form
 const emailCheck = document.getElementById('email');
@@ -103,7 +104,7 @@ function loadMessages() {
                             <div class="post">
                                 <div class="nick-name-date">
                                     <div class="name-nick">
-                                        <span class="name">${data[i].author}</span>
+                                        <span class="name">${data[i].email}</span>
                                         <span class="nick">${data[i].nickname}</span>
                                     </div>
                                     <div class="date">
@@ -263,24 +264,20 @@ registrationButton.addEventListener('click', () => {
       },
       body: JSON.stringify(userData),
     })
-      // eslint-disable-next-line consistent-return
       .then((response) => {
         if (response.ok) {
-          window.location.href = '/feed';
-        } else {
-          return response.json();
-        }
-      })
-      .then((data) => {
-        console.log(data.message);
-        // When the user clicks on sign-up, close the modal
-        registrationButton.onclick = function () {
           modal.style.visibility = 'hidden';
           modal.style.opacity = 0;
-        };
-      })
-      .catch((error) => {
-        console.error('Error:', error);
+          window.location.href = '/feed';
+        } else if (response.status === 400) {
+          modalValidateInputDataBase('nick-name', 'invalid-nick-name', 'myModal');
+        } else if (response.status === 409) {
+          modalValidateInputDataBase('email', 'invalid-email', 'myModal');
+        } else if (response.status === 410) {
+          modalValidateInputDataBase('nick-name', 'invalid-nick-name', 'myModal');
+          modalValidateInputDataBase('email', 'invalid-email', 'myModal');
+        }
+        return response.json();
       });
   }
 });
@@ -308,24 +305,17 @@ loginButton.addEventListener('click', () => {
       },
       body: JSON.stringify(userData),
     })
-      // eslint-disable-next-line consistent-return
       .then((response) => {
         if (response.ok) {
-          window.location.href = '/feed';
-        } else {
-          return response.json();
-        }
-      })
-      .then((data) => {
-        console.log(data.message);
-        // When the user clicks on sign-up, close the modal
-        loginButton.onclick = function () {
           modal.style.visibility = 'hidden';
           modal.style.opacity = 0;
-        };
-      })
-      .catch((error) => {
-        console.error('Error:', error);
+          window.location.href = '/feed';
+        } else if (response.status === 400) {
+          modalValidateInputDataBase('login-password', 'invalid-password-login', 'loginModal');
+        } else if (response.status === 404) {
+          modalValidateInputDataBase('login-authorization', 'invalid-nick-name-login', 'loginModal');
+        }
+        return response.json();
       });
   }
 });

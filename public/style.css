@@ -149,7 +149,7 @@
     }
 }
 
-#invalid-email, #invalid-nick-name, #invalid-password {
+#invalid-email, #invalid-nick-name, #invalid-password, #invalid-password-login, #invalid-nick-name-login {
     color: #E40060;
     margin-left: 33px;
     font-size: 9px;
@@ -253,17 +253,10 @@
     }
 }
 
-#invalid-password{
-    color: #E40060;
-    margin-left: 33px;
-    font-size: 9px;
-    visibility: hidden;
-}
-
 .input-pwd{
     padding-top: 23px;
     padding-bottom: 7px;
-    margin-top: -3px;
+    margin-top: -12px;
     margin-bottom: 4px;
 }
 
