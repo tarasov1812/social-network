@@ -29,7 +29,7 @@ app.get('/posts.json', (req, res) => {
   const query = `
   SELECT
     posts.id,
-    authors.author,
+    authors.email,
     authors.nickname,
     posts.content,
     posts.time,
@@ -126,46 +126,103 @@ app.put('/posts.json/:id', (req, res) => {
 });
 
 // create user
-app.post('/createUser', (req, res) => {
+app.post('/createUser', async (req, res) => {
   const { nickname, email, password } = req.body;
 
-  const checkUserQuery = `
-    SELECT COUNT(*) AS count
+  const checkNicknameQuery = `
+    SELECT id
+    FROM authors
+    WHERE nickname = $1
+  `;
+
+  const nicknameResult = await pool.query(checkNicknameQuery, [nickname]);
+  const nicknameData = nicknameResult.rows.length > 0;
+
+  const checkEmailQuery = `
+    SELECT id
     FROM authors
     WHERE email = $1
   `;
 
-  pool.query(checkUserQuery, [nickname], (error, result) => {
-    if (error) {
-      console.error('Error executing query', error);
-      res.status(500).json({ error: 'Internal server error' });
-      return;
-    }
+  const emailResult = await pool.query(checkEmailQuery, [email]);
+  const emailData = emailResult.rows.length > 0;
 
-    const userCount = result.rows[0].count;
+  if (emailData && nicknameData) {
+    res.status(410).json({ error: 'Email and nickname already exists' });
+    return;
+  }
 
-    if (userCount > 0) {
-      res.status(400).json({ error: 'User already exists' });
-      return;
-    }
+  if (emailData) {
+    res.status(409).json({ error: 'Email already exists' });
+    return;
+  }
 
-    const insertQuery = `
+  if (nicknameData) {
+    res.status(400).json({ error: 'Nickname already exists' });
+    return;
+  }
+
+  const insertQuery = `
       INSERT INTO authors (nickname, email, password)
       VALUES ($1, $2, $3)
     `;
 
-    const insertValues = [nickname, email, password];
+  const insertValues = [nickname, email, password];
 
-    // eslint-disable-next-line no-shadow
-    pool.query(insertQuery, insertValues, async (error) => {
-      if (error) {
-        console.error('Error executing query', error);
-        res.status(500).json({ error: 'Internal server error' });
-      } else {
+  // eslint-disable-next-line no-shadow
+  await pool.query(insertQuery, insertValues);
+  // Generate token
+  const token = crypto.randomUUID();
+
+  // Save token in data base
+  // Search author's id by email
+  const authorIdQuery = `
+            SELECT id FROM authors WHERE email = $1
+            `;
+  const authorIdResult = await pool.query(authorIdQuery, [email]);
+  const authorId = authorIdResult.rows[0].id;
+
+  // Insert token and author_id in sessions
+  const insertQuerySessions = `
+            INSERT INTO sessions (author_id, token)
+            VALUES ($1, $2)
+            `;
+  await pool.query(insertQuerySessions, [authorId, token]);
+
+  // Save token in cookie
+  // Cookie will expire in 7 days
+  const expiresDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+  res.cookie('email', email, { expires: expiresDate });
+  res.cookie('token', token, { expires: expiresDate });
+  res.set('Content-Type', 'application/json');
+  res.json({ message: 'User created successfully' });
+});
+
+// login
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  const checkUserQuery = `
+    SELECT *
+    FROM authors
+    WHERE email = $1
+  `;
+
+  await pool.query(checkUserQuery, [email], async (error, result) => {
+    if (result.rows.length > 0) {
+      const passwordQuery = `
+        SELECT password
+        FROM authors
+        WHERE email = $1
+      `;
+
+      // eslint-disable-next-line no-shadow
+      const resultPassword = await pool.query(passwordQuery, [email]);
+      const passwordDataBase = resultPassword.rows[0].password;
+
+      if (password === passwordDataBase) {
         // Generate token
         const token = crypto.randomUUID();
-
-        // Save token in data base
 
         // Search author's id by email
         const authorIdQuery = `
@@ -175,92 +232,22 @@ app.post('/createUser', (req, res) => {
         const authorId = authorIdResult.rows[0].id;
 
         // Insert token and author_id in sessions
-        const insertQuerySessions = `
+        const insertQuery = `
             INSERT INTO sessions (author_id, token)
             VALUES ($1, $2)
             `;
-        await pool.query(insertQuerySessions, [authorId, token]);
+        await pool.query(insertQuery, [authorId, token]);
 
         // Save token in cookie
         // Cookie will expire in 7 days
         const expiresDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
         res.cookie('email', email, { expires: expiresDate });
         res.cookie('token', token, { expires: expiresDate });
-        res.set('Content-Type', 'application/json');
-        res.json({ message: 'User created successfully' });
+
+        res.status(200).json({ message: 'Successful login' });
+      } else {
+        res.status(400).json({ error: 'Password is not correct' });
       }
-    });
-  });
-});
-
-// login
-app.post('/login', (req, res) => {
-  const { email, password } = req.body;
-
-  const checkUserQuery = `
-    SELECT COUNT(*) AS count
-    FROM authors
-    WHERE email = $1
-  `;
-
-  pool.query(checkUserQuery, [email], (error, result) => {
-    if (error) {
-      console.error('Error executing query', error);
-      res.status(500).json({ error: 'Internal server error' });
-      return;
-    }
-
-    const userCount = result.rows[0].count;
-
-    if (userCount > 0) {
-      const passwordQuery = `
-        SELECT password
-        FROM authors
-        WHERE email = $1
-      `;
-
-      const insertValues = [email];
-      // eslint-disable-next-line no-shadow
-      pool.query(passwordQuery, insertValues, async (error, result) => {
-        if (error) {
-          console.error('Error executing query', error);
-          res.status(500).json({ error: 'Internal server error' });
-          return;
-        }
-
-        const resultPassword = result.rows[0].password;
-
-        if (password === resultPassword) {
-          // Generate token
-          const token = crypto.randomUUID();
-
-          // Save token in data base
-
-          // Search author's id by email
-          const authorIdQuery = `
-            SELECT id FROM authors WHERE email = $1
-            `;
-          const authorIdResult = await pool.query(authorIdQuery, [email]);
-          const authorId = authorIdResult.rows[0].id;
-
-          // Insert token and author_id in sessions
-          const insertQuery = `
-            INSERT INTO sessions (author_id, token)
-            VALUES ($1, $2)
-            `;
-          await pool.query(insertQuery, [authorId, token]);
-
-          // Save token in cookie
-          // Cookie will expire in 7 days
-          const expiresDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-          res.cookie('email', email, { expires: expiresDate });
-          res.cookie('token', token, { expires: expiresDate });
-
-          res.status(200).json({ message: 'Successful login' });
-        } else {
-          res.status(400).json({ error: 'Password is not correct' });
-        }
-      });
     } else {
       res.status(404).json({ error: 'User doesn\'t exist' });
     }
@@ -282,26 +269,20 @@ app.get('/feed', async (req, res) => {
     SELECT id FROM authors WHERE email = $1
   `;
 
-  try {
-    const authorIdResult = await pool.query(authorIdQuery, [email]);
-    const authorId = authorIdResult.rows[0].id;
+  const authorIdResult = await pool.query(authorIdQuery, [email]);
+  const authorId = authorIdResult.rows[0].id;
 
-    const sessionQuery = `
-      SELECT COUNT(*) AS count FROM sessions
-      WHERE author_id = $1 AND token = $2
+  const sessionQuery = `
+    SELECT * FROM sessions
+    WHERE author_id = $1 AND token = $2
     `;
 
-    const sessionResult = await pool.query(sessionQuery, [authorId, token]);
-    const sessionCount = sessionResult.rows[0].count;
+  const sessionResult = await pool.query(sessionQuery, [authorId, token]);
 
-    if (sessionCount > 0) {
-      res.type('html').send('Access is allowed');
-    } else {
-      res.type('html').send('Access denied');
-    }
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).send('Error');
+  if (sessionResult.rows[0].length === 0) {
+    res.type('html').send('Access denied');
+  } else {
+    res.type('html').send('Access is allowed');
   }
 });
 
