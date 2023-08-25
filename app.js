@@ -254,12 +254,6 @@ app.post('/login', async (req, res) => {
   });
 });
 
-// Read content of index.html
-const html = fs.readFileSync('public/index.html', 'utf8');
-
-// Route to send index.html
-app.get('/', (req, res) => res.type('html').send(html));
-
 // Page feed
 app.get('/feed', async (req, res) => {
   const { email, token } = req.cookies;
@@ -285,5 +279,14 @@ app.get('/feed', async (req, res) => {
     res.type('html').send('Access is allowed');
   }
 });
+
+// Read content of index.html
+const main = fs.readFileSync('public/main.html', 'utf8');
+
+// Route to send index.html
+app.get('/', (req, res) => res.type('html').send(main));
+
+const index = fs.readFileSync('index.html', 'utf8');
+app.get('/app', (req, res) => res.type('html').send(index));
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
