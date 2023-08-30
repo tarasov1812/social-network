@@ -11,8 +11,8 @@ const app = express();
 const main = fs.readFileSync('public/main.html', 'utf8');
 app.get('/', (req, res) => res.type('html').send(main));
 
-// const index = fs.readFileSync('public/index.html', 'utf8');
-// app.get('/app', (req, res) => res.type('html').send(index));
+const index = fs.readFileSync('public/index.html', 'utf8');
+app.get('/app', (req, res) => res.type('html').send(index));
 
 app.use(express.static('public'));
 app.use(cookieParser());
