@@ -286,7 +286,7 @@ const main = fs.readFileSync('public/main.html', 'utf8');
 // Route to send index.html
 app.get('/', (req, res) => res.type('html').send(main));
 
-const index = fs.readFileSync('index.html', 'utf8');
+const index = fs.readFileSync('public/index.html', 'utf8');
 app.get('/app', (req, res) => res.type('html').send(index));
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
