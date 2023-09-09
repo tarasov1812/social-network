@@ -21,10 +21,10 @@ app.use(express.json());
 const port = process.env.PORT || 3000;
 
 const pool = new Pool({
-  user: 'alex',
-  host: 'dpg-chqe4q67avjb90kgmqsg-a.oregon-postgres.render.com',
-  database: 'twitter_production',
-  password: 'QScUHMnWsbyrcFBJBAFkKlDBS7e4uEsj',
+  user: 'twitter_data_base_user',
+  host: 'dpg-cjri4861208c73a2ceig-a.oregon-postgres.render.com',
+  database: 'twitter_data_base',
+  password: 'KDq4Mrt2Eoz7Ps5t1WZwEgFWe1q3Dp8I',
   port: '5432',
   ssl: {
     rejectUnauthorized: false,
@@ -36,7 +36,7 @@ app.get('/posts.json', (req, res) => {
   const query = `
   SELECT
     posts.id,
-    authors.email,
+    authors.name,
     authors.nickname,
     posts.content,
     posts.time,
