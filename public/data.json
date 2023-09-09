@@ -7,28 +7,28 @@
   "lastMessages": [
     {
       "id": 1,
-      "author": "Elon Musk",
-      "nickName": "@elonmusk",
+      "name": "Elon Musk",
+      "nickname": "@elonmusk",
       "content": "Has anyone seen web3? I can’t find it.",
-      "time": "2023-05-06T13:43:34Z",
+      "time": "2023-08-06T13:43:34Z",
       "reposts": 21,
       "likes": 21,
       "shares": 9
     },
     {
       "id": 2,
-      "author": "Alexandr",
-      "nickName": "@sportsru",
+      "name": "Alexandr",
+      "nickname": "@sportsru",
       "content": "I played table tennis. Very tired. The training was mainly on footwork.",
-      "time": "2023-05-06T14:54:45Z",
+      "time": "2023-09-06T12:54:45Z",
       "reposts": 23,
       "likes": 53,
       "shares": 4
     },
     {
       "id": 3,
-      "author": "Vinsent Vega",
-      "nickName": "@roizmangbn",
+      "name": "Vinsent Vega",
+      "nickname": "@roizmangbn",
       "content": "Things are a little different for them there. I mean, they have it exactly the same as here, just a little different.",
       "time": "2023-05-06T13:45:05Z",
       "reposts": 21,
@@ -37,8 +37,8 @@
     },
     {
       "id": 4,
-      "author": "Alexandr",
-      "nickName": "@sportsru",
+      "name": "Alexandr",
+      "nickname": "@sportsru",
       "content": "I attach photos from the last match. I'm playing better every day. A couple more years and you can go to the Olympics!",
       "time": "2023-05-06T14:53:22Z",
       "reposts": 21,
@@ -47,8 +47,8 @@
     },
     {
       "id": 5,
-      "author": "Mia Wallace",
-      "nickName": "@mia",
+      "name": "Mia Wallace",
+      "nickname": "@mia",
       "content": "here are three tomatoes walking down the street: dad is a tomato, mom is a tomato and a child is a tomato. The tomato child begins to lag behind. The tomato dad gets angry, runs up to the tomato child, crushes the soft-boiled... and says: \"Catch up, ketchup!\"",
       "time": "2023-05-06T14:42:55Z",
       "reposts": 21,
