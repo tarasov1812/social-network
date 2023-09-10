@@ -7,6 +7,13 @@ import cookieParser from 'cookie-parser';
 const { Pool } = pkg;
 
 const app = express();
+
+const main = fs.readFileSync('public/main.html', 'utf8');
+app.get('/', (req, res) => res.type('html').send(main));
+
+const index = fs.readFileSync('public/index.html', 'utf8');
+app.get('/app', (req, res) => res.type('html').send(index));
+
 app.use(express.static('public'));
 app.use(cookieParser());
 app.use(express.json());
@@ -14,10 +21,10 @@ app.use(express.json());
 const port = process.env.PORT || 3000;
 
 const pool = new Pool({
-  user: 'alex',
-  host: 'dpg-chqe4q67avjb90kgmqsg-a.oregon-postgres.render.com',
-  database: 'twitter_production',
-  password: 'QScUHMnWsbyrcFBJBAFkKlDBS7e4uEsj',
+  user: 'twitter_data_base_user',
+  host: 'dpg-cjri4861208c73a2ceig-a.oregon-postgres.render.com',
+  database: 'twitter_data_base',
+  password: 'KDq4Mrt2Eoz7Ps5t1WZwEgFWe1q3Dp8I',
   port: '5432',
   ssl: {
     rejectUnauthorized: false,
@@ -29,7 +36,7 @@ app.get('/posts.json', (req, res) => {
   const query = `
   SELECT
     posts.id,
-    authors.email,
+    authors.name,
     authors.nickname,
     posts.content,
     posts.time,
@@ -253,12 +260,6 @@ app.post('/login', async (req, res) => {
     }
   });
 });
-
-// Read content of index.html
-const html = fs.readFileSync('public/index.html', 'utf8');
-
-// Route to send index.html
-app.get('/', (req, res) => res.type('html').send(html));
 
 // Page feed
 app.get('/feed', async (req, res) => {

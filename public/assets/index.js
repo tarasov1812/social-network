@@ -104,7 +104,7 @@ function loadMessages() {
                             <div class="post">
                                 <div class="nick-name-date">
                                     <div class="name-nick">
-                                        <span class="name">${data[i].email}</span>
+                                        <span class="name">${data[i].name}</span>
                                         <span class="nick">${data[i].nickname}</span>
                                     </div>
                                     <div class="date">
