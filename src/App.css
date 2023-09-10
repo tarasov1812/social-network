@@ -1,14 +1,40 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Lato Regular';
+}
+
 #root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
+  background-color: #FFFFFF;
+}
+
+@media only screen and (min-width: 800px) {
+  #root{
+    background-color: #F4F5F6;
   }
-  
-  .card {
-    padding: 2em;
-  }
-  
-  .read-the-docs {
-    color: #888;
-  }
+}
+
+@font-face{
+  font-family: 'Lato Light';
+  font-weight: 300;
+  src: url("fonts/Lato-Light.ttf");
+}
+
+@font-face{
+  font-family: 'Lato Regular';
+  font-weight: 400;
+  src: url("fonts/Lato-Regular.ttf");
+}
+
+@font-face{
+  font-family: 'Lato';
+  font-weight: 700;
+  src: url("fonts/Lato-Bold.ttf");
+}
+
+@font-face{
+  font-family: 'Lato Black';
+  font-weight: 900;
+  src: url("fonts/Lato-Black.ttf");
+}
