@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 import Logo from './components/Logo.jsx';
@@ -8,8 +8,10 @@ import Profile from './components/Profile.jsx';
 import CreateMessage from './components/CreateMessage.jsx';
 import Themes from './components/Themes.jsx';
 import Recomendations from './components/Recomendations.jsx';
+import Modal from './components/Modal.jsx';
 
 function App() {
+  const [modalActive, setModalActive] = useState(false);
   return (
     <>
       <Logo />
@@ -23,7 +25,8 @@ function App() {
       }}
       >
         <div>
-          <CreateMessage />
+          <CreateMessage setActive={setModalActive} active={modalActive} />
+          <Modal active={modalActive} setActive={setModalActive} />
           <Posts />
         </div>
         <div>

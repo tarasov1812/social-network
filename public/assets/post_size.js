@@ -4,7 +4,7 @@
  * @returns number of characters in the message, except for links
  */
 
-export default function posSize(message) {
+export default function postSize(message) {
   // dictionary of top-10 most populars domens
   const domens = ['.com', '.org', '.net', '.gov', '.edu', '.es', '.ru', '.de', '.uk', '.nl'];
   // create array of words if the message for checking if the word has a link
