@@ -16,13 +16,7 @@ function App() {
     <>
       <Logo />
       <Header />
-      <div style={{
-        maxWidth: '960px',
-        margin: '0 auto',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-      }}
+      <div className='content'
       >
         <div>
           <CreateMessage setActive={setModalActive} active={modalActive} />
