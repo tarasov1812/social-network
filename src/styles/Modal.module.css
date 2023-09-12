@@ -137,13 +137,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 49px;
-    height: 49px;
-    color: #0057FF;
-    border-radius: 50%;
+    width: 52px;
+    height: 52px;
     font-family: 'Lato Black';
-    border: 3px solid;
-    background-color: #FFFFFF;
     order: 1;
 }
 
