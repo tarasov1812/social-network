@@ -14,6 +14,31 @@ function Modal({ active, setActive }) {
     }
   };
 
+  const handlePost = () => {
+    const author_id = 1; // Set the appropriate author_id here
+
+    const requestBody = {
+      author_id,
+      content: message,
+    };
+
+    fetch('/posts.json', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setActive(false);
+      })
+      .catch((error) => {
+        console.error('Error posting:', error);
+      });
+  };
+
   if (active) {
     return (
       <div className={styles.modal}>
@@ -26,7 +51,7 @@ function Modal({ active, setActive }) {
                 <Circle amountOfSimbols={postSize(message)} />
               </div>
               <button type="button" className={styles.foto} />
-              <button type="button" className={styles.send} onClick={() => setActive(false)}>Post</button>
+              <button type="button" className={styles.send} onClick={handlePost}>Post</button>
             </div>
           </div>
         </div>
