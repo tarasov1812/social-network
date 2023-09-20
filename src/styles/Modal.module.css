@@ -93,28 +93,6 @@
     }
 }
 
-.foto {
-    order: 2;
-    width: 61px;
-    height: 52px;
-    border-radius: 5px;
-    border: 1px solid #0057FF;
-    background-image: url(../../public/img/foto.svg);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 40%;
-    background-color: #FFFFFF;
-    margin: 0 16px;
-}
-
-@media only screen and (min-width: 800px) {
-    .foto {
-        margin: 0;
-        margin-right: auto;
-        order: 1;
-    }
-}
-
 .send {
     width: 220px;
     border-radius: 5px;
