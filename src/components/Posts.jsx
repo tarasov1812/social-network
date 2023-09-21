@@ -8,10 +8,10 @@ function Posts() {
   const [pictures, setPictures] = useState([]);
 
   useEffect(() => {
-    fetch('/data.json')
+    fetch('/posts.json')
       .then((response) => response.json())
       .then((data) => {
-        const { lastMessages } = data;
+        const lastMessages = data;
 
         setMessages(lastMessages);
 
