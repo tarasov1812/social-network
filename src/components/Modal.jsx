@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
+import { Widget } from '@uploadcare/react-widget';
 import styles from '../styles/Modal.module.css';
 import postSize from '/public/assets/post_size.js';
 import Circle from './Circle.jsx';
 
 function Modal({ active, setActive }) {
   const [message, setMessage] = useState('');
+  const [photoUrl, setPhotoUrl] = useState('');
+
+  const handlePhotoUpload = (info) => {
+    setPhotoUrl(info.cdnUrl);
+  };
 
   const handleChange = (event) => {
     const inputValue = event.target.value;
-    // The maximum allowed number of characters is 140
-    if (inputValue.length <= 140) {
+    // The maximum allowed number of characters is 140 and minimum 1
+    if (inputValue.length <= 140 && inputValue.length > 0) {
       setMessage(inputValue);
     }
   };
@@ -50,7 +56,19 @@ function Modal({ active, setActive }) {
               <div className={styles.counter}>
                 <Circle amountOfSimbols={postSize(message)} />
               </div>
-              <button type="button" className={styles.foto} />
+              <Widget
+                localeTranslations={{
+                  buttons: {
+                    choose: {
+                      files: {
+                        one: '',
+                      },
+                    },
+                  },
+                }}
+                publicKey="3840ea5c2fc14f7bb59a"
+                onChange={handlePhotoUpload}
+              />
               <button type="button" className={styles.send} onClick={handlePost}>Post</button>
             </div>
           </div>
