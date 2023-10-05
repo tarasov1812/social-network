@@ -1,8 +1,10 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styles from '../styles/Post.module.css';
 import timeConverter from '/public/assets/time_converter.js';
 
-function Post({ data, pictures }) {
+function Post({ pictures }) {
+  const data = useSelector(state => state.posts.data);
   const currentTime = new Date();
   const picture = pictures ? pictures.find((par) => par.messageId === data.id) : null;
   const pictureUrl = picture ? picture.urlAvatar : '';

@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setPosts } from './store/postSlice.js';
+import axios from 'axios'; 
 import './App.css';
 
 import Logo from './components/Logo.jsx';
@@ -12,12 +15,23 @@ import Modal from './components/Modal.jsx';
 
 function App() {
   const [modalActive, setModalActive] = useState(false);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    axios.get('/posts.json')
+      .then((response) => {
+        dispatch(setPosts(response.data));
+      })
+      .catch((error) => {
+        console.error('Error fetching posts:', error);
+      });
+  }, [dispatch]);
   return (
     <>
       <Logo />
       <Header />
-      <div className='content'
-      >
+      <div className="content">
         <div>
           <CreateMessage setActive={setModalActive} active={modalActive} />
           <Modal active={modalActive} setActive={setModalActive} />
