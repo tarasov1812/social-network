@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setPosts } from './store/postSlice.js';
+import { setPosts } from './store/PostSlice.js';
 import axios from 'axios'; 
 import './App.css';
 
