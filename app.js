@@ -42,7 +42,8 @@ app.get('/posts.json', (req, res) => {
     posts.time,
     posts.reposts,
     posts.likes,
-    posts.shares      
+    posts.shares,
+    posts.img      
   FROM
     posts
   JOIN
@@ -62,18 +63,18 @@ app.get('/posts.json', (req, res) => {
 app.post('/posts.json', (req, res) => {
   const {
     // eslint-disable-next-line camelcase
-    author_id, content,
+    author_id, content, img,
   } = req.body;
 
   const insertQuery = `
-    INSERT INTO posts (author_id, content, time, reposts, likes, shares)
-    VALUES ($1, $2, $3, $4, $5, $6)
+    INSERT INTO posts (author_id, content, time, reposts, likes, shares, img)
+    VALUES ($1, $2, $3, $4, $5, $6, $7)
   `;
   const currentDate = Date.now();
   const formattedDate = new Date(currentDate).toISOString().slice(0, -5);
 
   // eslint-disable-next-line camelcase
-  const insertValues = [author_id, content, formattedDate, 0, 0, 0];
+  const insertValues = [author_id, content, formattedDate, 0, 0, 0, img];
 
   pool.query(insertQuery, insertValues, (error) => {
     if (error) {

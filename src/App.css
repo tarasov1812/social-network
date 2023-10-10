@@ -18,25 +18,25 @@ body {
 @font-face{
   font-family: 'Lato Light';
   font-weight: 300;
-  src: url("fonts/Lato-Light.ttf");
+  src: url("/fonts/Lato-Light.ttf");
 }
 
 @font-face{
   font-family: 'Lato Regular';
   font-weight: 400;
-  src: url("fonts/Lato-Regular.ttf");
+  src: url("/fonts/Lato-Regular.ttf");
 }
 
 @font-face{
   font-family: 'Lato';
   font-weight: 700;
-  src: url("fonts/Lato-Bold.ttf");
+  src: url("/fonts/Lato-Bold.ttf");
 }
 
 @font-face{
   font-family: 'Lato Black';
   font-weight: 900;
-  src: url("fonts/Lato-Black.ttf");
+  src: url("/fonts/Lato-Black.ttf");
 }
 
 .content {
@@ -63,7 +63,7 @@ body {
   height: 52px;
   border-radius: 5px;
   border: 1px solid #0057FF;
-  background-image: url(../../public/img/foto.svg);
+  background-image: url(/img/foto.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 40%;

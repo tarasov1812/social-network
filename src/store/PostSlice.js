@@ -11,6 +11,9 @@ const postSlice = createSlice({
       // eslint-disable-next-line no-param-reassign
       state.data = action.payload;
     },
+    createPost(state, action) {
+      state.data.push(action.payload);
+    },
   },
 });
 
@@ -19,5 +22,5 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   return response.data;
 });
 
-export const { setPosts } = postSlice.actions;
+export const { setPosts, createPost } = postSlice.actions;
 export default postSlice.reducer;
