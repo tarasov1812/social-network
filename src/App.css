@@ -95,3 +95,9 @@ body {
   background-size: 40%;
   outline: none;
 }
+
+#container a.active {
+  color: #0057FF;
+  font-family: 'Lato Black';
+  text-decoration: underline;
+}

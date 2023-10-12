@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import '../App.css';
 
 import Logo from './Logo.jsx';
-import Header from './Header.jsx';
 import Posts from './Posts.jsx';
 import Profile from './Profile.jsx';
 import CreateMessage from './CreateMessage.jsx';
@@ -16,7 +15,6 @@ function Feed() {
   return (
     <>
       <Logo />
-      <Header />
       <div className="content">
         <div>
           <CreateMessage setActive={setModalActive} active={modalActive} />

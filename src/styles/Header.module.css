@@ -25,12 +25,13 @@
     }
 }
 
-.container p {
+.container a {
     display: none;
 } 
 
 @media only screen and (min-width: 800px) {
-    .container p{
+    .container a{
+        color: #1D1E22;
         font-family: 'Lato';
         margin-left: 14px;
         display: block;
@@ -97,3 +98,7 @@
     }
 }
 
+a:hover {
+    text-decoration: underline;
+    color: #0057FF;
+}
