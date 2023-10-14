@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useSelector } from 'react';
 import { useDispatch } from 'react-redux';
-import { setPosts } from './store/PostSlice.js';
-import axios from 'axios'; 
+import { setPosts, fetchPosts } from './store/PostSlice.js';
 import './App.css';
 
 import Logo from './components/Logo.jsx';
@@ -17,16 +16,18 @@ function App() {
   const [modalActive, setModalActive] = useState(false);
 
   const dispatch = useDispatch();
+  const posts = useSelector((state) => state.posts);
 
   useEffect(() => {
-    axios.get('/posts.json')
-      .then((response) => {
-        dispatch(setPosts(response.data));
-      })
-      .catch((error) => {
-        console.error('Error fetching posts:', error);
-      });
+    dispatch(fetchPosts());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (posts) {
+      dispatch(setPosts(posts));
+    }
+  }, [dispatch, posts]);
+
   return (
     <>
       <Logo />
