@@ -98,6 +98,17 @@ body {
 
 #container a.active {
   color: #0057FF;
+  text-decoration: none;
   font-family: 'Lato Black';
-  text-decoration: underline;
+  border-bottom: 3px solid #0057FF;
+}
+
+#setting-nav a.active {
+  color: #0057FF;
+  border-left: 3px solid #0057FF;
+}
+.settings {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
 }
