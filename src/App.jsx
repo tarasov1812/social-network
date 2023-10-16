@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useSelector } from 'react';
+import { useDispatch } from 'react-redux';
+import { setPosts, fetchPosts } from './store/PostSlice.js';
 import './App.css';
 
 import Logo from './components/Logo.jsx';
@@ -12,12 +14,25 @@ import Modal from './components/Modal.jsx';
 
 function App() {
   const [modalActive, setModalActive] = useState(false);
+
+  const dispatch = useDispatch();
+  const posts = useSelector((state) => state.posts);
+
+  useEffect(() => {
+    dispatch(fetchPosts());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (posts) {
+      dispatch(setPosts(posts));
+    }
+  }, [dispatch, posts]);
+
   return (
     <>
       <Logo />
       <Header />
-      <div className='content'
-      >
+      <div className="content">
         <div>
           <CreateMessage setActive={setModalActive} active={modalActive} />
           <Modal active={modalActive} setActive={setModalActive} />

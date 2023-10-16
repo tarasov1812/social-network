@@ -1,29 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Post from './Post.jsx';
 import styles from '../styles/Posts.module.css';
 
 function Posts() {
+  const messages = useSelector((state) => state.posts.data);
   const [isLoading, setIsloading] = useState(true);
-  const [messages, setMessages] = useState([]);
   const [pictures, setPictures] = useState([]);
 
   useEffect(() => {
-    fetch('/posts.json')
+    fetch('/pictures.json')
       .then((response) => response.json())
-      .then((data) => {
-        const lastMessages = data;
-
-        setMessages(lastMessages);
-
-        fetch('/pictures.json')
-          .then((response) => response.json())
-          .then((picturesData) => {
-            setPictures(picturesData.picturesMessage);
-            setIsloading(false);
-          })
-          .catch((error) => console.error('Error loading images', error));
+      .then((picturesData) => {
+        setPictures(picturesData.picturesMessage);
+        setIsloading(false);
       })
-      .catch((error) => console.error('Error loading messages', error));
+      .catch((error) => console.error('Error loading images', error));
   }, []);
 
   if (isLoading) {
