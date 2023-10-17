@@ -32,7 +32,7 @@ const router = createBrowserRouter(createRoutesFromElements(
 
 function App() {
   const dispatch = useDispatch();
-  const posts = useSelector((state) => state.posts);
+  const posts = useSelector(state => state.posts);
 
   useEffect(() => {
     dispatch(fetchPosts());

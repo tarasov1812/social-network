@@ -11,7 +11,7 @@ const postSlice = createSlice({
       // eslint-disable-next-line no-param-reassign
       state.data = action.payload;
     },
-    createPost(state, action) {
+    createPost: (state, action) => {
       state.data.push(action.payload);
     },
   },
