@@ -7,7 +7,7 @@ function Themes() {
   const messageToShow = 5;
 
   useEffect(() => {
-    fetch('./data.json')
+    fetch('/data.json')
       .then((response) => response.json())
       .then((data) => {
         setThemes(data.topics.slice(0, messageToShow));

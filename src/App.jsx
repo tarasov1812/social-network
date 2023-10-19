@@ -1,5 +1,5 @@
-import React, { useEffect, useSelector } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Route, RouterProvider, createBrowserRouter, createRoutesFromElements,
 } from 'react-router-dom';
@@ -32,7 +32,7 @@ const router = createBrowserRouter(createRoutesFromElements(
 
 function App() {
   const dispatch = useDispatch();
-  const posts = useSelector(state => state.posts);
+  const posts = useSelector((state) => state.posts.data);
 
   useEffect(() => {
     dispatch(fetchPosts());
