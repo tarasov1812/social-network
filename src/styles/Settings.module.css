@@ -26,10 +26,7 @@
     color: #1D1E22;
     font-family: 'Lato Light';
     text-decoration: none;
-    margin-top: 14px;
+    margin: 14px 0;
     padding-left: 16px;
-}
-
-a.active {
-    color: #0057FF;
+    font-size: 16px;
 }

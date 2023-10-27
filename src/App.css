@@ -106,7 +106,9 @@ body {
 #setting-nav a.active {
   color: #0057FF;
   border-left: 3px solid #0057FF;
+  font-family: 'Lato';
 }
+
 .settings {
   display: flex;
   flex-direction: column;

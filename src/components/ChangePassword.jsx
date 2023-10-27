@@ -6,12 +6,12 @@ function ChangePassword() {
     <div className={styles.container}>
       <h2>Edit Password</h2>
       <div className={styles.form}>
-        <span className={styles.nickSpan}>Old password</span>
-        <input className={styles.location} type="text" name="nick" />
-        <span className={styles.nickSpan}>New password</span>
-        <input className={styles.location} type="text" name="nick" />
-        <span className={styles.nickSpan}>Repeat new password</span>
-        <input className={styles.location} type="text" name="nick" />
+        <span className={styles.span}>Old password</span>
+        <input className={styles.input} type="password" name="nick" />
+        <span className={styles.span}>New password</span>
+        <input className={styles.input} type="password" name="nick" />
+        <span className={styles.span}>Repeat new password</span>
+        <input className={styles.input} type="password" name="nick" />
         <button className={styles.button} type="button">Save</button>
       </div>
     </div>

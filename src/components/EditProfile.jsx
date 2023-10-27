@@ -14,19 +14,19 @@ function EditProfile() {
             <input className={styles.input} type="text" name="nick" />
             {/* <div className={styles.invalid}>The field should not be empty</div> */}
           </div>
-          <div className={styles.profileFoto} />
+          <div className={styles.profileFoto}><div className={styles.photoSetting} /></div>
         </div>
-        <span className={styles.nickSpan}>About me</span>
-        <input className={styles.aboutMe} type="text" name="nick" />
+        <span className={styles.aboutMeSpan}>About me</span>
+        <textarea className={styles.aboutMe} type="text" name="nick" />
         <span className={styles.nickSpan}>Location</span>
         <input className={styles.location} type="text" name="nick" />
         <div className={styles.dateAndPermission}>
           <div>
-            <span className={styles.nameSpan}>Your name</span>
+            <span className={styles.nameSpan}>Date of birth</span>
             <input className={styles.input} type="text" name="name" />
           </div>
           <div>
-            <span className={styles.nickSpan}>Your nick</span>
+            <span className={styles.nickSpan}>Show date of birth</span>
             <input className={styles.input} type="text" name="nick" />
           </div>
         </div>
