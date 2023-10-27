@@ -30,5 +30,17 @@ const postSlice = createSlice({
   },
 });
 
+export const createPostAsync = createAsyncThunk(
+  'posts/createPost',
+  async (requestBody) => {
+    const response = await axios.post('/posts.json', requestBody, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  },
+);
+
 export const { setPosts, createPost } = postSlice.actions;
 export default postSlice.reducer;
