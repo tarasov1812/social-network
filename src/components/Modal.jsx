@@ -3,9 +3,9 @@ import { useDispatch } from 'react-redux';
 import { Widget } from '@uploadcare/react-widget';
 import styles from '../styles/Modal.module.css';
 import postSize from '/public/assets/post_size.js';
-import axios from 'axios';
 import Circle from './Circle.jsx';
 import { createPost } from '../store/PostSlice.js';
+import { createPostAsync } from '../store/PostSlice.js';
 
 function Modal({ active, setActive }) {
   const [message, setMessage] = useState('');
@@ -45,13 +45,9 @@ function Modal({ active, setActive }) {
       img: photoUrl,
     };
 
-    axios.post('/posts.json', requestBody, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    dispatch(createPostAsync(requestBody))
       .then((response) => {
-        console.log(response.data);
+        console.log(response);
         setActive(false);
         dispatch(createPost(newPost));
       })
