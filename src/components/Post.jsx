@@ -6,7 +6,7 @@ function Post({ data, pictures }) {
   const currentTime = new Date();
   const picture = pictures ? pictures.find((par) => par.messageId === data.id) : null;
   const pictureUrl = picture ? picture.urlAvatar : '';
-  const postPictureUrl = picture ? picture.urlMessagePic : '';
+  const postPictureUrl = data.img ? data.img : '';
 
   let date = timeConverter(Math.floor((currentTime - new Date(data.time)) / 1000 / 60));
   // put string 'age' if date is not 'now'
