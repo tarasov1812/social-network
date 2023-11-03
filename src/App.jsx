@@ -1,20 +1,26 @@
-import React, { useState, useEffect, useSelector } from 'react';
+import React, { useEffect, useSelector } from 'react';
 import { useDispatch } from 'react-redux';
+import {
+  Route, RouterProvider, createBrowserRouter, createRoutesFromElements,
+} from 'react-router-dom';
 import { setPosts, fetchPosts } from './store/PostSlice.js';
 import './App.css';
 
-import Logo from './components/Logo.jsx';
-import Header from './components/Header.jsx';
-import Posts from './components/Posts.jsx';
+import Feed from './components/Feed.jsx';
 import Profile from './components/Profile.jsx';
-import CreateMessage from './components/CreateMessage.jsx';
-import Themes from './components/Themes.jsx';
+import Header from './components/Header.jsx';
 import Recomendations from './components/Recomendations.jsx';
-import Modal from './components/Modal.jsx';
+
+const router = createBrowserRouter(createRoutesFromElements(
+  <Route path="/app/" element={<Header />}>
+    <Route index element={<Feed />} />
+    <Route path="feed" element={<Feed />} />
+    <Route path="profile" element={<Profile />} />
+    <Route path="settings" element={<Recomendations />} />
+  </Route>,
+));
 
 function App() {
-  const [modalActive, setModalActive] = useState(false);
-
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts);
 
@@ -29,22 +35,7 @@ function App() {
   }, [dispatch, posts]);
 
   return (
-    <>
-      <Logo />
-      <Header />
-      <div className="content">
-        <div>
-          <CreateMessage setActive={setModalActive} active={modalActive} />
-          <Modal active={modalActive} setActive={setModalActive} />
-          <Posts />
-        </div>
-        <div>
-          <Profile />
-          <Themes />
-          <Recomendations />
-        </div>
-      </div>
-    </>
+    <RouterProvider router={router} />
   );
 }
 
