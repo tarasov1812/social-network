@@ -6,17 +6,12 @@ import styles from '../styles/Posts.module.css';
 function Posts() {
   const messages = useSelector((state) => state.posts.data);
   const [isLoading, setIsloading] = useState(true);
-  const [pictures, setPictures] = useState([]);
 
   useEffect(() => {
-    fetch('/pictures.json')
-      .then((response) => response.json())
-      .then((picturesData) => {
-        setPictures(picturesData.picturesMessage);
-        setIsloading(false);
-      })
-      .catch((error) => console.error('Error loading images', error));
-  }, []);
+    if (messages.length > 0) {
+      setIsloading(false);
+    }
+  }, [messages]);
 
   if (isLoading) {
     const elements = [];
@@ -49,7 +44,7 @@ function Posts() {
   return (
     <div className={styles.allPosts}>
       {messages.map((message) => (
-        <Post data={message} pictures={pictures} />
+        <Post data={message} />
       ))}
     </div>
   );

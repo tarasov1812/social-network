@@ -5,6 +5,10 @@ import styles from '../styles/Settings.module.css';
 function Settings() {
   return (
     <div className={styles.settings}>
+      <input className={styles.menu__toggle} type="checkbox" id="menu__toggle" />
+      <label className={styles.menu__btn} htmlFor="menu__toggle">
+        <span />
+      </label>
       <nav className={styles.nav} id="setting-nav">
         <span className={styles.header}>Settings</span>
         <NavLink to="/app/settings/profile-settings">Profile Settings</NavLink>

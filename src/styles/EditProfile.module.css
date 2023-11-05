@@ -1,8 +1,25 @@
 .container {
-    margin-top: 24px;
-    margin-right: 18px;
-    width: 633px;
+    margin: 0 auto;
+    max-width: 633px;
     height: 667px;
+}
+
+@media only screen and (min-width: 800px) {
+    .container {
+        margin: 24px 18px 0 0;
+    }
+}
+
+h2 {
+    margin: 15px auto 0;
+    text-align: center;
+}
+
+@media only screen and (min-width: 800px) {
+    h2 {
+        margin: 22px 0 20px 0;
+        text-align: initial;
+    }
 }
 
 .form {
@@ -19,15 +36,52 @@
 }
 
 .input {
-    height: 50px;
+    height: 40px;
     width: -webkit-fill-available;
     border-radius: 10px;
     border: 1px solid rgba(223, 223, 223, 1);
     margin: 0 17px 0;
     color: #555555;
-    font-size: 18px;
     padding-left: 16px;
     font-family: 'Lato Regular';
+    font-size: 18px;
+    padding-top: 10px;
+}
+
+.inputBirth {
+    height: 40px;
+    width: -webkit-fill-available;
+    border-radius: 10px;
+    border: 1px solid rgba(223, 223, 223, 1);
+    margin: 0 12px 0 17px;
+    color: #555555;
+    padding-left: 16px;
+    font-family: 'Lato Regular';
+    padding-top: 10px;
+}
+
+@media only screen and (min-width: 800px) {
+    .inputBirth {
+        font-size: 18px;
+    }
+}
+
+.inputConfirm {
+    height: 40px;
+    width: -webkit-fill-available;
+    border-radius: 10px;
+    border: 1px solid rgba(223, 223, 223, 1);
+    margin: 0 17px 0 12px;
+    color: #555555;
+    padding-left: 16px;
+    font-family: 'Lato Regular';
+    padding-top: 10px;
+}
+
+@media only screen and (min-width: 800px) {
+    .inputConfirm {
+        font-size: 18px;
+    }
 }
 
 .invalid {
@@ -38,7 +92,7 @@
 }
 
 .nameNick {
-    width:400px;
+    max-width:400px;
 }
 
 .nameNickFoto {
@@ -47,14 +101,22 @@
 }
 
 .profileFoto {
+    max-width: 100%;
     width: 128px;
     height: 128px;
-    background-image: url('../../public/img/alexandr.jpeg');
+    background-image: url('../../public/img/travolta.png');
     background-size: cover;
     border-radius: 50%;
-    margin: 24px 52px 24px 36px;
+    margin: 24px 17px 24px 0;
     display: flex;
-    align-items: center
+    align-items: center;
+    flex-shrink: 0;
+}
+
+@media only screen and (min-width: 960px) {
+    .profileFoto {
+        margin: 24px 52px 24px 36px;
+    }
 }
 
 .aboutMe {
@@ -65,9 +127,9 @@
     border: 1px solid rgba(223, 223, 223, 1);
     margin: -20px 17px 0;
     color: #555555;
-    font-size: 18px;
     padding-left: 16px;
     font-family: 'Lato Regular';
+    font-size: 18px;
 }
 
 .aboutMeSpan {
@@ -76,18 +138,6 @@
     font-size: 9px;
     position: relative;
     top: 0;
-}
-
-.location {
-    height: 50px;
-    width: -webkit-fill-available;
-    border-radius: 10px;
-    border: 1px solid rgba(223, 223, 223, 1);
-    margin: 0 17px 0;
-    color: #555555;
-    font-size: 18px;
-    padding-left: 16px;
-    font-family: 'Lato Regular';
 }
 
 .dateAndPermission {

@@ -2,10 +2,8 @@ import React from 'react';
 import styles from '../styles/Post.module.css';
 import timeConverter from '/public/assets/time_converter.js';
 
-function Post({ data, pictures }) {
+function Post({ data }) {
   const currentTime = new Date();
-  const picture = pictures ? pictures.find((par) => par.messageId === data.id) : null;
-  const pictureUrl = picture ? picture.urlAvatar : '';
   const postPictureUrl = data.img ? data.img : '';
 
   let date = timeConverter(Math.floor((currentTime - new Date(data.time)) / 1000 / 60));
@@ -22,7 +20,7 @@ function Post({ data, pictures }) {
 
   return (
     <div className={styles.postAll}>
-      <img className={styles.avatar} src={pictureUrl} alt="User Avatar" />
+      <img className={styles.avatar} src={data.avatar} alt="User Avatar" />
       <div className={styles.post}>
         <div className={styles.nickNameDate}>
           <div className={styles.nameNick}>
