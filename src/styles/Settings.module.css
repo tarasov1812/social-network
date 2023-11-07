@@ -1,0 +1,32 @@
+.nav {
+    margin-top: 100px;
+    height: 203px;
+    width: 312px;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    margin-top: 8px;
+    font-size: 18px;
+    font-family: 'Lato Black';
+    padding-left: 16px;
+}
+
+.settings {
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 0 auto;
+    justify-content: center
+}
+
+.nav a {
+    color: #1D1E22;
+    font-family: 'Lato Light';
+    text-decoration: none;
+    margin: 14px 0;
+    padding-left: 16px;
+    font-size: 16px;
+}

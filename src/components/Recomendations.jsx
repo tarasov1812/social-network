@@ -8,11 +8,11 @@ function Recomendations() {
     const channelsToShow = 3;
 
     const fetchData = async () => {
-      const response = await fetch('./data.json');
+      const response = await fetch('/data.json');
       const data = await response.json();
       const blog = data.blogs;
 
-      const picturesResponse = await fetch('./pictures.json');
+      const picturesResponse = await fetch('/pictures.json');
       const pictures = await picturesResponse.json();
 
       const channelsData = blog.slice(0, channelsToShow).map((item) => {

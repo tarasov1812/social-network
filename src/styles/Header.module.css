@@ -15,6 +15,7 @@
 
 @media only screen and (min-width: 800px) {
     .container {
+        justify-content: unset;
         position: sticky;
         height: 64px;
         margin-top: unset;
@@ -25,39 +26,63 @@
     }
 }
 
-.container a {
+.container p {
     display: none;
-} 
+}
+
+.container a {
+    width: 25%;
+}
 
 @media only screen and (min-width: 800px) {
     .container a{
         color: #1D1E22;
         font-family: 'Lato';
-        margin-left: 14px;
+        padding-left: 14px;
         display: block;
         font-size: 12px;
-        margin-right: 28px;
+        padding-right: 28px;
+        height: 62px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: auto;
+        margin: 0;
     }
 }
+
+@media only screen and (min-width: 800px) {
+    .container p{
+        font-family: 'Lato';
+        padding-left: 14px;
+        display: block;
+        padding-right: 28px;
+    }
+}
+
 
 .home {
     width: 20px;
     height: 20px;
     background-image: url('../../public/img/home.png');
     background-size: cover;
+    margin: 12px auto;
 }
 
 .profile {
     width: 20px;
     height: 20px;
-    background-image: url('../../public/img/user.svg')
+    background-image: url('../../public/img/user.svg');
+    margin: 12px auto;
 }
 
 .settings {
     width: 20px;
     height: 20px;
-    background-image: url('../../public/img/adjust.svg')
+    background-image: url('../../public/img/adjust.svg');
+    margin: 12px auto;
 }
+
 
 @media only screen and (min-width: 800px) {
     .profile, .settings, .home {
@@ -71,6 +96,7 @@
     background-image: url('../../public/img/alexandr.jpeg');
     background-size: cover;
     border-radius: 50%;
+    margin: 12px auto;
 }
 
 @media only screen and (min-width: 800px) {
@@ -99,6 +125,9 @@
 }
 
 a:hover {
-    text-decoration: underline;
     color: #0057FF;
+}
+
+a {
+    text-decoration: none;
 }

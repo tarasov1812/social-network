@@ -6,14 +6,22 @@ function Header() {
   return (
     <>
       <nav id="container" className={styles.container}>
-        <div className={styles.home} />
-        <NavLink to="/app/feed">Feed</NavLink>
-        <div className={styles.profile} />
-        <NavLink to="/app/profile">Profile</NavLink>
-        <div className={styles.settings} />
-        <NavLink to="/app/settings">Settings</NavLink>
+        <NavLink to="/app/feed">
+          <div className={styles.home} />
+          <p>Feed</p>
+        </NavLink>
+        <NavLink to="/app/profile">
+          <div className={styles.profile} />
+          <p>Profile</p>
+        </NavLink>
+        <NavLink to="/app/settings">
+          <div className={styles.settings} />
+          <p>Settings</p>
+        </NavLink>
         <div className={styles.logo} />
-        <div className={styles.avatar} />
+        <NavLink to="/app/login">
+          <div className={styles.avatar} />
+        </NavLink>
       </nav>
       <Outlet />
     </>
