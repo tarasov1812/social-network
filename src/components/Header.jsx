@@ -1,8 +1,14 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink, Outlet } from 'react-router-dom';
 import styles from '../styles/Header.module.css';
 
 function Header() {
+  const currentUser = useSelector((state) => state.posts.currentUser);
+  const backgroundStyle = {
+    backgroundImage: `url(${currentUser.avatar})`,
+  };
+
   return (
     <>
       <nav id="container" className={styles.container}>
@@ -20,7 +26,7 @@ function Header() {
         </NavLink>
         <div className={styles.logo} />
         <NavLink to="/app/login">
-          <div className={styles.avatar} />
+          <div className={styles.avatar} style={backgroundStyle} />
         </NavLink>
       </nav>
       <Outlet />

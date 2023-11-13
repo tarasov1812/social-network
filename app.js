@@ -12,7 +12,11 @@ const main = fs.readFileSync('public/main.html', 'utf8');
 app.get('/', (req, res) => res.type('html').send(main));
 
 const index = fs.readFileSync('public/index.html', 'utf8');
-app.get('/app', (req, res) => res.type('html').send(index));
+const routes = ['', '/', '/feed', '/profile', '/settings', '/login', '/settings/profile-settings', '/settings/change-password', '/settings/change-email'];
+
+routes.forEach((route) => {
+  app.get(`/app${route}`, (req, res) => res.type('html').send(index));
+});
 
 app.use(express.static('public'));
 app.use(cookieParser());
@@ -38,6 +42,7 @@ app.get('/posts.json', (req, res) => {
     posts.id,
     authors.name,
     authors.nickname,
+    authors.avatar,
     posts.content,
     posts.time,
     posts.reposts,

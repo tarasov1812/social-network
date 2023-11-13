@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 import { Widget } from '@uploadcare/react-widget';
 import styles from '../styles/Modal.module.css';
 import postSize from '/public/assets/post_size.js';
 import Circle from './Circle.jsx';
-import { createPost } from '../store/PostSlice.js';
-import { createPostAsync } from '../store/PostSlice.js';
+import { createPost, createPostAsync } from '../store/PostSlice.js';
 
 function Modal({ active, setActive }) {
+  const currentUser = useSelector((state) => state.posts.currentUser);
   const [message, setMessage] = useState('');
   const [photoUrl, setPhotoUrl] = useState('');
 
@@ -38,6 +37,9 @@ function Modal({ active, setActive }) {
     const newPost = {
       id: Math.random(),
       author_id: author_id,
+      avatar: currentUser.avatar,
+      name: currentUser.name,
+      nickname: currentUser.nickName,
       content: message,
       time: new Date().toISOString().slice(0, -5),
       likes: 0,
