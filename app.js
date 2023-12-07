@@ -271,26 +271,72 @@ app.post('/login', async (req, res) => {
 app.get('/feed', async (req, res) => {
   const { email, token } = req.cookies;
 
+  if (email === undefined || token === undefined) {
+    res.redirect('/');
+  }
   // Get author_id from table authors with email
   const authorIdQuery = `
     SELECT id FROM authors WHERE email = $1
   `;
 
   const authorIdResult = await pool.query(authorIdQuery, [email]);
-  const authorId = authorIdResult.rows[0].id;
 
-  const sessionQuery = `
+  if (authorIdResult.rows[0] !== undefined) {
+    const authorId = authorIdResult.rows[0].id;
+
+    const sessionQuery = `
     SELECT * FROM sessions
     WHERE author_id = $1 AND token = $2
     `;
 
-  const sessionResult = await pool.query(sessionQuery, [authorId, token]);
+    const sessionResult = await pool.query(sessionQuery, [authorId, token]);
 
-  if (sessionResult.rows[0].length === 0) {
-    res.type('html').send('Access denied');
+    if (sessionResult.rows[0].length === 0) {
+      res.redirect('/');
+    } else {
+      const userQuery = `
+      SELECT * FROM authors
+      WHERE id = $1
+      `;
+      const currentUser = await pool.query(userQuery, [authorId]);
+      res.status(200).send(currentUser.rows[0]);
+    }
   } else {
-    res.type('html').send('Access is allowed');
+    res.redirect('/');
   }
+});
+
+app.put('/changeProfileDate/:id', (req, res) => {
+  const userId = req.params.id;
+
+  const {
+    nickname, name, avatar, about, location, birthdate, showbirthdate,
+  } = req.body;
+
+  const updateQuery = `
+  UPDATE authors
+  SET nickname = $1,
+      name = $2,
+      avatar = $3,
+      about = $4,
+      location = $5,
+      birthdate = $6,
+      showbirthdate = $7
+  WHERE id = $8
+`;
+
+  const updateValues = [nickname, name, avatar, about, location,
+    birthdate, showbirthdate, userId];
+
+  pool.query(updateQuery, updateValues, (error) => {
+    if (error) {
+      console.error('Error executing query', error);
+      res.status(500).json({ error: 'Internal server error' });
+    } else {
+      res.set('Content-Type', 'application/json');
+      res.json({ message: 'User data updated successfully' });
+    }
+  });
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

@@ -268,7 +268,7 @@ registrationButton.addEventListener('click', () => {
         if (response.ok) {
           modal.style.visibility = 'hidden';
           modal.style.opacity = 0;
-          window.location.href = '/feed';
+          window.location.href = '/app';
         } else if (response.status === 400) {
           modalValidateInputDataBase('nick-name', 'invalid-nick-name', 'myModal');
         } else if (response.status === 409) {
@@ -309,7 +309,7 @@ loginButton.addEventListener('click', () => {
         if (response.ok) {
           modal.style.visibility = 'hidden';
           modal.style.opacity = 0;
-          window.location.href = '/feed';
+          window.location.href = '/app';
         } else if (response.status === 400) {
           modalValidateInputDataBase('login-password', 'invalid-password-login', 'loginModal');
         } else if (response.status === 404) {

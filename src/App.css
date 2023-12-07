@@ -96,17 +96,11 @@ body {
   outline: none;
 }
 
-#container a.active {
+#container #link1.active {
   color: #0057FF;
   text-decoration: none;
   font-family: 'Lato Black';
   border-bottom: 3px solid #0057FF;
-}
-
-#setting-nav a.active {
-  color: #0057FF;
-  border-left: 3px solid #0057FF;
-  font-family: 'Lato';
 }
 
 .settings {

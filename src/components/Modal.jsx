@@ -26,7 +26,7 @@ function Modal({ active, setActive }) {
   };
 
   const handlePost = () => {
-    const author_id = 1; // Set the appropriate author_id here
+    const author_id = currentUser.id;
 
     const requestBody = {
       author_id,
@@ -65,7 +65,7 @@ function Modal({ active, setActive }) {
         <div className={styles.container}>
           <div className={styles.line} />
           <div className={styles.content}>
-            <textarea name="message" placeholder="What is new Alexandr?" onChange={handleChange} className={styles.text} maxLength={140} />
+            <textarea name="message" placeholder={`What is new ${currentUser.name}?`} onChange={handleChange} className={styles.text} maxLength={140} />
             <div className={styles.buttons}>
               <div className={styles.counter}>
                 <Circle amountOfSimbols={postSize(message)} />

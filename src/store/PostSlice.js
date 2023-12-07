@@ -6,21 +6,18 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   return response.data;
 });
 
+export const fetchUser = createAsyncThunk('posts/fetchUser', async () => {
+  const response = await axios.get('/feed');
+  return response.data;
+});
+
 const postSlice = createSlice({
   name: 'posts',
   initialState: {
     data: [],
     currentUser: {
-      nickName: '@burtovoy',
-      name: 'Alexandr',
-      avatar: 'https://ucarecdn.com/360f60a2-a4d1-47c4-89f8-09f7181d6619/-/preview/500x500/-/quality/smart/-/format/auto/',
-      location: 'Volgograd',
-      aboutMe: 'Entrepreneur and mentor in programming',
-      webSite: 'burtovoy.org',
-      birthDate: '14.06.1946',
-      visibility: 'Show everyone',
-      email: 'burtovoy@gmail.com',
     },
+    isLoadingUser: true,
   },
   reducers: {
     setPosts: (state, action) => ({
@@ -41,6 +38,19 @@ const postSlice = createSlice({
       .addCase(fetchPosts.fulfilled, (state, action) => ({
         ...state,
         data: action.payload,
+      }))
+      .addCase(fetchUser.pending, (state) => ({
+        ...state,
+        isLoadingUser: true,
+      }))
+      .addCase(fetchUser.fulfilled, (state, action) => ({
+        ...state,
+        isLoadingUser: false,
+        currentUser: action.payload,
+      }))
+      .addCase(fetchUser.rejected, (state) => ({
+        ...state,
+        isLoadingUser: false,
       }));
   },
 });
@@ -49,6 +59,18 @@ export const createPostAsync = createAsyncThunk(
   'posts/createPost',
   async (requestBody) => {
     const response = await axios.post('/posts.json', requestBody, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  },
+);
+
+export const changeProfileDate = createAsyncThunk(
+  'user/changeProfileDate',
+  async ({ id, requestBody }) => {
+    const response = await axios.put(`/changeProfileDate/${id}`, requestBody, {
       headers: {
         'Content-Type': 'application/json',
       },
