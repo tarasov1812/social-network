@@ -7,8 +7,15 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
 });
 
 export const fetchUser = createAsyncThunk('posts/fetchUser', async () => {
-  const response = await axios.get('/feed');
-  return response.data;
+  try {
+    const response = await axios.get('/feed');
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      window.location.href = '/';
+    }
+    throw error;
+  }
 });
 
 const postSlice = createSlice({

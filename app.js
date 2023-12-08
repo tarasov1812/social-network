@@ -272,7 +272,8 @@ app.get('/feed', async (req, res) => {
   const { email, token } = req.cookies;
 
   if (email === undefined || token === undefined) {
-    res.redirect('/');
+    res.status(401).send('Unauthorized');
+    return;
   }
   // Get author_id from table authors with email
   const authorIdQuery = `
@@ -292,7 +293,7 @@ app.get('/feed', async (req, res) => {
     const sessionResult = await pool.query(sessionQuery, [authorId, token]);
 
     if (sessionResult.rows[0].length === 0) {
-      res.redirect('/');
+      res.status(401).send('Session finished');
     } else {
       const userQuery = `
       SELECT * FROM authors
@@ -302,7 +303,7 @@ app.get('/feed', async (req, res) => {
       res.status(200).send(currentUser.rows[0]);
     }
   } else {
-    res.redirect('/');
+    res.status(401).send('User not found');
   }
 });
 
