@@ -12,15 +12,15 @@ function Header() {
   return (
     <>
       <nav id="container" className={styles.container}>
-        <NavLink to="/app/feed">
+        <NavLink to="/app/feed" id="link1">
           <div className={styles.home} />
           <p>Feed</p>
         </NavLink>
-        <NavLink to="/app/profile">
+        <NavLink to="/app/profile" id="link1">
           <div className={styles.profile} />
           <p>Profile</p>
         </NavLink>
-        <NavLink to="/app/settings">
+        <NavLink to="/app/settings" id="link1">
           <div className={styles.settings} />
           <p>Settings</p>
         </NavLink>

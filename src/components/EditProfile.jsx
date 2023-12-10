@@ -3,7 +3,8 @@ import fileUploaderRegularCssSrc from '@uploadcare/blocks/web/lr-file-uploader-r
 import React, {
   useCallback, useState, useRef, useEffect,
 } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeProfileDate, setCurrentUser } from '../store/PostSlice.js';
 import styles from '../styles/EditProfile.module.css';
 
 LR.FileUploaderRegular.shadowStyles = /* CSS */ `
@@ -41,32 +42,76 @@ LR.FileUploaderRegular.shadowStyles = /* CSS */ `
 LR.registerBlocks(LR);
 
 function EditProfile() {
+  const dispatch = useDispatch();
   const dataOutputRef = useRef();
   const currentUser = useSelector((state) => state.posts.currentUser);
-  const [photoUrl, setPhotoUrl] = useState(currentUser.avatar);
+  const isLoadingUser = useSelector((state) => state.posts.isLoadingUser);
 
-  const backgroundStyle = {
-    backgroundImage: `url(${photoUrl})`,
-  };
+  const [photoUrl, setPhotoUrl] = useState(currentUser.avatar);
+  const [name, setName] = useState(currentUser.name);
+  const [nick, setNick] = useState(currentUser.nickname ? currentUser.nickname.slice(1) : '');
+  const [about, setAbout] = useState(currentUser.about);
+  const [location, setLocation] = useState(currentUser.location);
+  const [birthdate, setBirthdate] = useState(currentUser.birthdate ? currentUser.birthdate.split('T')[0] : '');
+  const [showbirthdate, setShowbirthdate] = useState('not settled');
 
   const handlePhotoUpload = useCallback((e) => {
     const { data } = e.detail;
-    setPhotoUrl(data[0].cdnUrl);
+    const newPhotoUrl = data[0].cdnUrl;
+    setPhotoUrl(newPhotoUrl);
   }, []);
 
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
     const el = dataOutputRef.current;
-
-    if (el) {
+    if (el && !isLoadingUser) {
       el.addEventListener('lr-data-output', handlePhotoUpload);
-    }
-
-    return () => {
-      if (el) {
+      return () => {
         el.removeEventListener('lr-data-output', handlePhotoUpload);
-      }
+      };
+    }
+  }, [isLoadingUser, handlePhotoUpload]);
+
+  const handleSave = () => {
+    console.log(currentUser.birthdate);
+    console.log(birthdate);
+    console.log(new Date(`${birthdate}T00:00:00.000Z`).toISOString());
+    const { id } = currentUser;
+
+    const requestBody = {
+      nickname: nick ? `@${nick}` : currentUser.nickname,
+      name: name || currentUser.name,
+      avatar: photoUrl || currentUser.avatar,
+      about: about || currentUser.about,
+      location: location || currentUser.location,
+      birthdate: birthdate ? new Date(`${birthdate}T00:00:00.000Z`).toISOString() : currentUser.birthdate,
+      showbirthdate: showbirthdate === 'not settled' ? currentUser.showbirthdate : showbirthdate,
     };
-  }, [handlePhotoUpload]);
+
+    const newUserData = {
+      id: currentUser.id,
+      nickname: nick ? `@${nick}` : currentUser.nickname,
+      name: name || currentUser.name,
+      avatar: photoUrl || currentUser.avatar,
+      about: about || currentUser.about,
+      location: location || currentUser.location,
+      birthdate: birthdate ? new Date(`${birthdate}T00:00:00.000Z`).toISOString() : currentUser.birthdate,
+      showbirthdate: showbirthdate === 'not settled' ? currentUser.showbirthdate : showbirthdate,
+    };
+
+    dispatch(changeProfileDate({ id, requestBody }))
+      .then((response) => {
+        console.log(response);
+        dispatch(setCurrentUser(newUserData));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const backgroundStyle = {
+    backgroundImage: `url(${currentUser.avatar})`,
+  };
 
   return (
     <div className={styles.container}>
@@ -75,9 +120,9 @@ function EditProfile() {
         <div className={styles.nameNickFoto}>
           <div className={styles.nameNick}>
             <span className={styles.nameSpan}>Your name</span>
-            <input className={styles.input} type="text" name="name" defaultValue={currentUser.name} />
+            <input className={styles.input} type="text" name="name" defaultValue={currentUser.name} onChange={(e) => setName(e.target.value)} />
             <span className={styles.nickSpan}>Your nick</span>
-            <input className={styles.input} type="text" name="nick" defaultValue={currentUser.nickName} />
+            <input className={styles.input} type="text" name="nick" defaultValue={currentUser.nickname ? currentUser.nickname.slice(1) : ''} onChange={(e) => setNick(e.target.value)} />
             {/* <div className={styles.invalid}>The field should not be empty</div> */}
           </div>
           <div className={styles.profileFoto} style={backgroundStyle}>
@@ -100,20 +145,27 @@ function EditProfile() {
           </div>
         </div>
         <span className={styles.aboutMeSpan}>About me</span>
-        <textarea className={styles.aboutMe} type="text" name="nick" defaultValue={currentUser.aboutMe} />
+        <textarea className={styles.aboutMe} type="text" name="about" defaultValue={currentUser.about} onChange={(e) => setAbout(e.target.value)} />
         <span className={styles.nickSpan}>Location</span>
-        <input className={styles.input} type="text" name="nick" defaultValue={currentUser.location} />
+        <input className={styles.input} type="text" name="location" defaultValue={currentUser.location} onChange={(e) => setLocation(e.target.value)} />
         <div className={styles.dateAndPermission}>
           <div>
             <span className={styles.nameSpan}>Date of birth</span>
-            <input className={styles.inputBirth} type="text" name="name" defaultValue={currentUser.birthDate} />
+            <input className={styles.inputBirth} type="date" name="date" defaultValue={currentUser.birthdate ? currentUser.birthdate.split('T')[0] : ''} onChange={(e) => setBirthdate(e.target.value)} />
           </div>
-          <div>
-            <span className={styles.nickSpan}>Show date of birth</span>
-            <input className={styles.inputConfirm} type="text" name="nick" defaultValue={currentUser.visibility} />
+          <div className={styles.checkB}>
+            <span className={styles.birth}>Show birthdate</span>
+            <input
+              className={styles.inputConfirm}
+              type="checkbox"
+              name="showbd"
+              checked={showbirthdate === 'not settled' ? currentUser.showbirthdate : showbirthdate}
+              // checked={showbirthdate}
+              onChange={(e) => setShowbirthdate(e.target.checked)}
+            />
           </div>
         </div>
-        <button className={styles.button} type="button">Save</button>
+        <button className={styles.button} type="button" onClick={handleSave}>Save</button>
       </div>
     </div>
   );

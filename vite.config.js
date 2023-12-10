@@ -16,4 +16,13 @@ export default defineConfig({
     },
   },
   plugins: [react()],
+
+  server: {
+    proxy: {
+      '/posts': 'http://localhost:3000',
+      '/posts.json': 'http://localhost:3000',
+      '/feed': 'http://localhost:3000',
+      '/changeProfileDate': 'http://localhost:3000',
+    },
+  },
 });

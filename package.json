@@ -31,6 +31,7 @@
     "cookie-parser": "^1.4.6",
     "crypto": "^1.0.1",
     "express": "^4.18.2",
+    "js-cookie": "^3.0.5",
     "pg": "^8.11.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
