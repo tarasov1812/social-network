@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-// import { selectCurrentUser } from '../store/PostSlice.js';
 import styles from '../styles/Profile.module.css';
 
 function Profile() {

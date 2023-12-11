@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from '../styles/Post.module.css';
 import timeConverter from '/public/assets/time_converter.js';
 
@@ -20,12 +21,12 @@ function Post({ data }) {
 
   return (
     <div className={styles.postAll}>
-      <img className={styles.avatar} src={data.avatar} alt="User Avatar" />
+      <Link to={`/app/profile/${data.author_id}`} id="postLink1"><img className={styles.avatar} src={data.avatar} alt="User Avatar" /></Link>
       <div className={styles.post}>
         <div className={styles.nickNameDate}>
           <div className={styles.nameNick}>
-            <span className={styles.name}>{data.name}</span>
-            <span className={styles.nick}>{data.nickname}</span>
+            <span className={styles.name}><Link to={`/app/profile/${data.author_id}`} id="postLink1">{data.name}</Link></span>
+            <span className={styles.nick}><Link to={`/app/profile/${data.author_id}`} id="postLink2">{data.nickname}</Link></span>
           </div>
           <div className={styles.date}>
             <span>{date}</span>

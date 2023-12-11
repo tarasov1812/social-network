@@ -168,7 +168,7 @@
     }
 }
 
-.read {
+.subscribed {
     width: 100%;
     color: #0057FF;
     border: 1px solid #0057FF;
@@ -176,10 +176,11 @@
     background-color: #FFFFFF;
     padding: 14px 0;
     margin-bottom: 24px;
+    cursor: pointer;
 }
 
 @media only screen and (min-width: 800px) {
-    .read{
+    .subscribed{
         margin-left: auto;
         margin-bottom: 0;
         width: 120px; 
@@ -190,6 +191,32 @@
         font-size: 14px;
     }
 }
+
+.unSubscribed {
+    width: 100%;
+    color: #FFFFFF;
+    border: 1px solid #0057FF;
+    border-radius: 5px;
+    background-color: #0057FF;
+    padding: 14px 0;
+    margin-bottom: 24px;
+    cursor: pointer;
+}
+
+@media only screen and (min-width: 800px) {
+    .unSubscribed{
+        margin-left: auto;
+        margin-bottom: 0;
+        width: 120px; 
+        line-height: 14px;
+        padding: 5px 0;  
+        font-weight: 500;
+        font-family: 'Roboto';
+        font-size: 14px;
+    }
+}
+
+
 
 .about{
     margin-left: 16px;
@@ -268,4 +295,8 @@
     height: 16px;
     background-image: url('../../public/img/birthday.svg');
     background-size: cover;
+}
+
+.br #br1, #br2, #br3{
+    line-height: unset;
 }

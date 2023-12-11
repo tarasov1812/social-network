@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import Post from './Post.jsx';
 import styles from '../styles/Posts.module.css';
 
-function Posts() {
+function Posts({ postsToView }) {
   const messages = useSelector((state) => state.posts.data);
   const [isLoading, setIsloading] = useState(true);
 
@@ -43,7 +43,7 @@ function Posts() {
   }
   return (
     <div className={styles.allPosts}>
-      {messages.map((message) => (
+      {(postsToView || messages).map((message) => (
         <Post data={message} />
       ))}
     </div>

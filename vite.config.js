@@ -23,6 +23,10 @@ export default defineConfig({
       '/posts.json': 'http://localhost:3000',
       '/feed': 'http://localhost:3000',
       '/changeProfileDate': 'http://localhost:3000',
+      '/user-posts': 'http://localhost:3000',
+      '/postUserAndSubs': 'http://localhost:3000',
+      '/unsubscribe': 'http://localhost:3000',
+      '/subscribe': 'http://localhost:3000',
     },
   },
 });

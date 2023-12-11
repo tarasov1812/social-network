@@ -1,68 +1,16 @@
 {
-  "picturesMessage": [
-    {
-      "messageId": 1,
-      "urlAvatar": "img/elon.png",
-      "urlMessagePic": ""
-    },
-    {
-      "messageId": 2,
-      "urlAvatar": "img/alexandr.jpeg",
-      "urlMessagePic": ""
-    },
-    {
-      "messageId": 3,
-      "urlAvatar": "img/travolta.png",
-      "urlMessagePic": ""
-    },
-    {
-      "messageId": 4,
-      "urlAvatar": "img/alexandr.jpeg",
-      "urlMessagePic": "img/game.jpeg"
-    },
-    {
-      "messageId": 5,
-      "urlAvatar": "img/uma_thurman.png",
-      "urlMessagePic": ""
-    },
-    {
-      "messageId": 6,
-      "urlAvatar": "img/elon.png",
-      "urlMessagePic": ""
-    },
-    {
-      "messageId": 16,
-      "urlAvatar": "img/elon.png",
-      "urlMessagePic": ""
-    },
-    {
-      "messageId": 17,
-      "urlAvatar": "img/elon.png",
-      "urlMessagePic": ""
-    },
-    {
-      "messageId": 18,
-      "urlAvatar": "img/elon.png",
-      "urlMessagePic": ""
-    },
-    {
-      "messageId": 19,
-      "urlAvatar": "img/elon.png",
-      "urlMessagePic": ""
-    }
-  ],
   "picturesChannel": [
     {
       "channelId": 1,
-      "url": "img/habr.png"
+      "url": "https://ucarecdn.com/d35445d0-9837-4fdf-8a2f-fb45dd901984/habr.png"
     },
     {
       "channelId": 2,
-      "url": "img/match.png"
+      "url": "https://ucarecdn.com/532b575d-b8a2-4662-962f-d560894ba42b/match.png"
     },
     {
       "channelId": 3,
-      "url": "img/pm.png"
+      "url": "https://ucarecdn.com/77bd48bb-f402-4c4b-8e07-ab06c6499694/pm.png"
     }
   ]
 }

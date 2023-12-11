@@ -97,6 +97,7 @@
     border-radius: 50%;
     margin: 12px auto;
     background-image: url('../../public/img/travolta.png');
+    background-position: center;
 }
 
 @media only screen and (min-width: 800px) {

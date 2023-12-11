@@ -35,25 +35,75 @@ const pool = new Pool({
   },
 });
 
-// get posts
-app.get('/posts.json', (req, res) => {
+app.get('/postUserAndSubs', (req, res) => {
+  const { userId } = req.query;
+
   const query = `
-  SELECT
-    posts.id,
-    authors.name,
-    authors.nickname,
-    authors.avatar,
-    posts.content,
-    posts.time,
-    posts.reposts,
-    posts.likes,
-    posts.shares,
-    posts.img      
-  FROM
-    posts
-  JOIN
-    authors ON posts.author_id = authors.id;
-`;
+    SELECT
+      posts.id,
+      authors.name,
+      authors.nickname,
+      authors.avatar,
+      authors.about,
+      authors.location,
+      authors.birthdate,
+      authors.showbirthdate,
+      posts.author_id,
+      posts.content,
+      posts.time,
+      posts.reposts,
+      posts.likes,
+      posts.shares,
+      posts.img      
+    FROM
+      posts
+    JOIN
+      authors ON posts.author_id = authors.id
+    WHERE
+      posts.author_id = ${userId} OR posts.author_id IN (
+        SELECT subscribed_to_id FROM subscriptions WHERE subscriber_id = ${userId}
+      );
+  `;
+
+  pool.query(query, (error, results) => {
+    if (error) {
+      console.error('Error executing query', error);
+      res.status(500).json({ error: 'Internal server error' });
+    } else {
+      res.json(results.rows);
+    }
+  });
+});
+
+// get posts from user with known id
+app.get('/user-posts/:userId', (req, res) => {
+  const { userId } = req.params;
+
+  const query = `
+    SELECT
+      posts.id,
+      authors.name,
+      authors.nickname,
+      authors.avatar,
+      authors.about,
+      authors.location,
+      authors.birthdate,
+      authors.showbirthdate,
+      posts.author_id,
+      posts.content,
+      posts.time,
+      posts.reposts,
+      posts.likes,
+      posts.shares,
+      posts.img      
+    FROM
+      posts
+    JOIN
+      authors ON posts.author_id = authors.id
+    WHERE
+      posts.author_id = ${userId};
+  `;
+
   pool.query(query, (error, results) => {
     if (error) {
       console.error('Error executing query', error);
@@ -307,37 +357,44 @@ app.get('/feed', async (req, res) => {
   }
 });
 
-app.put('/changeProfileDate/:id', (req, res) => {
-  const userId = req.params.id;
+// Unsubscribe
+app.delete('/unsubscribe', (req, res) => {
+  const { subscriberId, subscribedToId } = req.body;
+  console.log(subscriberId);
+  console.log(subscribedToId);
+  const query = `
+    DELETE FROM subscriptions
+    WHERE subscriber_id = $1 AND subscribed_to_id = $2;
+  `;
 
-  const {
-    nickname, name, avatar, about, location, birthdate, showbirthdate,
-  } = req.body;
-
-  const updateQuery = `
-  UPDATE authors
-  SET nickname = $1,
-      name = $2,
-      avatar = $3,
-      about = $4,
-      location = $5,
-      birthdate = $6,
-      showbirthdate = $7
-  WHERE id = $8
-`;
-
-  const updateValues = [nickname, name, avatar, about, location,
-    birthdate, showbirthdate, userId];
-
-  pool.query(updateQuery, updateValues, (error) => {
+  pool.query(query, [subscriberId, subscribedToId], (error) => {
     if (error) {
       console.error('Error executing query', error);
       res.status(500).json({ error: 'Internal server error' });
     } else {
-      res.set('Content-Type', 'application/json');
-      res.json({ message: 'User data updated successfully' });
+      res.status(200).json({ message: 'Unsubscribed successfully' });
     }
   });
+});
+
+// Subscribe
+app.post('/subscribe', async (req, res) => {
+  const { subscriberId, subscribedToId } = req.body;
+  console.log(subscriberId);
+  console.log(subscribedToId);
+  try {
+    const query = `
+      INSERT INTO subscriptions (subscriber_id, subscribed_to_id)
+      VALUES ($1, $2)
+    `;
+    const values = [subscriberId, subscribedToId];
+    await pool.query(query, values);
+
+    res.status(200).json({ success: true, message: 'Subscription successful' });
+  } catch (error) {
+    console.error('Error executing query:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

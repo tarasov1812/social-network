@@ -73,9 +73,6 @@ function EditProfile() {
   }, [isLoadingUser, handlePhotoUpload]);
 
   const handleSave = () => {
-    console.log(currentUser.birthdate);
-    console.log(birthdate);
-    console.log(new Date(`${birthdate}T00:00:00.000Z`).toISOString());
     const { id } = currentUser;
 
     const requestBody = {

@@ -6,6 +6,30 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   return response.data;
 });
 
+export const fetchCurrentUserPosts = createAsyncThunk(
+  'posts/postUserAndSubs',
+  async (userId) => {
+    const response = await axios.get('/postUserAndSubs', {
+      params: {
+        userId,
+      },
+    });
+    return response.data;
+  },
+);
+
+export const fetchPostsWithUserId = createAsyncThunk(
+  'posts/fetchPostsWithUserId',
+  async ({ userId }) => {
+    const response = await axios.get(`/user-posts/${userId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  },
+);
+
 export const fetchUser = createAsyncThunk('posts/fetchUser', async () => {
   try {
     const response = await axios.get('/feed');
@@ -18,11 +42,56 @@ export const fetchUser = createAsyncThunk('posts/fetchUser', async () => {
   }
 });
 
+// unsubcribe
+export const unsubscribeUser = (subscriberId, subscribedToId) => async () => {
+  try {
+    const response = await axios.delete('/unsubscribe', {
+      data: { subscriberId, subscribedToId },
+    });
+    console.log(subscriberId);
+    console.log(subscribedToId);
+    console.log(response.data);
+  } catch (error) {
+    console.error('Error unsubscribing:', error);
+  }
+};
+
+// subscribe
+export const subscribeUser = (subscriberId, subscribedToId) => async () => {
+  try {
+    const response = await axios.post('/subscribe', {
+      subscriberId,
+      subscribedToId,
+    });
+    console.log(subscriberId);
+    console.log(subscribedToId);
+    console.log(response.data);
+  } catch (error) {
+    console.error('Subscription error:', error);
+  }
+};
+
+// for future using
+export const profileView = createAsyncThunk(
+  'user/profileView',
+  async ({ id }) => {
+    const response = await axios.get(`/profileView/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  },
+);
+
 const postSlice = createSlice({
   name: 'posts',
   initialState: {
     data: [],
+    postsWithId: [],
     currentUser: {
+    },
+    profileInfo: {
     },
     isLoadingUser: true,
   },
@@ -42,6 +111,10 @@ const postSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(fetchCurrentUserPosts.fulfilled, (state, action) => ({
+        ...state,
+        data: action.payload,
+      }))
       .addCase(fetchPosts.fulfilled, (state, action) => ({
         ...state,
         data: action.payload,
