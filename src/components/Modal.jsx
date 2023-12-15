@@ -65,7 +65,7 @@ function Modal({ active, setActive }) {
         <div className={styles.container}>
           <div className={styles.line} />
           <div className={styles.content}>
-            <textarea name="message" placeholder={`What is new ${currentUser.name}?`} onChange={handleChange} className={styles.text} maxLength={140} />
+            <textarea name="message" placeholder={`What is new, ${currentUser.name}?`} onChange={handleChange} className={styles.text} maxLength={140} />
             <div className={styles.buttons}>
               <div className={styles.counter}>
                 <Circle amountOfSimbols={postSize(message)} />

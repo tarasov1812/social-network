@@ -1,21 +1,19 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import {
   Route, RouterProvider, createBrowserRouter, createRoutesFromElements,
 } from 'react-router-dom';
 import {
-  fetchPosts, fetchUser,
+  fetchCurrentUserPosts, fetchUser,
 } from './store/PostSlice.js';
 import './App.css';
 
 import Feed from './components/Feed.jsx';
-import Profile from './components/Profile.jsx';
 import Header from './components/Header.jsx';
 import EditProfile from './components/EditProfile.jsx';
 import ChangePassword from './components/ChangePassword.jsx';
 import Settings from './components/Settings.jsx';
 import ChangeEmail from './components/ChangeEmail.jsx';
-import Recomendations from './components/Recomendations.jsx';
 import ProfilePage from './components/ProfilePage.jsx';
 
 const router = createBrowserRouter(createRoutesFromElements(
@@ -23,7 +21,8 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route index element={<Feed />} />
     <Route path="feed" element={<Feed />} />
     <Route path="profile" element={<ProfilePage />} />
-    <Route path="login" element={<Recomendations />} />
+    <Route path="profile/:id" element={<ProfilePage />} />
+    <Route path="login" element={<ProfilePage />} />
     <Route path="settings/" element={<Settings />}>
       <Route index element={<EditProfile />} />
       <Route path="profile-settings" element={<EditProfile />} />
@@ -36,13 +35,17 @@ const router = createBrowserRouter(createRoutesFromElements(
 function App() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch((fetchUser()));
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(fetchPosts());
-  }, [dispatch]);
+  dispatch(fetchUser())
+    .then((response) => {
+      const { id } = response.payload;
+      dispatch(fetchCurrentUserPosts(id))
+        .then((postsResponse) => {
+          console.log(postsResponse);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
 
   return (
     <RouterProvider router={router} />

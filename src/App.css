@@ -40,11 +40,17 @@ body {
 }
 
 .content {
-  max-width: 960px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  
+}
+
+@media only screen and (min-width: 800px) {
+  .content {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
 }
 
 .uploadcare--widget {
@@ -107,4 +113,32 @@ body {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+}
+
+a#postLink1 {
+  margin: 0;
+  padding: 0;
+  color: #1D1E22;
+  font-family: 'Lato Black';
+  font-size: 14px;
+}
+
+@media only screen and (min-width: 800px) {
+  a#postLink1{
+    font-size: 16px;
+  }
+}
+
+a#postLink2 {
+  margin: 0;
+  padding: 0;
+  color: #ABACB1;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+@media only screen and (min-width: 800px) {
+  a#postLink2 {
+    font-size: 16px;
+  }
 }
