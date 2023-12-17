@@ -35,6 +35,7 @@ const router = createBrowserRouter(createRoutesFromElements(
 function App() {
   const dispatch = useDispatch();
 
+  // Get current user id, and then all post related with this user id
   dispatch(fetchUser())
     .then((response) => {
       const { id } = response.payload;

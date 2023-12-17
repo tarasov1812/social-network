@@ -14,6 +14,10 @@ app.get('/', (req, res) => res.type('html').send(main));
 const index = fs.readFileSync('public/index.html', 'utf8');
 const routes = ['', '/', '/feed', '/profile', '/settings', '/login', '/settings/profile-settings', '/settings/change-password', '/settings/change-email'];
 
+app.get('/app/profile/:id', (req, res) => {
+  res.type('html').send(index);
+});
+
 routes.forEach((route) => {
   app.get(`/app${route}`, (req, res) => res.type('html').send(index));
 });
@@ -346,9 +350,13 @@ app.get('/feed', async (req, res) => {
       res.status(401).send('Session finished');
     } else {
       const userQuery = `
-      SELECT * FROM authors
+      SELECT authors.*, 
+      (SELECT COUNT(*) FROM subscriptions WHERE subscribed_to_id = authors.id) AS followers_count,
+      (SELECT COUNT(*) FROM subscriptions WHERE subscriber_id = authors.id) AS following_count,
+      (SELECT COUNT(*) FROM posts WHERE author_id = authors.id) AS post_count
+      FROM authors
       WHERE id = $1
-      `;
+    `;
       const currentUser = await pool.query(userQuery, [authorId]);
       res.status(200).send(currentUser.rows[0]);
     }
@@ -357,11 +365,44 @@ app.get('/feed', async (req, res) => {
   }
 });
 
+app.get('/get-user-with-id/:id', async (req, res) => {
+  const { id } = req.params;
+  const { currentUserId } = req.query;
+
+  const userQuery = `
+      SELECT authors.*, 
+      (SELECT COUNT(*) FROM subscriptions WHERE subscribed_to_id = authors.id) AS followers_count,
+      (SELECT COUNT(*) FROM subscriptions WHERE subscriber_id = authors.id) AS following_count,
+      (SELECT COUNT(*) FROM posts WHERE author_id = authors.id) AS post_count
+      FROM authors
+      WHERE authors.id = $1
+    `;
+
+  const userResult = await pool.query(userQuery, [id]);
+
+  if (userResult.rows.length === 0) {
+    res.status(404).send('User not found');
+    return;
+  }
+
+  const user = userResult.rows[0];
+
+  // check subscribtion for CurrentUserId for user.id
+  const subscriptionQuery = `
+      SELECT * FROM subscriptions
+      WHERE subscriber_id = $1 AND subscribed_to_id = $2
+  `;
+  const subscriptionResult = await pool.query(subscriptionQuery, [currentUserId, user.id]);
+
+  // add flag isSubscribe
+  user.isSubscribed = subscriptionResult.rows.length > 0;
+
+  res.status(200).send(user);
+});
+
 // Unsubscribe
 app.delete('/unsubscribe', (req, res) => {
   const { subscriberId, subscribedToId } = req.body;
-  console.log(subscriberId);
-  console.log(subscribedToId);
   const query = `
     DELETE FROM subscriptions
     WHERE subscriber_id = $1 AND subscribed_to_id = $2;
@@ -380,8 +421,6 @@ app.delete('/unsubscribe', (req, res) => {
 // Subscribe
 app.post('/subscribe', async (req, res) => {
   const { subscriberId, subscribedToId } = req.body;
-  console.log(subscriberId);
-  console.log(subscribedToId);
   try {
     const query = `
       INSERT INTO subscriptions (subscriber_id, subscribed_to_id)
@@ -395,6 +434,40 @@ app.post('/subscribe', async (req, res) => {
     console.error('Error executing query:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
+});
+
+// change profile Data
+app.put('/changeProfileDate/:id', (req, res) => {
+  const userId = req.params.id;
+
+  const {
+    nickname, name, avatar, about, location, birthdate, showbirthdate,
+  } = req.body;
+
+  const updateQuery = `
+  UPDATE authors
+  SET nickname = $1,
+      name = $2,
+      avatar = $3,
+      about = $4,
+      location = $5,
+      birthdate = $6,
+      showbirthdate = $7
+  WHERE id = $8
+`;
+
+  const updateValues = [nickname, name, avatar, about, location,
+    birthdate, showbirthdate, userId];
+
+  pool.query(updateQuery, updateValues, (error) => {
+    if (error) {
+      console.error('Error executing query', error);
+      res.status(500).json({ error: 'Internal server error' });
+    } else {
+      res.set('Content-Type', 'application/json');
+      res.json({ message: 'User data updated successfully' });
+    }
+  });
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

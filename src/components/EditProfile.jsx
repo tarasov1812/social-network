@@ -45,7 +45,6 @@ function EditProfile() {
   const dispatch = useDispatch();
   const dataOutputRef = useRef();
   const currentUser = useSelector((state) => state.posts.currentUser);
-  const isLoadingUser = useSelector((state) => state.posts.isLoadingUser);
 
   const [photoUrl, setPhotoUrl] = useState(currentUser.avatar);
   const [name, setName] = useState(currentUser.name);
@@ -54,23 +53,24 @@ function EditProfile() {
   const [location, setLocation] = useState(currentUser.location);
   const [birthdate, setBirthdate] = useState(currentUser.birthdate ? currentUser.birthdate.split('T')[0] : '');
   const [showbirthdate, setShowbirthdate] = useState('not settled');
+  console.log(photoUrl);
 
   const handlePhotoUpload = useCallback((e) => {
     const { data } = e.detail;
-    const newPhotoUrl = data[0].cdnUrl;
-    setPhotoUrl(newPhotoUrl);
+    setPhotoUrl(data[0].cdnUrl);
   }, []);
 
-  // eslint-disable-next-line consistent-return
   useEffect(() => {
     const el = dataOutputRef.current;
-    if (el && !isLoadingUser) {
+    if (el) {
       el.addEventListener('lr-data-output', handlePhotoUpload);
-      return () => {
-        el.removeEventListener('lr-data-output', handlePhotoUpload);
-      };
     }
-  }, [isLoadingUser, handlePhotoUpload]);
+    return () => {
+      if (el) {
+        el.removeEventListener('lr-data-output', handlePhotoUpload);
+      }
+    };
+  }, [handlePhotoUpload]);
 
   const handleSave = () => {
     const { id } = currentUser;
@@ -107,7 +107,7 @@ function EditProfile() {
   };
 
   const backgroundStyle = {
-    backgroundImage: `url(${currentUser.avatar})`,
+    backgroundImage: `url(${photoUrl || currentUser.avatar})`,
   };
 
   return (

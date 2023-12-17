@@ -27,6 +27,7 @@ export default defineConfig({
       '/postUserAndSubs': 'http://localhost:3000',
       '/unsubscribe': 'http://localhost:3000',
       '/subscribe': 'http://localhost:3000',
+      '/get-user-with-id': 'http://localhost:3000',
     },
   },
 });
