@@ -470,4 +470,90 @@ app.put('/changeProfileDate/:id', (req, res) => {
   });
 });
 
+// change password
+app.put('/changePassword/:id', async (req, res) => {
+  const userId = req.params.id;
+
+  const {
+    oldPassword,
+    newPassword,
+  } = req.body;
+
+  const checkPasswordQuery = `
+    SELECT password FROM authors WHERE id = $1
+  `;
+
+  const authorIdResult = await pool.query(checkPasswordQuery, [userId]);
+
+  if (authorIdResult.rows.length === 0) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+
+  const storedPassword = authorIdResult.rows[0].password;
+
+  if (oldPassword === storedPassword) {
+    const updateQuery = `
+  UPDATE authors
+  SET password = $1
+  WHERE id = $2
+`;
+
+    const updateValues = [newPassword, userId];
+
+    pool.query(updateQuery, updateValues, (error) => {
+      if (error) {
+        console.error('Error executing query', error);
+        res.status(500).json({ error: 'Internal server error' });
+      } else {
+        res.set('Content-Type', 'application/json');
+        res.json({ message: 'User password updated successfully' });
+      }
+    });
+  }
+  return res.json({ message: 'User password updated successfully' });
+});
+
+// change email
+app.put('/changeEmail/:id', async (req, res) => {
+  const userId = req.params.id;
+
+  const {
+    password,
+    email,
+  } = req.body;
+
+  const checkPasswordQuery = `
+    SELECT password FROM authors WHERE id = $1
+  `;
+
+  const authorIdResult = await pool.query(checkPasswordQuery, [userId]);
+
+  if (authorIdResult.rows.length === 0) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+
+  const storedPassword = authorIdResult.rows[0].password;
+
+  if (password === storedPassword) {
+    const updateQuery = `
+  UPDATE authors
+  SET email = $1
+  WHERE id = $2
+`;
+
+    const updateValues = [email, userId];
+
+    pool.query(updateQuery, updateValues, (error) => {
+      if (error) {
+        console.error('Error executing query', error);
+        res.status(500).json({ error: 'Internal server error' });
+      } else {
+        res.set('Content-Type', 'application/json');
+        res.json({ message: 'User password updated successfully' });
+      }
+    });
+  }
+  return res.json({ message: 'Email updated successfully' });
+});
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

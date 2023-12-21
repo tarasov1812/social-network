@@ -176,5 +176,35 @@ export const changeProfileDate = createAsyncThunk(
   },
 );
 
+export const changePassword = createAsyncThunk(
+  'user/changePassword',
+  async ({ id, oldPassword, newPassword }) => {
+    const response = await axios.put(`/changePassword/${id}`, {
+      oldPassword,
+      newPassword,
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  },
+);
+
+export const changeEmail = createAsyncThunk(
+  'user/changeEmail',
+  async ({ id, password, email }) => {
+    const response = await axios.put(`/changeEmail/${id}`, {
+      password,
+      email,
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  },
+);
+
 export const { setPosts, createPost, setCurrentUser } = postSlice.actions;
 export default postSlice.reducer;
