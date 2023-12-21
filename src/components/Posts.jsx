@@ -1,17 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import Post from './Post.jsx';
 import styles from '../styles/Posts.module.css';
 
 function Posts({ postsToView }) {
   const messages = useSelector((state) => state.posts.data);
-  const [isLoading, setIsloading] = useState(true);
-
-  useEffect(() => {
-    if (messages.length > 0) {
-      setIsloading(false);
-    }
-  }, [messages]);
+  const isLoading = useSelector((state) => state.posts.isLoading);
 
   if (isLoading) {
     const elements = [];

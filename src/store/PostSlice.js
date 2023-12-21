@@ -18,12 +18,27 @@ export const fetchCurrentUserPosts = createAsyncThunk(
   },
 );
 
-export const fetchPostsWithUserId = createAsyncThunk(
-  'posts/fetchPostsWithUserId',
-  async ({ userId }) => {
-    const response = await axios.get(`/user-posts/${userId}`, {
+export const fetchUserPostsWithId = createAsyncThunk(
+  'posts/fetchUserPostsWithId',
+  async ({ id }) => {
+    const response = await axios.get(`/user-posts/${id}`, {
       headers: {
         'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  },
+);
+
+export const fetchUserInfoWithId = createAsyncThunk(
+  'posts/fetchUserInfoWithId',
+  async ({ id, currentUserId }) => {
+    const response = await axios.get(`/get-user-with-id/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      params: {
+        currentUserId,
       },
     });
     return response.data;
@@ -48,8 +63,6 @@ export const unsubscribeUser = (subscriberId, subscribedToId) => async () => {
     const response = await axios.delete('/unsubscribe', {
       data: { subscriberId, subscribedToId },
     });
-    console.log(subscriberId);
-    console.log(subscribedToId);
     console.log(response.data);
   } catch (error) {
     console.error('Error unsubscribing:', error);
@@ -63,8 +76,6 @@ export const subscribeUser = (subscriberId, subscribedToId) => async () => {
       subscriberId,
       subscribedToId,
     });
-    console.log(subscriberId);
-    console.log(subscribedToId);
     console.log(response.data);
   } catch (error) {
     console.error('Subscription error:', error);
@@ -88,12 +99,15 @@ const postSlice = createSlice({
   name: 'posts',
   initialState: {
     data: [],
-    postsWithId: [],
+    postsFoundById: [],
     currentUser: {
     },
-    profileInfo: {
+    userFoundById: {
     },
-    isLoadingUser: true,
+    isLoading: true,
+    isLoadingCurrentUser: true,
+    isLoadingPostsWithId: true,
+    isLoadingUserWithId: true,
   },
   reducers: {
     setPosts: (state, action) => ({
@@ -114,23 +128,26 @@ const postSlice = createSlice({
       .addCase(fetchCurrentUserPosts.fulfilled, (state, action) => ({
         ...state,
         data: action.payload,
+        isLoading: false,
+      }))
+      .addCase(fetchUserPostsWithId.fulfilled, (state, action) => ({
+        ...state,
+        postsFoundById: action.payload,
+        isLoadingPostsWithId: false,
+      }))
+      .addCase(fetchUserInfoWithId.fulfilled, (state, action) => ({
+        ...state,
+        userFoundById: action.payload,
+        isLoadingUserWithId: false,
       }))
       .addCase(fetchPosts.fulfilled, (state, action) => ({
         ...state,
         data: action.payload,
       }))
-      .addCase(fetchUser.pending, (state) => ({
-        ...state,
-        isLoadingUser: true,
-      }))
       .addCase(fetchUser.fulfilled, (state, action) => ({
         ...state,
-        isLoadingUser: false,
         currentUser: action.payload,
-      }))
-      .addCase(fetchUser.rejected, (state) => ({
-        ...state,
-        isLoadingUser: false,
+        isLoadingCurrentUser: false,
       }));
   },
 });
