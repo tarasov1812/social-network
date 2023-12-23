@@ -30,6 +30,8 @@ export default defineConfig({
       '/subscribe': 'http://localhost:3000',
       '/get-user-with-id': 'http://localhost:3000',
       '/changeEmail': 'http://localhost:3000',
+      '/getSubscribers': 'http://localhost:3000',
+      '/getSubscribed': 'http://localhost:3000',
     },
   },
 });

@@ -230,11 +230,11 @@ app.post('/createUser', async (req, res) => {
   }
 
   const insertQuery = `
-      INSERT INTO authors (nickname, email, password)
-      VALUES ($1, $2, $3)
+      INSERT INTO authors (nickname, email, password, avatar)
+      VALUES ($1, $2, $3, $4)
     `;
-
-  const insertValues = [nickname, email, password];
+  const emptyAvatar = 'https://ucarecdn.com/117dd0e7-4525-4fe4-ba5a-55f0e4a21b25/5208421_avatar_person_profile_user_icon.png';
+  const insertValues = [nickname, email, password, emptyAvatar];
 
   // eslint-disable-next-line no-shadow
   await pool.query(insertQuery, insertValues);
@@ -554,6 +554,44 @@ app.put('/changeEmail/:id', async (req, res) => {
     });
   }
   return res.json({ message: 'Email updated successfully' });
+});
+
+// get subscribres data
+app.get('/getSubscribers/:id/:currentUserId', async (req, res) => {
+  const { id, currentUserId } = req.params;
+  const subscribersQuery = `
+    SELECT sub.subscriber_id, auth.id, auth.name, auth.nickname, auth.about, auth.avatar,
+      EXISTS (
+        SELECT 1
+        FROM subscriptions AS s
+        WHERE s.subscriber_id = $1 AND s.subscribed_to_id = sub.subscriber_id
+      ) AS isSubscribed
+    FROM subscriptions AS sub
+    JOIN authors AS auth ON sub.subscriber_id = auth.id
+    WHERE sub.subscribed_to_id = $2;
+  `;
+
+  const { rows } = await pool.query(subscribersQuery, [currentUserId, id]);
+  res.json(rows);
+});
+
+// get subscribred data
+app.get('/getSubscribed/:id/:currentUserId', async (req, res) => {
+  const { id, currentUserId } = req.params;
+  const subscriptionsQuery = `
+      SELECT sub.subscriber_id, auth.id, auth.name, auth.nickname, auth.about, auth.avatar,
+      EXISTS (
+        SELECT 1
+        FROM subscriptions AS s
+        WHERE s.subscriber_id = $1 AND s.subscribed_to_id = sub.subscriber_id
+      ) AS isSubscribed
+    FROM subscriptions AS sub
+    JOIN authors AS auth ON sub.subscribed_to_id = auth.id
+    WHERE sub.subscriber_id = $2;
+    `;
+
+  const { rows } = await pool.query(subscriptionsQuery, [currentUserId, id]);
+  res.json(rows);
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
