@@ -32,6 +32,7 @@
 }
 
 .profileFoto{
+    z-index: 5;
     display: block;
     width: 95px;
     height: 95px;
@@ -47,6 +48,7 @@
 @media only screen and (min-width: 800px) {
     .profileFoto{
         position: absolute;
+        background-color: #ABACB1;
         top: 210px;
         width: 120px;
         height: 120px;
@@ -132,6 +134,7 @@
 
 .statisticData{
     display: inline-block;
+    cursor: pointer;
 }
 
 @media only screen and (min-width: 800px) {

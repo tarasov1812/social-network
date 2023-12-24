@@ -3,7 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { subscribeUser, unsubscribeUser, fetchCurrentUserPosts } from '../store/PostSlice.js';
 import styles from '../styles/ProfilePageBanner.module.css';
 
-function ProfilePageBanner({ userToViewData }) {
+function ProfilePageBanner({
+  userToViewData, onFollowersClick, onFollowingClick, onMessagesClick,
+}) {
   const dispatch = useDispatch();
   const [subscribed, setSubscribed] = useState(userToViewData.isSubscribed);
   const currentUser = useSelector((state) => state.posts.currentUser);
@@ -52,7 +54,7 @@ function ProfilePageBanner({ userToViewData }) {
       <div className={styles.profileFoto} style={backgroundStyle} />
       <div className={styles.statistic}>
         <div className={styles.statistic2}>
-          <div className={styles.statisticData}>
+          <div className={styles.statisticData} onClick={onMessagesClick}>
             <span className={styles.number}>
               {userToViewData.post_count
             || currentUser.post_count}
@@ -60,7 +62,7 @@ function ProfilePageBanner({ userToViewData }) {
             <br className={styles.br} id="br1" />
             <span className={styles.word}>Messages</span>
           </div>
-          <div className={styles.statisticData}>
+          <div className={styles.statisticData} onClick={onFollowingClick}>
             <span className={styles.number}>
               {userToViewData.following_count
             || currentUser.following_count}
@@ -69,7 +71,7 @@ function ProfilePageBanner({ userToViewData }) {
             <br className={styles.br} id="br2" />
             <span className={styles.word}>Following</span>
           </div>
-          <div className={styles.statisticData}>
+          <div className={styles.statisticData} onClick={onFollowersClick}>
             <span className={styles.number}>
               {userToViewData.followers_count
             || currentUser.followers_count}

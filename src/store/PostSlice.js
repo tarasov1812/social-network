@@ -30,6 +30,34 @@ export const fetchUserPostsWithId = createAsyncThunk(
   },
 );
 
+// get Subscribers
+export const fetchSubscribers = createAsyncThunk(
+  'user/fetchSubscribers',
+  async ({ id, currentUserId }) => {
+    try {
+      const response = await axios.get(`/getSubscribers/${id}/${currentUserId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching subscribers:', error);
+      throw error;
+    }
+  },
+);
+
+// get Subscribed
+export const fetchSubscribed = createAsyncThunk(
+  'user/fetchSubscribed',
+  async ({ id, currentUserId }) => {
+    try {
+      const response = await axios.get(`/getSubscribed/${id}/${currentUserId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching subscribers:', error);
+      throw error;
+    }
+  },
+);
+
 export const fetchUserInfoWithId = createAsyncThunk(
   'posts/fetchUserInfoWithId',
   async ({ id, currentUserId }) => {
@@ -82,24 +110,13 @@ export const subscribeUser = (subscriberId, subscribedToId) => async () => {
   }
 };
 
-// for future using
-export const profileView = createAsyncThunk(
-  'user/profileView',
-  async ({ id }) => {
-    const response = await axios.get(`/profileView/${id}`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    return response.data;
-  },
-);
-
 const postSlice = createSlice({
   name: 'posts',
   initialState: {
     data: [],
     postsFoundById: [],
+    subscribers: [],
+    subscribed: [],
     currentUser: {
     },
     userFoundById: {
@@ -108,6 +125,8 @@ const postSlice = createSlice({
     isLoadingCurrentUser: true,
     isLoadingPostsWithId: true,
     isLoadingUserWithId: true,
+    isLoadingSubscribers: true,
+    isLoadingSubscribed: true,
   },
   reducers: {
     setPosts: (state, action) => ({
@@ -134,6 +153,16 @@ const postSlice = createSlice({
         ...state,
         postsFoundById: action.payload,
         isLoadingPostsWithId: false,
+      }))
+      .addCase(fetchSubscribers.fulfilled, (state, action) => ({
+        ...state,
+        subscribers: action.payload,
+        isLoadingSubscribers: false,
+      }))
+      .addCase(fetchSubscribed.fulfilled, (state, action) => ({
+        ...state,
+        subscribed: action.payload,
+        isLoadingSubscribed: false,
       }))
       .addCase(fetchUserInfoWithId.fulfilled, (state, action) => ({
         ...state,
@@ -168,6 +197,36 @@ export const changeProfileDate = createAsyncThunk(
   'user/changeProfileDate',
   async ({ id, requestBody }) => {
     const response = await axios.put(`/changeProfileDate/${id}`, requestBody, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  },
+);
+
+export const changePassword = createAsyncThunk(
+  'user/changePassword',
+  async ({ id, oldPassword, newPassword }) => {
+    const response = await axios.put(`/changePassword/${id}`, {
+      oldPassword,
+      newPassword,
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  },
+);
+
+export const changeEmail = createAsyncThunk(
+  'user/changeEmail',
+  async ({ id, password, email }) => {
+    const response = await axios.put(`/changeEmail/${id}`, {
+      password,
+      email,
+    }, {
       headers: {
         'Content-Type': 'application/json',
       },

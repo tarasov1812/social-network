@@ -230,11 +230,11 @@ app.post('/createUser', async (req, res) => {
   }
 
   const insertQuery = `
-      INSERT INTO authors (nickname, email, password)
-      VALUES ($1, $2, $3)
+      INSERT INTO authors (nickname, email, password, avatar)
+      VALUES ($1, $2, $3, $4)
     `;
-
-  const insertValues = [nickname, email, password];
+  const emptyAvatar = 'https://ucarecdn.com/117dd0e7-4525-4fe4-ba5a-55f0e4a21b25/5208421_avatar_person_profile_user_icon.png';
+  const insertValues = [nickname, email, password, emptyAvatar];
 
   // eslint-disable-next-line no-shadow
   await pool.query(insertQuery, insertValues);
@@ -468,6 +468,130 @@ app.put('/changeProfileDate/:id', (req, res) => {
       res.json({ message: 'User data updated successfully' });
     }
   });
+});
+
+// change password
+app.put('/changePassword/:id', async (req, res) => {
+  const userId = req.params.id;
+
+  const {
+    oldPassword,
+    newPassword,
+  } = req.body;
+
+  const checkPasswordQuery = `
+    SELECT password FROM authors WHERE id = $1
+  `;
+
+  const authorIdResult = await pool.query(checkPasswordQuery, [userId]);
+
+  if (authorIdResult.rows.length === 0) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+
+  const storedPassword = authorIdResult.rows[0].password;
+
+  if (oldPassword === storedPassword) {
+    const updateQuery = `
+  UPDATE authors
+  SET password = $1
+  WHERE id = $2
+`;
+
+    const updateValues = [newPassword, userId];
+
+    pool.query(updateQuery, updateValues, (error) => {
+      if (error) {
+        console.error('Error executing query', error);
+        res.status(500).json({ error: 'Internal server error' });
+      } else {
+        res.set('Content-Type', 'application/json');
+        res.json({ message: 'User password updated successfully' });
+      }
+    });
+  }
+  return res.json({ message: 'User password updated successfully' });
+});
+
+// change email
+app.put('/changeEmail/:id', async (req, res) => {
+  const userId = req.params.id;
+
+  const {
+    password,
+    email,
+  } = req.body;
+
+  const checkPasswordQuery = `
+    SELECT password FROM authors WHERE id = $1
+  `;
+
+  const authorIdResult = await pool.query(checkPasswordQuery, [userId]);
+
+  if (authorIdResult.rows.length === 0) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+
+  const storedPassword = authorIdResult.rows[0].password;
+
+  if (password === storedPassword) {
+    const updateQuery = `
+  UPDATE authors
+  SET email = $1
+  WHERE id = $2
+`;
+
+    const updateValues = [email, userId];
+
+    pool.query(updateQuery, updateValues, (error) => {
+      if (error) {
+        console.error('Error executing query', error);
+        res.status(500).json({ error: 'Internal server error' });
+      } else {
+        res.set('Content-Type', 'application/json');
+        res.json({ message: 'User password updated successfully' });
+      }
+    });
+  }
+  return res.json({ message: 'Email updated successfully' });
+});
+
+// get subscribres data
+app.get('/getSubscribers/:id/:currentUserId', async (req, res) => {
+  const { id, currentUserId } = req.params;
+  const subscribersQuery = `
+    SELECT sub.subscriber_id, auth.id, auth.name, auth.nickname, auth.about, auth.avatar,
+      EXISTS (
+        SELECT 1
+        FROM subscriptions AS s
+        WHERE s.subscriber_id = $1 AND s.subscribed_to_id = sub.subscriber_id
+      ) AS isSubscribed
+    FROM subscriptions AS sub
+    JOIN authors AS auth ON sub.subscriber_id = auth.id
+    WHERE sub.subscribed_to_id = $2;
+  `;
+
+  const { rows } = await pool.query(subscribersQuery, [currentUserId, id]);
+  res.json(rows);
+});
+
+// get subscribred data
+app.get('/getSubscribed/:id/:currentUserId', async (req, res) => {
+  const { id, currentUserId } = req.params;
+  const subscriptionsQuery = `
+      SELECT sub.subscriber_id, auth.id, auth.name, auth.nickname, auth.about, auth.avatar,
+      EXISTS (
+        SELECT 1
+        FROM subscriptions AS s
+        WHERE s.subscriber_id = $1 AND s.subscribed_to_id = sub.subscriber_id
+      ) AS isSubscribed
+    FROM subscriptions AS sub
+    JOIN authors AS auth ON sub.subscribed_to_id = auth.id
+    WHERE sub.subscriber_id = $2;
+    `;
+
+  const { rows } = await pool.query(subscriptionsQuery, [currentUserId, id]);
+  res.json(rows);
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
