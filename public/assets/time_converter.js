@@ -1,6 +1,6 @@
 /**
  * Function of converting numbers to time
- * @param {*} number - any numbre
+ * @param {*} number - any number
  * @returns time in minutes or hours or days or over one year ago
  */
 

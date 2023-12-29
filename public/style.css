@@ -932,3 +932,12 @@ hr {
   .hidden {
     display: none;
   }
+
+  .invalid-input {
+    background-color: #FFDEEC;
+    border: 1px solid #FF97C3;
+  }
+
+  .visible-warning {
+    visibility: visible;
+  }

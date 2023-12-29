@@ -1,9 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
-  const response = await axios.get('/posts.json');
-  return response.data;
+export const fetchThemes = createAsyncThunk('posts/fetchThemes', async () => {
+  const response = await axios.get('/tags');
+  return response.data.tags;
+});
+
+export const fetchChannels = createAsyncThunk('posts/fetchChannels', async () => {
+  const response = await axios.get('/channels');
+  return response.data.channels;
 });
 
 export const fetchCurrentUserPosts = createAsyncThunk(
@@ -117,6 +122,8 @@ const postSlice = createSlice({
     postsFoundById: [],
     subscribers: [],
     subscribed: [],
+    themes: [],
+    channels: [],
     currentUser: {
     },
     userFoundById: {
@@ -169,9 +176,13 @@ const postSlice = createSlice({
         userFoundById: action.payload,
         isLoadingUserWithId: false,
       }))
-      .addCase(fetchPosts.fulfilled, (state, action) => ({
+      .addCase(fetchThemes.fulfilled, (state, action) => ({
         ...state,
-        data: action.payload,
+        themes: action.payload,
+      }))
+      .addCase(fetchChannels.fulfilled, (state, action) => ({
+        ...state,
+        channels: action.payload,
       }))
       .addCase(fetchUser.fulfilled, (state, action) => ({
         ...state,
