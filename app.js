@@ -39,6 +39,91 @@ const pool = new Pool({
   },
 });
 
+// tags (simplified for now)
+app.get('/tags', (req, res) => {
+  const tags = [
+    {
+      tag: '#javascript',
+      messages: '2 941 messages',
+    },
+    {
+      tag: '#python3',
+      messages: '29 718 messages',
+    },
+    {
+      tag: '#ruby',
+      messages: '958 messages',
+    },
+    {
+      tag: '#how_to_start_programming',
+      messages: '4 185 messages',
+    },
+    {
+      tag: '#help_me_with_my_code',
+      messages: '482 messages',
+    },
+  ];
+
+  res.json({ tags });
+});
+
+// channels (simplified for now)
+app.get('/channels', (req, res) => {
+  const channels = [
+    {
+      channelName: 'Habr',
+      channelNick: '@habr_popsci',
+      img: 'https://ucarecdn.com/d35445d0-9837-4fdf-8a2f-fb45dd901984/habr.png',
+    },
+    {
+      channelName: 'Match TV',
+      channelNick: '@MatchTV',
+      img: 'https://ucarecdn.com/532b575d-b8a2-4662-962f-d560894ba42b/match.png',
+    },
+    {
+      channelName: 'Pop Mechanica',
+      channelNick: '@PopMechanica',
+      img: 'https://ucarecdn.com/77bd48bb-f402-4c4b-8e07-ab06c6499694/pm.png',
+    },
+  ];
+
+  res.json({ channels });
+});
+
+// get posts for main page
+app.get('/posts.json', (req, res) => {
+  const query = `
+  SELECT
+    posts.id,
+    authors.name,
+    authors.avatar,
+    authors.nickname,
+    posts.content,
+    posts.time,
+    posts.reposts,
+    posts.likes,
+    posts.shares,
+    posts.img      
+  FROM
+    posts
+  JOIN
+    authors ON posts.author_id = authors.id
+  ORDER BY
+    posts.time DESC
+  LIMIT
+    12;
+`;
+  pool.query(query, (error, results) => {
+    if (error) {
+      console.error('Error executing query', error);
+      res.status(500).json({ error: 'Internal server error' });
+    } else {
+      res.json(results.rows);
+    }
+  });
+});
+
+// get posts for current user
 app.get('/postUserAndSubs', (req, res) => {
   const { userId } = req.query;
 
@@ -275,50 +360,49 @@ app.post('/login', async (req, res) => {
     WHERE email = $1
   `;
 
-  await pool.query(checkUserQuery, [email], async (error, result) => {
-    if (result.rows.length > 0) {
-      const passwordQuery = `
-        SELECT password
-        FROM authors
-        WHERE email = $1
-      `;
+  const result = await pool.query(checkUserQuery, [email]);
 
-      // eslint-disable-next-line no-shadow
-      const resultPassword = await pool.query(passwordQuery, [email]);
-      const passwordDataBase = resultPassword.rows[0].password;
+  if (result.rows.length > 0) {
+    const passwordQuery = `
+      SELECT password
+      FROM authors
+      WHERE email = $1
+    `;
 
-      if (password === passwordDataBase) {
-        // Generate token
-        const token = crypto.randomUUID();
+    const resultPassword = await pool.query(passwordQuery, [email]);
+    const passwordDataBase = resultPassword.rows[0].password;
 
-        // Search author's id by email
-        const authorIdQuery = `
+    if (password === passwordDataBase) {
+      // Generate token
+      const token = crypto.randomUUID();
+
+      // Search author's id by email
+      const authorIdQuery = `
             SELECT id FROM authors WHERE email = $1
             `;
-        const authorIdResult = await pool.query(authorIdQuery, [email]);
-        const authorId = authorIdResult.rows[0].id;
+      const authorIdResult = await pool.query(authorIdQuery, [email]);
+      const authorId = authorIdResult.rows[0].id;
 
-        // Insert token and author_id in sessions
-        const insertQuery = `
+      // Insert token and author_id in sessions
+      const insertQuery = `
             INSERT INTO sessions (author_id, token)
             VALUES ($1, $2)
             `;
-        await pool.query(insertQuery, [authorId, token]);
+      await pool.query(insertQuery, [authorId, token]);
 
-        // Save token in cookie
-        // Cookie will expire in 7 days
-        const expiresDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-        res.cookie('email', email, { expires: expiresDate });
-        res.cookie('token', token, { expires: expiresDate });
+      // Save token in cookie
+      // Cookie will expire in 7 days
+      const expiresDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+      res.cookie('email', email, { expires: expiresDate });
+      res.cookie('token', token, { expires: expiresDate });
 
-        res.status(200).json({ message: 'Successful login' });
-      } else {
-        res.status(400).json({ error: 'Password is not correct' });
-      }
+      res.status(200).json({ message: 'Successful login' });
     } else {
-      res.status(404).json({ error: 'User doesn\'t exist' });
+      res.status(400).json({ error: 'Password is not correct' });
     }
-  });
+  } else {
+    res.status(404).json({ error: 'User doesn\'t exist' });
+  }
 });
 
 // Page feed
@@ -592,6 +676,33 @@ app.get('/getSubscribed/:id/:currentUserId', async (req, res) => {
 
   const { rows } = await pool.query(subscriptionsQuery, [currentUserId, id]);
   res.json(rows);
+});
+
+// getInfo
+app.get('/getInfo', async (req, res) => {
+  try {
+    // Queries to Data Base
+    const usersQuery = 'SELECT COUNT(*) AS usersCount FROM authors';
+    const messagesQuery = 'SELECT COUNT(*) AS messagesCount FROM posts';
+    const today = new Date().toISOString().split('T')[0]; // Today's date
+    const messagesTodayQuery = `SELECT COUNT(*) AS messagesTodayCount FROM posts WHERE DATE(time) = '${today}'`;
+
+    // Exequte SQL-queries
+    const [usersResult, messagesResult, messagesTodayResult] = await Promise.all([
+      pool.query(usersQuery),
+      pool.query(messagesQuery),
+      pool.query(messagesTodayQuery),
+    ]);
+    // Send result
+    res.json({
+      usersCount: usersResult.rows[0].userscount,
+      messagesCount: messagesResult.rows[0].messagescount,
+      messagesTodayCount: messagesTodayResult.rows[0].messagestodaycount,
+    });
+  } catch (error) {
+    console.error('Error getting info:', error);
+    res.status(500).send('Server Error');
+  }
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

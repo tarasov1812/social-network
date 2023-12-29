@@ -1,19 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import styles from '../styles/Themes.module.css';
 import Theme from './Theme.jsx';
 
 function Themes() {
-  const [themes, setThemes] = useState([]);
-  const messageToShow = 5;
-
-  useEffect(() => {
-    fetch('/data.json')
-      .then((response) => response.json())
-      .then((data) => {
-        setThemes(data.topics.slice(0, messageToShow));
-      })
-      .catch((error) => console.error(error));
-  }, []);
+  const themes = useSelector((state) => state.posts.themes);
   return (
     <div className={styles.container}>
       <h4>Relevat topics</h4>

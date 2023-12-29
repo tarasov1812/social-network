@@ -19,6 +19,11 @@ export default defineConfig({
 
   server: {
     proxy: {
+      '/getInfo': 'http://localhost:3000',
+      '/createUser': 'http://localhost:3000',
+      '/login': 'http://localhost:3000',
+      '/tags': 'http://localhost:3000',
+      '/channels': 'http://localhost:3000',
       '/posts': 'http://localhost:3000',
       '/posts.json': 'http://localhost:3000',
       '/feed': 'http://localhost:3000',

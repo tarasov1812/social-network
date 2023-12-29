@@ -4,7 +4,7 @@ import {
   Route, RouterProvider, createBrowserRouter, createRoutesFromElements,
 } from 'react-router-dom';
 import {
-  fetchCurrentUserPosts, fetchUser,
+  fetchCurrentUserPosts, fetchUser, fetchThemes, fetchChannels,
 } from './store/PostSlice.js';
 import './App.css';
 
@@ -46,6 +46,20 @@ function App() {
         .catch((error) => {
           console.log(error);
         });
+    });
+  dispatch(fetchThemes())
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  dispatch(fetchChannels())
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
     });
 
   return (
