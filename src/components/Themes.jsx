@@ -9,7 +9,7 @@ function Themes() {
     <div className={styles.container}>
       <h4>Relevat topics</h4>
       {themes.map((theme) => (
-        <Theme tag={theme.tag} messages={theme.messages} />
+        <Theme key={theme.key} tag={theme.tag} messages={theme.messages} />
       ))}
     </div>
   );

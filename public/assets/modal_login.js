@@ -26,6 +26,7 @@ btn2.onclick = function () {
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function () {
+  modalForm.style.visibility = 'hidden';
   modal.style.visibility = 'hidden';
   modal.style.opacity = 0;
 };

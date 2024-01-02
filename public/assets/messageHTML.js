@@ -25,6 +25,7 @@ export default function messageHTML(
   reposts,
   likes,
   shares,
+  time,
 ) {
   return `
 <div class="post-all">
@@ -36,7 +37,7 @@ export default function messageHTML(
                 <span class="nick">${nickname}</span>
             </div>
             <div class="date">
-                <span class="time">${date}</span>
+                <span class="time" data-date="${time}">${date}</span>
                 <span class="ago">${ago}</span>
             </div>
         </div>

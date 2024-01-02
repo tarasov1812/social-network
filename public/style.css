@@ -50,7 +50,7 @@
     overflow: auto; 
     background-color: rgba(0, 0, 0, 0.6);
     visibility: hidden;
-    opacity: 1;
+    opacity: 0;
     transition: 0.3s ease-in-out;
 }
 
@@ -225,9 +225,9 @@
     height: 100%; 
     overflow: auto; 
     background-color: rgba(0, 0, 0, 0.6);
-    visibility: hidden;
-    opacity: 1;
     transition: 0.3s ease-in-out;
+    visibility: hidden;
+    opacity: 0;
 }
 
 .login-form {

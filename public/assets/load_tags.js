@@ -1,10 +1,10 @@
 /**
  * Function for loading popular tags
  */
-import axios from 'axios';
 
 const grayTopics = document.getElementById('gray-topics');
 const loadTags = async () => {
+  // eslint-disable-next-line no-undef
   const response = await axios.get('/tags');
   response.data.tags.forEach((topic) => {
     const currentTopicsHtml = `

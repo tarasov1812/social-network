@@ -1,22 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { subscribeUser, unsubscribeUser, fetchCurrentUserPosts } from '../store/PostSlice.js';
+import { subscribeUser, unsubscribeUser, fetchCurrentUserPosts, 
+  fetchSubscribers, fetchSubscribed } from '../store/PostSlice.js';
 import styles from '../styles/Subscriber.module.css';
 
-function Subscriber({ data }) {
-  console.log(data.issubscribed);
+function Subscriber({ userToViewData, data, customKey }) {
   const dispatch = useDispatch();
   const [subscribed, setSubscribed] = useState(data.issubscribed);
+
+  useEffect(() => {
+    if (data.issubscribed !== undefined) {
+      setSubscribed(data.issubscribed);
+    }
+  }, [data.issubscribed]);
+
   const currentUser = useSelector((state) => state.posts.currentUser);
-  const showSubscribeButton = data.subscriber_id !== undefined
+  const showSubscribeButton = data.id !== undefined
   && currentUser.nickname !== data.nickname;
-  console.log(data.id);
   const handleButtonClick = () => {
+    const currentUserId = currentUser.id;
+    let id;
+    if (typeof userToView === 'object' && userToView !== null && Object.keys(userToView).length > 0) {
+      id = userToViewData.id.toString();
+    } else {
+      id = currentUser.id.toString();
+    }
     if (subscribed) {
       dispatch(unsubscribeUser(currentUser.id, data.id))
         .then(() => {
           dispatch(fetchCurrentUserPosts(currentUser.id));
+          dispatch(fetchSubscribers({ id, currentUserId }));
+          dispatch(fetchSubscribed({ id, currentUserId }));
         })
         .catch((error) => {
           console.log(error);
@@ -26,6 +41,8 @@ function Subscriber({ data }) {
       dispatch(subscribeUser(currentUser.id, data.id))
         .then(() => {
           dispatch(fetchCurrentUserPosts(currentUser.id));
+          dispatch(fetchSubscribers({ id, currentUserId }));
+          dispatch(fetchSubscribed({ id, currentUserId }));
         })
         .catch((error) => {
           console.log(error);
@@ -35,7 +52,7 @@ function Subscriber({ data }) {
   };
 
   return (
-    <div className={styles.postAll}>
+    <div className={styles.postAll} key={customKey}>
       <Link to={`/app/profile/${data.id}`} id="postLink1"><img className={styles.avatar} src={data.avatar} alt="User Avatar" /></Link>
       <div className={styles.post}>
         <div className={styles.nickNameDate}>

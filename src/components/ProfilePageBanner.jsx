@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { subscribeUser, unsubscribeUser, fetchCurrentUserPosts } from '../store/PostSlice.js';
 import styles from '../styles/ProfilePageBanner.module.css';
@@ -15,11 +15,18 @@ function ProfilePageBanner({
   const showSubscribeButton = userToViewData.id !== undefined
   && currentUser.id !== userToViewData.id;
 
+  useEffect(() => {
+    if (userToViewData.isSubscribed !== undefined) {
+      setSubscribed(userToViewData.isSubscribed);
+    }
+  }, [userToViewData.isSubscribed]);
+
   const handleButtonClick = () => {
     if (subscribed) {
       dispatch(unsubscribeUser(currentUser.id, userToViewData.id))
         .then(() => {
           dispatch(fetchCurrentUserPosts(currentUser.id));
+          
         })
         .catch((error) => {
           console.log(error);

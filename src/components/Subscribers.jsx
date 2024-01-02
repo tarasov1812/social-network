@@ -3,9 +3,7 @@ import { useSelector } from 'react-redux';
 import Subscriber from './Subscriber.jsx';
 import styles from '../styles/Subscribers.module.css';
 
-function Subscribers({ subscribersToShowProps, subscribedToShowProps }) {
-  console.log(subscribersToShowProps);
-  console.log(subscribedToShowProps);
+function Subscribers({ userToViewData, subscribersToShowProps, subscribedToShowProps }) {
   const nonEmptyArray = subscribedToShowProps.length > 0
     ? subscribedToShowProps : subscribersToShowProps;
   const isLoadingSubscribers = useSelector((state) => state.posts.isLoadingSubscribers);
@@ -41,7 +39,7 @@ function Subscribers({ subscribersToShowProps, subscribedToShowProps }) {
   return (
     <div className={styles.allPosts}>
       {nonEmptyArray.map((subscriber) => (
-        <Subscriber data={subscriber} />
+        <Subscriber userToViewData={userToViewData} data={subscriber} key={subscriber.id}/>
       ))}
     </div>
   );

@@ -16,6 +16,7 @@
   },
   "extends": ["airbnb", "plugin:mocha/recommended"],
   "plugins": [
-    "mocha"
+    "mocha",
+    "dotenv"
   ]
 }
