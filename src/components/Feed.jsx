@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchUserInfoWithId
+} from '../store/PostSlice.js';
 import '../App.css';
 
 import Logo from './Logo.jsx';
@@ -10,7 +14,21 @@ import Recomendations from './Recomendations.jsx';
 import Modal from './Modal.jsx';
 
 function Feed() {
+  const dispatch = useDispatch();
+  const currentUser = useSelector((state) => state.posts.currentUser);
+  const isLoadingCurrentUser = useSelector((state) => state.posts.isLoadingCurrentUser);
   const [modalActive, setModalActive] = useState(false);
+  // if (!isLoadingCurrentUser) {
+  //   const currentUserId = currentUser.id;
+  //   console.log(currentUserId);
+  //   dispatch(fetchUserInfoWithId({ currentUserId, currentUserId }))
+  //   .then((response) => {
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  // });
+
+  // }
 
   return (
     <>

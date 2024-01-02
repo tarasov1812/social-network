@@ -4,6 +4,7 @@ import styles from '../styles/Profile.module.css';
 
 function Profile() {
   const currentUser = useSelector((state) => state.posts.currentUser);
+  const userFoundById = useSelector((state) => state.posts.userFoundById);
   const backgroundStyle = {
     backgroundImage: `url(${currentUser.avatar})`,
   };
@@ -18,17 +19,17 @@ function Profile() {
       </div>
       <div className={styles.statistic}>
         <div className={styles.statisticData}>
-          <span className={styles.number}>45K</span>
+          <span className={styles.number}>{userFoundById.post_count}</span>
           <br />
           <span className={styles.word}>Messages</span>
         </div>
         <div className={styles.statisticData}>
-          <span className={styles.number}>28</span>
+          <span className={styles.number}>{userFoundById.following_count}</span>
           <br />
           <span className={styles.word}>Following</span>
         </div>
         <div className={styles.statisticData}>
-          <span className={styles.number}>3</span>
+          <span className={styles.number}>{userFoundById.followers_count}</span>
           <br />
           <span className={styles.word}>Followers</span>
         </div>

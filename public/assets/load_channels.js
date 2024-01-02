@@ -1,10 +1,10 @@
 /**
  * Function for loading interesting channels
  */
-import axios from 'axios';
 
 const grayChannels = document.getElementById('gray-channels');
 const loadChannels = async () => {
+  // eslint-disable-next-line no-undef
   const response = await axios.get('/channels');
   response.data.channels.forEach((channel) => {
     const interestingChannelsHtml = `

@@ -3,6 +3,8 @@ import fs from 'fs';
 import pkg from 'pg';
 import crypto from 'crypto';
 import cookieParser from 'cookie-parser';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const { Pool } = pkg;
 
@@ -26,39 +28,45 @@ app.use(express.static('public'));
 app.use(cookieParser());
 app.use(express.json());
 
-const port = process.env.PORT || 3000;
-
+//contection to data
 const pool = new Pool({
-  user: 'twitter_data_base_user',
-  host: 'dpg-cjri4861208c73a2ceig-a.oregon-postgres.render.com',
-  database: 'twitter_data_base',
-  password: 'KDq4Mrt2Eoz7Ps5t1WZwEgFWe1q3Dp8I',
-  port: '5432',
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
   ssl: {
     rejectUnauthorized: false,
   },
 });
 
+const port = process.env.PORT || 3000;
+
 // tags (simplified for now)
 app.get('/tags', (req, res) => {
   const tags = [
     {
+      key: 1,
       tag: '#javascript',
       messages: '2 941 messages',
     },
     {
+      key: 2,
       tag: '#python3',
       messages: '29 718 messages',
     },
     {
+      key: 3,
       tag: '#ruby',
       messages: '958 messages',
     },
     {
+      key: 4,
       tag: '#how_to_start_programming',
       messages: '4 185 messages',
     },
     {
+      key: 5,
       tag: '#help_me_with_my_code',
       messages: '482 messages',
     },
@@ -71,16 +79,19 @@ app.get('/tags', (req, res) => {
 app.get('/channels', (req, res) => {
   const channels = [
     {
+      id: 1,
       channelName: 'Habr',
       channelNick: '@habr_popsci',
       img: 'https://ucarecdn.com/d35445d0-9837-4fdf-8a2f-fb45dd901984/habr.png',
     },
     {
+      id: 2,
       channelName: 'Match TV',
       channelNick: '@MatchTV',
       img: 'https://ucarecdn.com/532b575d-b8a2-4662-962f-d560894ba42b/match.png',
     },
     {
+      id: 3,
       channelName: 'Pop Mechanica',
       channelNick: '@PopMechanica',
       img: 'https://ucarecdn.com/77bd48bb-f402-4c4b-8e07-ab06c6499694/pm.png',
@@ -151,7 +162,9 @@ app.get('/postUserAndSubs', (req, res) => {
     WHERE
       posts.author_id = ${userId} OR posts.author_id IN (
         SELECT subscribed_to_id FROM subscriptions WHERE subscriber_id = ${userId}
-      );
+      )
+    ORDER BY
+      posts.time DESC
   `;
 
   pool.query(query, (error, results) => {
@@ -190,7 +203,9 @@ app.get('/user-posts/:userId', (req, res) => {
     JOIN
       authors ON posts.author_id = authors.id
     WHERE
-      posts.author_id = ${userId};
+      posts.author_id = ${userId}
+    ORDER BY
+      posts.time DESC
   `;
 
   pool.query(query, (error, results) => {
@@ -663,15 +678,20 @@ app.get('/getSubscribers/:id/:currentUserId', async (req, res) => {
 app.get('/getSubscribed/:id/:currentUserId', async (req, res) => {
   const { id, currentUserId } = req.params;
   const subscriptionsQuery = `
-      SELECT sub.subscriber_id, auth.id, auth.name, auth.nickname, auth.about, auth.avatar,
+    SELECT 
+      sub.subscribed_to_id AS id, 
+      auth.name, 
+      auth.nickname, 
+      auth.about, 
+      auth.avatar,
       EXISTS (
         SELECT 1
         FROM subscriptions AS s
-        WHERE s.subscriber_id = $1 AND s.subscribed_to_id = sub.subscriber_id
+        WHERE s.subscriber_id = $1 AND s.subscribed_to_id = sub.subscribed_to_id
       ) AS isSubscribed
     FROM subscriptions AS sub
     JOIN authors AS auth ON sub.subscribed_to_id = auth.id
-    WHERE sub.subscriber_id = $2;
+    WHERE sub.subscriber_id = $2
     `;
 
   const { rows } = await pool.query(subscriptionsQuery, [currentUserId, id]);

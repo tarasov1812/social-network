@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Theme({ tag, messages }) {
+function Theme({ customKey, tag, messages }) {
   return (
-    <>
+    <div key={customKey}>
       <h5>{tag}</h5>
       <p>{messages}</p>
-    </>
+    </div>
   );
 }
 

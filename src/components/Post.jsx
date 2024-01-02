@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styles from '../styles/Post.module.css';
 import timeConverter from '/public/assets/time_converter.js';
 
-function Post({ data }) {
+function Post({ data, customKey }) {
   const currentTime = new Date();
   const postPictureUrl = data.img ? data.img : '';
 
@@ -20,7 +20,7 @@ function Post({ data }) {
   }
 
   return (
-    <div className={styles.postAll}>
+    <div className={styles.postAll} key={customKey}>
       <Link to={`/app/profile/${data.author_id}`} id="postLink1"><img className={styles.avatar} src={data.avatar} alt="User Avatar" /></Link>
       <div className={styles.post}>
         <div className={styles.nickNameDate}>

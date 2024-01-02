@@ -46,7 +46,7 @@ function EditProfile() {
   const dataOutputRef = useRef();
   const currentUser = useSelector((state) => state.posts.currentUser);
 
-  const [photoUrl, setPhotoUrl] = useState(currentUser.avatar);
+  const [photoUrl, setPhotoUrl] = useState('');
   const [name, setName] = useState(currentUser.name);
   const [nick, setNick] = useState(currentUser.nickname ? currentUser.nickname.slice(1) : '');
   const [about, setAbout] = useState(currentUser.about);
@@ -55,9 +55,19 @@ function EditProfile() {
   const [showbirthdate, setShowbirthdate] = useState('not settled');
   console.log(photoUrl);
 
+  let backgroundStyle = {
+    backgroundImage: `url(${photoUrl || currentUser.avatar})`,
+  };
+
   const handlePhotoUpload = useCallback((e) => {
     const { data } = e.detail;
-    setPhotoUrl(data[0].cdnUrl);
+    console.log(data);
+    if (data && data.length > 0 && data[0].cdnUrl) {
+      setPhotoUrl(data[0].cdnUrl);
+      backgroundStyle = {
+        backgroundImage: `url(${photoUrl})`,
+      };
+    }
   }, []);
 
   useEffect(() => {
@@ -98,16 +108,11 @@ function EditProfile() {
 
     dispatch(changeProfileDate({ id, requestBody }))
       .then((response) => {
-        console.log(response);
         dispatch(setCurrentUser(newUserData));
       })
       .catch((error) => {
         console.log(error);
       });
-  };
-
-  const backgroundStyle = {
-    backgroundImage: `url(${photoUrl || currentUser.avatar})`,
   };
 
   return (

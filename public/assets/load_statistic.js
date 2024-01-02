@@ -2,10 +2,10 @@
  * Function for loading statistic of written amount of messages and amount of registred users
  * by connection to API at the server
  */
-import axios from 'axios';
 
 const loadStatistic = async () => {
   try {
+    // eslint-disable-next-line no-undef
     const response = await axios.get('/getInfo');
     const usersCountElement = document.getElementById('usersRegistred');
     usersCountElement.innerHTML = `${response.data.usersCount}`;

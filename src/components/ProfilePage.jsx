@@ -20,7 +20,7 @@ function ProfilePage() {
   const [dispatched2, setDispatched2] = useState(false);
 
   // get the id of user to watch
-  const { id } = useParams();
+  let { id } = useParams();
   const parsedId = parseInt(id, 10);
 
   // array and object to show data in props
@@ -33,7 +33,6 @@ function ProfilePage() {
   if (parsedId && !dispatched) {
     dispatch(fetchUserPostsWithId({ id }))
       .then((response) => {
-        console.log(response);
       })
       .catch((error) => {
         console.log(error);
@@ -60,25 +59,25 @@ function ProfilePage() {
   const isLoadingSubscribed = useSelector((state) => state.posts.isLoadingSubscribed);
 
   // dispatch data from the server with this conditions
-  if (parsedId && !dispatched2 && !isLoadingCurrentUser) {
+  if (!dispatched2 && !isLoadingCurrentUser) {
     const currentUserId = currentUser.id;
+    if (id === undefined) {
+      id = currentUser.id.toString();
+    }
     dispatch(fetchUserInfoWithId({ id, currentUserId }))
       .then((response) => {
-        console.log(response);
       })
       .catch((error) => {
         console.log(error);
       });
     dispatch(fetchSubscribers({ id, currentUserId }))
       .then((response) => {
-        console.log(response);
       })
       .catch((error) => {
         console.log(error);
       });
     dispatch(fetchSubscribed({ id, currentUserId }))
       .then((response) => {
-        console.log(response);
       })
       .catch((error) => {
         console.log(error);
@@ -177,6 +176,7 @@ function ProfilePage() {
           )}
           {showSubscribers && (
             <Subscribers
+              userToViewData={userToViewData}
               subscribersToShowProps={subscribersToShowProps}
               subscribedToShowProps={subscribedToShowProps}
             />

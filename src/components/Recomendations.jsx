@@ -9,7 +9,7 @@ function Recomendations() {
     <div className={styles.container}>
       <h4>Interesting channels</h4>
       {channels.map((item) => (
-        <div className={styles.channel}>
+        <div className={styles.channel} key={item.id}>
           <img className={styles.channelLogo} src={item.img} alt="Channel Logo" />
           <div className={styles.channelNameAndNick}>
             <span className={styles.channelName}>{item.channelName}</span>
