@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { changePassword } from '../store/PostSlice.js';
+import { changePassword } from '../store/CurrentUserSlice.js';
 import styles from '../styles/ChangePassword.module.css';
 
 function ChangePassword() {
   const dispatch = useDispatch();
-  const currentUser = useSelector((state) => state.posts.currentUser);
-  const { id } = currentUser;
+  const currentUser = useSelector((state) => state.currentUser.currentUser);
+  const passwordChanged = useSelector((state) => state.currentUser.passwordChanged);
+  let id;
+  if (currentUser) {
+    id = currentUser.id;
+  }
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
+
+  if (passwordChanged) {
+    alert('Password was changed');
+  }
 
   const handleSave = () => {
     if (newPassword === repeatPassword) {
@@ -19,7 +27,7 @@ function ChangePassword() {
       setNewPassword('');
       setRepeatPassword('');
     } else {
-      // modal than password is not the same
+      alert('The entered passwords do not match');
     }
   };
   return (

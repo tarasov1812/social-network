@@ -6,9 +6,9 @@ import styles from '../styles/Subscribers.module.css';
 function Subscribers({ userToViewData, subscribersToShowProps, subscribedToShowProps }) {
   const nonEmptyArray = subscribedToShowProps.length > 0
     ? subscribedToShowProps : subscribersToShowProps;
-  const isLoadingSubscribers = useSelector((state) => state.posts.isLoadingSubscribers);
+  const userDetailsLoading = useSelector((state) => state.differentUser.userDetailsLoading);
 
-  if (isLoadingSubscribers) {
+  if (userDetailsLoading) {
     const elements = [];
 
     for (let i = 0; i < 5; i += 1) {

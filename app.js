@@ -133,92 +133,8 @@ app.get('/posts.json', (req, res) => {
     }
   });
 });
-
-// get posts for current user
-app.get('/postUserAndSubs', (req, res) => {
-  const { userId } = req.query;
-
-  const query = `
-    SELECT
-      posts.id,
-      authors.name,
-      authors.nickname,
-      authors.avatar,
-      authors.about,
-      authors.location,
-      authors.birthdate,
-      authors.showbirthdate,
-      posts.author_id,
-      posts.content,
-      posts.time,
-      posts.reposts,
-      posts.likes,
-      posts.shares,
-      posts.img      
-    FROM
-      posts
-    JOIN
-      authors ON posts.author_id = authors.id
-    WHERE
-      posts.author_id = ${userId} OR posts.author_id IN (
-        SELECT subscribed_to_id FROM subscriptions WHERE subscriber_id = ${userId}
-      )
-    ORDER BY
-      posts.time DESC
-  `;
-
-  pool.query(query, (error, results) => {
-    if (error) {
-      console.error('Error executing query', error);
-      res.status(500).json({ error: 'Internal server error' });
-    } else {
-      res.json(results.rows);
-    }
-  });
-});
-
-// get posts from user with known id
-app.get('/user-posts/:userId', (req, res) => {
-  const { userId } = req.params;
-
-  const query = `
-    SELECT
-      posts.id,
-      authors.name,
-      authors.nickname,
-      authors.avatar,
-      authors.about,
-      authors.location,
-      authors.birthdate,
-      authors.showbirthdate,
-      posts.author_id,
-      posts.content,
-      posts.time,
-      posts.reposts,
-      posts.likes,
-      posts.shares,
-      posts.img      
-    FROM
-      posts
-    JOIN
-      authors ON posts.author_id = authors.id
-    WHERE
-      posts.author_id = ${userId}
-    ORDER BY
-      posts.time DESC
-  `;
-
-  pool.query(query, (error, results) => {
-    if (error) {
-      console.error('Error executing query', error);
-      res.status(500).json({ error: 'Internal server error' });
-    } else {
-      res.json(results.rows);
-    }
-  });
-});
-
-// creae post
+ 
+// create post
 app.post('/posts.json', (req, res) => {
   const {
     // eslint-disable-next-line camelcase
@@ -456,47 +372,50 @@ app.get('/feed', async (req, res) => {
       FROM authors
       WHERE id = $1
     `;
-      const currentUser = await pool.query(userQuery, [authorId]);
-      res.status(200).send(currentUser.rows[0]);
+
+      const postsQuery = `
+      SELECT
+        posts.id,
+        authors.name,
+        authors.nickname,
+        authors.avatar,
+        authors.about,
+        authors.location,
+        authors.birthdate,
+        authors.showbirthdate,
+        posts.author_id,
+        posts.content,
+        posts.time,
+        posts.reposts,
+        posts.likes,
+        posts.shares,
+        posts.img      
+      FROM
+        posts
+      JOIN
+        authors ON posts.author_id = authors.id
+      WHERE
+        posts.author_id = $1 OR posts.author_id IN (
+          SELECT subscribed_to_id FROM subscriptions WHERE subscriber_id = $1
+        )
+      ORDER BY
+        posts.time DESC
+    `;
+      const [
+        currentUserResult,
+        postsResult,
+      ] = await Promise.all([
+        pool.query(userQuery, [authorId]),
+        pool.query(postsQuery, [authorId]),
+      ]);
+
+      const userDetails = currentUserResult.rows[0];
+      const posts = postsResult.rows;
+      res.status(200).send({ userDetails, posts });
     }
   } else {
     res.status(401).send('User not found');
   }
-});
-
-app.get('/get-user-with-id/:id', async (req, res) => {
-  const { id } = req.params;
-  const { currentUserId } = req.query;
-
-  const userQuery = `
-      SELECT authors.*, 
-      (SELECT COUNT(*) FROM subscriptions WHERE subscribed_to_id = authors.id) AS followers_count,
-      (SELECT COUNT(*) FROM subscriptions WHERE subscriber_id = authors.id) AS following_count,
-      (SELECT COUNT(*) FROM posts WHERE author_id = authors.id) AS post_count
-      FROM authors
-      WHERE authors.id = $1
-    `;
-
-  const userResult = await pool.query(userQuery, [id]);
-
-  if (userResult.rows.length === 0) {
-    res.status(404).send('User not found');
-    return;
-  }
-
-  const user = userResult.rows[0];
-
-  // check subscribtion for CurrentUserId for user.id
-  const subscriptionQuery = `
-      SELECT * FROM subscriptions
-      WHERE subscriber_id = $1 AND subscribed_to_id = $2
-  `;
-  const subscriptionResult = await pool.query(subscriptionQuery, [currentUserId, user.id]);
-
-  // add flag isSubscribe
-  user.isSubscribed = subscriptionResult.rows.length > 0;
-
-  res.status(200).send(user);
 });
 
 // Unsubscribe
@@ -602,14 +521,15 @@ app.put('/changePassword/:id', async (req, res) => {
     pool.query(updateQuery, updateValues, (error) => {
       if (error) {
         console.error('Error executing query', error);
-        res.status(500).json({ error: 'Internal server error' });
+        return res.status(500).json({ error: 'Internal server error' });
       } else {
         res.set('Content-Type', 'application/json');
-        res.json({ message: 'User password updated successfully' });
+        return res.json({ message: 'User password updated successfully' });
       }
     });
+  } else {
+    return res.status(500).json({ error: 'Password is not the same' });
   }
-  return res.json({ message: 'User password updated successfully' });
 });
 
 // change email
@@ -655,49 +575,6 @@ app.put('/changeEmail/:id', async (req, res) => {
   return res.json({ message: 'Email updated successfully' });
 });
 
-// get subscribres data
-app.get('/getSubscribers/:id/:currentUserId', async (req, res) => {
-  const { id, currentUserId } = req.params;
-  const subscribersQuery = `
-    SELECT sub.subscriber_id, auth.id, auth.name, auth.nickname, auth.about, auth.avatar,
-      EXISTS (
-        SELECT 1
-        FROM subscriptions AS s
-        WHERE s.subscriber_id = $1 AND s.subscribed_to_id = sub.subscriber_id
-      ) AS isSubscribed
-    FROM subscriptions AS sub
-    JOIN authors AS auth ON sub.subscriber_id = auth.id
-    WHERE sub.subscribed_to_id = $2;
-  `;
-
-  const { rows } = await pool.query(subscribersQuery, [currentUserId, id]);
-  res.json(rows);
-});
-
-// get subscribred data
-app.get('/getSubscribed/:id/:currentUserId', async (req, res) => {
-  const { id, currentUserId } = req.params;
-  const subscriptionsQuery = `
-    SELECT 
-      sub.subscribed_to_id AS id, 
-      auth.name, 
-      auth.nickname, 
-      auth.about, 
-      auth.avatar,
-      EXISTS (
-        SELECT 1
-        FROM subscriptions AS s
-        WHERE s.subscriber_id = $1 AND s.subscribed_to_id = sub.subscribed_to_id
-      ) AS isSubscribed
-    FROM subscriptions AS sub
-    JOIN authors AS auth ON sub.subscribed_to_id = auth.id
-    WHERE sub.subscriber_id = $2
-    `;
-
-  const { rows } = await pool.query(subscriptionsQuery, [currentUserId, id]);
-  res.json(rows);
-});
-
 // getInfo
 app.get('/getInfo', async (req, res) => {
   try {
@@ -724,5 +601,98 @@ app.get('/getInfo', async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
+// info of user with known id
+app.get('/get-user-details/:id/:currentUserId', async (req, res) => {
+  const { id, currentUserId } = req.params;
+
+  try {
+    const userDetailsQuery = `
+      SELECT 
+        authors.*, 
+        (SELECT COUNT(*) FROM subscriptions WHERE subscribed_to_id = authors.id) AS followers_count,
+        (SELECT COUNT(*) FROM subscriptions WHERE subscriber_id = authors.id) AS following_count,
+        (SELECT COUNT(*) FROM posts WHERE author_id = authors.id) AS post_count,
+        EXISTS (
+          SELECT 1 FROM subscriptions WHERE subscriber_id = $1 AND subscribed_to_id = authors.id
+        ) AS isSubscribed
+      FROM authors
+      WHERE authors.id = $2
+    `;
+
+    const subscribersQuery = `
+      SELECT sub.subscriber_id, auth.id, auth.name, auth.nickname, auth.about, auth.avatar,
+        EXISTS (
+          SELECT 1 FROM subscriptions AS s
+          WHERE s.subscriber_id = $1 AND s.subscribed_to_id = sub.subscriber_id
+        ) AS isSubscribed
+      FROM subscriptions AS sub
+      JOIN authors AS auth ON sub.subscriber_id = auth.id
+      WHERE sub.subscribed_to_id = $2;
+    `;
+
+    const subscribedQuery = `
+      SELECT 
+        sub.subscribed_to_id AS id, 
+        auth.name, 
+        auth.nickname, 
+        auth.about, 
+        auth.avatar,
+        EXISTS (
+          SELECT 1 FROM subscriptions AS s
+          WHERE s.subscriber_id = $1 AND s.subscribed_to_id = sub.subscribed_to_id
+        ) AS isSubscribed
+      FROM subscriptions AS sub
+      JOIN authors AS auth ON sub.subscribed_to_id = auth.id
+      WHERE sub.subscriber_id = $2;
+    `;
+
+    const postsQuery = `
+      SELECT
+        posts.id,
+        authors.name,
+        authors.nickname,
+        authors.avatar,
+        authors.about,
+        authors.location,
+        authors.birthdate,
+        authors.showbirthdate,
+        posts.author_id,
+        posts.content,
+        posts.time,
+        posts.reposts,
+        posts.likes,
+        posts.shares,
+        posts.img      
+      FROM
+        posts
+      JOIN
+        authors ON posts.author_id = authors.id
+      WHERE
+        posts.author_id = $1
+      ORDER BY
+        posts.time DESC
+    `;
+
+
+    const [userInfoResult, subscribersResult, subscribedResult, postsResult] = await Promise.all([
+      pool.query(userDetailsQuery, [currentUserId, id]),
+      pool.query(subscribersQuery, [currentUserId, id]),
+      pool.query(subscribedQuery, [currentUserId, id]),
+      pool.query(postsQuery, [id]),
+    ]);
+
+    const userInfo = userInfoResult.rows[0];
+    const subscribers = subscribersResult.rows;
+    const subscribed = subscribedResult.rows;
+    const posts = postsResult.rows;
+
+    res.json({ userInfo, subscribers, subscribed, posts });
+  } catch (error) {
+    console.error('Error fetching user details:', error);
+    res.status(500).send('Error fetching user details');
+  }
+});
+
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

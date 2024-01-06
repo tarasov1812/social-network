@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import postReducer from './PostSlice.js';
+import CurrentUserReducer from './CurrentUserSlice.js';
+import DifferentUserReducer from './DifferentUserSlice.js'
 
 const store = configureStore({
   reducer: {
-    posts: postReducer,
+    currentUser: CurrentUserReducer,
+    differentUser: DifferentUserReducer,
   },
 });
 

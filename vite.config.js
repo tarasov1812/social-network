@@ -20,6 +20,7 @@ export default defineConfig({
   server: {
     proxy: {
       // '/': 'http://localhost:3000',
+      '/get-user-details': 'http://localhost:3000',
       '/getInfo': 'http://localhost:3000',
       '/createUser': 'http://localhost:3000',
       '/login': 'http://localhost:3000',

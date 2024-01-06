@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeEmail } from '../store/PostSlice.js';
+import { changeEmail } from '../store/CurrentUserSlice.js';
 import styles from '../styles/ChangeEmail.module.css';
 
 function ChangeEmail() {
   const dispatch = useDispatch();
-  const currentUser = useSelector((state) => state.posts.currentUser);
+  const currentUser = useSelector((state) => state.currentUser.currentUser);
   const { id } = currentUser;
 
   const [newEmail, setNewEmail] = useState('');

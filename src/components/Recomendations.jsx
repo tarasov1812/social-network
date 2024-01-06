@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import styles from '../styles/Recomendations.module.css';
 
 function Recomendations() {
-  const channels = useSelector((state) => state.posts.channels);
+  const channels = useSelector((state) => state.currentUser.channels);
 
   return (
     <div className={styles.container}>

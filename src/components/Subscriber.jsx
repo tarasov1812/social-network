@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { subscribeUser, unsubscribeUser, fetchCurrentUserPosts, 
-  fetchSubscribers, fetchSubscribed } from '../store/PostSlice.js';
+import { subscribeUser, unsubscribeUser, fetchUser } from '../store/CurrentUserSlice.js';
+import { fetchUserDetails } from '../store/DifferentUserSlice.js';
 import styles from '../styles/Subscriber.module.css';
 
 function Subscriber({ userToViewData, data, customKey }) {
@@ -15,23 +15,23 @@ function Subscriber({ userToViewData, data, customKey }) {
     }
   }, [data.issubscribed]);
 
-  const currentUser = useSelector((state) => state.posts.currentUser);
+  const currentUser = useSelector((state) => state.currentUser.currentUser);
   const showSubscribeButton = data.id !== undefined
   && currentUser.nickname !== data.nickname;
   const handleButtonClick = () => {
     const currentUserId = currentUser.id;
     let id;
-    if (typeof userToView === 'object' && userToView !== null && Object.keys(userToView).length > 0) {
+    if (typeof userToViewData === 'object' && userToViewData !== null && Object.keys(userToViewData).length > 0) {
       id = userToViewData.id.toString();
     } else {
       id = currentUser.id.toString();
     }
+    
     if (subscribed) {
       dispatch(unsubscribeUser(currentUser.id, data.id))
         .then(() => {
-          dispatch(fetchCurrentUserPosts(currentUser.id));
-          dispatch(fetchSubscribers({ id, currentUserId }));
-          dispatch(fetchSubscribed({ id, currentUserId }));
+          dispatch(fetchUserDetails({ id, currentUserId }));
+          dispatch(fetchUser());
         })
         .catch((error) => {
           console.log(error);
@@ -40,9 +40,8 @@ function Subscriber({ userToViewData, data, customKey }) {
     } else {
       dispatch(subscribeUser(currentUser.id, data.id))
         .then(() => {
-          dispatch(fetchCurrentUserPosts(currentUser.id));
-          dispatch(fetchSubscribers({ id, currentUserId }));
-          dispatch(fetchSubscribed({ id, currentUserId }));
+          dispatch(fetchUserDetails({ id, currentUserId }));
+          dispatch(fetchUser());
         })
         .catch((error) => {
           console.log(error);

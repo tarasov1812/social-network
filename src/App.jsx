@@ -4,17 +4,17 @@ import {
   Route, RouterProvider, createBrowserRouter, createRoutesFromElements,
 } from 'react-router-dom';
 import {
-  fetchCurrentUserPosts, fetchUser, fetchThemes, fetchChannels, fetchUserInfoWithId
-} from './store/PostSlice.js';
+  fetchUser, fetchThemes, fetchChannels
+} from './store/CurrentUserSlice.js';
 import './App.css';
 
-import Feed from './components/Feed.jsx';
+import Feed from './pages/Feed.jsx';
 import Header from './components/Header.jsx';
-import EditProfile from './components/EditProfile.jsx';
-import ChangePassword from './components/ChangePassword.jsx';
+import EditProfile from './pages/EditProfile.jsx';
+import ChangePassword from './pages/ChangePassword.jsx';
 import Settings from './components/Settings.jsx';
-import ChangeEmail from './components/ChangeEmail.jsx';
-import ProfilePage from './components/ProfilePage.jsx';
+import ChangeEmail from './pages/ChangeEmail.jsx';
+import ProfilePage from './pages/ProfilePage.jsx';
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path="/app/" element={<Header />}>
@@ -34,36 +34,9 @@ const router = createBrowserRouter(createRoutesFromElements(
 
 function App() {
   const dispatch = useDispatch();
-
-  // Get current user id, and then all post related with this user id
-  dispatch(fetchUser())
-    .then((response) => {
-      const { id } = response.payload;
-      dispatch(fetchCurrentUserPosts(id))
-        .then((postsResponse) => {
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      dispatch(fetchUserInfoWithId({ id, id }))
-        .then((response) => {
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    });
-  dispatch(fetchThemes())
-    .then((response) => {
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  dispatch(fetchChannels())
-    .then((response) => {
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  dispatch(fetchUser());
+  dispatch(fetchThemes());
+  dispatch(fetchChannels());
 
   return (
     <RouterProvider router={router} />

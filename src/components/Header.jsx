@@ -1,13 +1,16 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { NavLink, Outlet } from 'react-router-dom';
-import styles from '../styles/Header.module.css';
+import React from "react";
+import { useSelector } from "react-redux";
+import { NavLink, Outlet } from "react-router-dom";
+import styles from "../styles/Header.module.css";
 
 function Header() {
-  const currentUser = useSelector((state) => state.posts.currentUser);
-  const backgroundStyle = {
-    backgroundImage: `url(${currentUser.avatar})`,
-  };
+  const currentUser = useSelector((state) => state.currentUser.currentUser);
+  let backgroundStyle = {};
+  if (currentUser && currentUser.avatar) {
+    backgroundStyle = {
+      backgroundImage: `url(${currentUser.avatar})`,
+    };
+  }
 
   return (
     <>
