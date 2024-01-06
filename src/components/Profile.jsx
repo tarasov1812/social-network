@@ -3,8 +3,7 @@ import { useSelector } from 'react-redux';
 import styles from '../styles/Profile.module.css';
 
 function Profile() {
-  const currentUser = useSelector((state) => state.posts.currentUser);
-  const userFoundById = useSelector((state) => state.posts.userFoundById);
+  const currentUser = useSelector((state) => state.currentUser.currentUser);
   const backgroundStyle = {
     backgroundImage: `url(${currentUser.avatar})`,
   };
@@ -19,17 +18,17 @@ function Profile() {
       </div>
       <div className={styles.statistic}>
         <div className={styles.statisticData}>
-          <span className={styles.number}>{userFoundById.post_count}</span>
+          <span className={styles.number}>{currentUser.post_count}</span>
           <br />
           <span className={styles.word}>Messages</span>
         </div>
         <div className={styles.statisticData}>
-          <span className={styles.number}>{userFoundById.following_count}</span>
+          <span className={styles.number}>{currentUser.following_count}</span>
           <br />
           <span className={styles.word}>Following</span>
         </div>
         <div className={styles.statisticData}>
-          <span className={styles.number}>{userFoundById.followers_count}</span>
+          <span className={styles.number}>{currentUser.followers_count}</span>
           <br />
           <span className={styles.word}>Followers</span>
         </div>

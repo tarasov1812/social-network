@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { subscribeUser, unsubscribeUser, fetchCurrentUserPosts } from '../store/PostSlice.js';
+import { subscribeUser, unsubscribeUser, fetchUser } from '../store/CurrentUserSlice.js';
+import { fetchUserDetails } from '../store/DifferentUserSlice.js';
 import styles from '../styles/ProfilePageBanner.module.css';
 
 function ProfilePageBanner({
   userToViewData, onFollowersClick, onFollowingClick, onMessagesClick,
 }) {
   const dispatch = useDispatch();
-  const [subscribed, setSubscribed] = useState(userToViewData.isSubscribed);
-  const currentUser = useSelector((state) => state.posts.currentUser);
+  const [subscribed, setSubscribed] = useState(userToViewData.issubscribed);
+  const currentUser = useSelector((state) => state.currentUser.currentUser);
   const backgroundStyle = {
     backgroundImage: `url(${userToViewData.avatar || currentUser.avatar})`,
   };
@@ -17,16 +18,19 @@ function ProfilePageBanner({
 
   useEffect(() => {
     if (userToViewData.isSubscribed !== undefined) {
-      setSubscribed(userToViewData.isSubscribed);
+      console.log('!');
+      setSubscribed(userToViewData.issubscribed);
     }
   }, [userToViewData.isSubscribed]);
 
   const handleButtonClick = () => {
+    const id = userToViewData.id;
+    const currentUserId = currentUser.id;
     if (subscribed) {
       dispatch(unsubscribeUser(currentUser.id, userToViewData.id))
         .then(() => {
-          dispatch(fetchCurrentUserPosts(currentUser.id));
-          
+          dispatch(fetchUser());
+          dispatch(fetchUserDetails({ id, currentUserId }));      
         })
         .catch((error) => {
           console.log(error);
@@ -35,7 +39,8 @@ function ProfilePageBanner({
     } else {
       dispatch(subscribeUser(currentUser.id, userToViewData.id))
         .then(() => {
-          dispatch(fetchCurrentUserPosts(currentUser.id));
+          dispatch(fetchUser());
+          dispatch(fetchUserDetails({ id, currentUserId }));
         })
         .catch((error) => {
           console.log(error);

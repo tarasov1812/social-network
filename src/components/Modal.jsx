@@ -4,10 +4,10 @@ import { Widget } from '@uploadcare/react-widget';
 import styles from '../styles/Modal.module.css';
 import postSize from '/public/assets/post_size.js';
 import Circle from './Circle.jsx';
-import { createPost, createPostAsync } from '../store/PostSlice.js';
+import { createPost, createPostAsync } from '../store/CurrentUserSlice.js';
 
 function Modal({ active, setActive }) {
-  const currentUser = useSelector((state) => state.posts.currentUser);
+  const currentUser = useSelector((state) => state.currentUser.currentUser);
   const [message, setMessage] = useState('');
   const [photoUrl, setPhotoUrl] = useState('');
 

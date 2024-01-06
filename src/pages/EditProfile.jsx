@@ -4,7 +4,7 @@ import React, {
   useCallback, useState, useRef, useEffect,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeProfileDate, setCurrentUser } from '../store/PostSlice.js';
+import { changeProfileDate, setCurrentUser } from '../store/CurrentUserSlice.js';
 import styles from '../styles/EditProfile.module.css';
 
 LR.FileUploaderRegular.shadowStyles = /* CSS */ `
@@ -44,7 +44,7 @@ LR.registerBlocks(LR);
 function EditProfile() {
   const dispatch = useDispatch();
   const dataOutputRef = useRef();
-  const currentUser = useSelector((state) => state.posts.currentUser);
+  const currentUser = useSelector((state) => state.currentUser.currentUser);
 
   const [photoUrl, setPhotoUrl] = useState('');
   const [name, setName] = useState(currentUser.name);
@@ -53,7 +53,6 @@ function EditProfile() {
   const [location, setLocation] = useState(currentUser.location);
   const [birthdate, setBirthdate] = useState(currentUser.birthdate ? currentUser.birthdate.split('T')[0] : '');
   const [showbirthdate, setShowbirthdate] = useState('not settled');
-  console.log(photoUrl);
 
   let backgroundStyle = {
     backgroundImage: `url(${photoUrl || currentUser.avatar})`,
@@ -61,7 +60,6 @@ function EditProfile() {
 
   const handlePhotoUpload = useCallback((e) => {
     const { data } = e.detail;
-    console.log(data);
     if (data && data.length > 0 && data[0].cdnUrl) {
       setPhotoUrl(data[0].cdnUrl);
       backgroundStyle = {

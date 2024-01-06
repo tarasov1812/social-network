@@ -4,10 +4,10 @@ import Post from './Post.jsx';
 import styles from '../styles/Posts.module.css';
 
 function Posts({ postsToView }) {
-  const messages = useSelector((state) => state.posts.data);
-  const isLoading = useSelector((state) => state.posts.isLoading);
+  const messages = useSelector((state) => state.currentUser.data);
+  const isLoadingCurrentUser = useSelector((state) => state.currentUser.isLoading);
 
-  if (isLoading) {
+  if (isLoadingCurrentUser) {
     const elements = [];
 
     for (let i = 0; i < 5; i += 1) {

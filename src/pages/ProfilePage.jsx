@@ -2,23 +2,16 @@ import React, { useState, useEffect } from 'react';
 import '../App.css';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  fetchUserPostsWithId, fetchUserInfoWithId, fetchSubscribers, fetchSubscribed,
-} from '../store/PostSlice.js';
-
-import Logo from './Logo.jsx';
-import Posts from './Posts.jsx';
-import Themes from './Themes.jsx';
-import Recomendations from './Recomendations.jsx';
-import ProfilePageBanner from './ProfilePageBanner.jsx';
-import Subscribers from './Subscribers.jsx';
+import { fetchUserDetails } from '../store/DifferentUserSlice.js';
+import Logo from '../components/Logo.jsx';
+import Posts from '../components/Posts.jsx';
+import Themes from '../components/Themes.jsx';
+import Recomendations from '../components/Recomendations.jsx';
+import ProfilePageBanner from '../components/ProfilePageBanner.jsx';
+import Subscribers from '../components/Subscribers.jsx';
 
 function ProfilePage() {
   const dispatch = useDispatch();
-  // using dispatched variables for dipatch just once
-  const [dispatched, setDispatched] = useState(false);
-  const [dispatched2, setDispatched2] = useState(false);
-
   // get the id of user to watch
   let { id } = useParams();
   const parsedId = parseInt(id, 10);
@@ -29,76 +22,30 @@ function ProfilePage() {
   let subscribersToShow = [];
   let subscribedToShow = [];
 
-  // get selected users posts
-  if (parsedId && !dispatched) {
-    dispatch(fetchUserPostsWithId({ id }))
-      .then((response) => {
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    setDispatched(true);
-  }
-
   // load information from the Store about current user
-  const allMessages = useSelector((state) => state.posts.data);
-  const currentUser = useSelector((state) => state.posts.currentUser);
+  const allMessages = useSelector((state) => state.currentUser.data);
+  const currentUser = useSelector((state) => state.currentUser.currentUser);
 
   // load dipatchs results from the Store
-  const postsFoundById = useSelector((state) => state.posts.postsFoundById);
-  const userFoundById = useSelector((state) => state.posts.userFoundById);
-  const subscribers = useSelector((state) => state.posts.subscribers);
-  const subscribed = useSelector((state) => state.posts.subscribed);
+  const postsFoundById = useSelector((state) => state.differentUser.postsFoundById);
+  const userInfo = useSelector((state) => state.differentUser.userInfo);
+  const subscribers = useSelector((state) => state.differentUser.subscribers);
+  const subscribed = useSelector((state) => state.differentUser.subscribed);
 
   // information about finishing loadings
-  const isLoadingPostsWithId = useSelector((state) => state.posts.isLoadingPostsWithId);
-  const isLoadingUserWithId = useSelector((state) => state.posts.isLoadingUserWithId);
-  const isLoadingCurrentUser = useSelector((state) => state.posts.isLoadingCurrentUser);
-  const isLoadingSubscribers = useSelector((state) => state.posts.isLoadingSubscribers);
-  const isLoadingSubscribed = useSelector((state) => state.posts.isLoadingSubscribed);
+  const isLoadingCurrentUser = useSelector((state) => state.currentUser.isLoadingCurrentUser);
+  const userDetailsLoading = useSelector((state) => state.differentUser.userDetailsLoading);
 
-  // dispatch data from the server with this conditions
-  if (!dispatched2 && !isLoadingCurrentUser) {
-    const currentUserId = currentUser.id;
-    if (id === undefined) {
-      id = currentUser.id.toString();
-    }
-    dispatch(fetchUserInfoWithId({ id, currentUserId }))
-      .then((response) => {
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    dispatch(fetchSubscribers({ id, currentUserId }))
-      .then((response) => {
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    dispatch(fetchSubscribed({ id, currentUserId }))
-      .then((response) => {
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    setDispatched2(true);
-  }
 
-  if (!isLoadingPostsWithId && currentUser.id !== parsedId) {
+
+  if (!userDetailsLoading && currentUser.id !== parsedId) {
     postsToView = [...postsFoundById];
   }
 
-  if (!isLoadingSubscribers) {
+  if (!userDetailsLoading) {
+    userToViewData = { ...userInfo };
     subscribersToShow = [...subscribers];
-  }
-
-  if (!isLoadingSubscribed) {
     subscribedToShow = [...subscribed];
-  }
-
-  if (!isLoadingUserWithId) {
-    userToViewData = { ...userFoundById };
   }
 
   // show different components depends on user choise
@@ -112,7 +59,6 @@ function ProfilePage() {
   const handleFollowersClick = () => {
     setSubscribedToShowProps([]);
     setSubscribersToShowProps(subscribersToShow);
-
     setShowSubscribers(true);
   };
 
@@ -151,14 +97,20 @@ function ProfilePage() {
     }
   }
 
-  // Reset dispatched values when `id` changes
+  const currentUserId = currentUser.id;
   useEffect(() => {
-    setDispatched(false);
-    setDispatched2(false);
+    // Load user details if not loading and ID is available
+    if (!isLoadingCurrentUser && parsedId) {
+      if (id === undefined) {
+        id = currentUser.id.toString();
+      }
+      dispatch(fetchUserDetails({ id, currentUserId }));
+    }
+    // Reset subscribers and posts when ID changes
     setSubscribersToShowProps([]);
     setSubscribedToShowProps([]);
     setShowSubscribers(false);
-  }, [id]);
+  }, [dispatch, id, parsedId, currentUserId, isLoadingCurrentUser, currentUser.id]);
 
   return (
     <>
