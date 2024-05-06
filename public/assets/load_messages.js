@@ -10,11 +10,12 @@ const currentTime = new Date();
 
 const loadMessages = async () => {
   // eslint-disable-next-line no-undef
-  const response = await axios.get('/posts.json');
+  const response = await axios.get('http://localhost:8086/app/findLatesPosts');
   response.data.forEach((message) => {
+    console.log(message);
     const pictureUrl = message.img ? message.img : '';
     // get time difference from the post time and current time
-    let date = timeConverter(Math.floor((currentTime - new Date(message.time)) / 1000 / 60));
+    let date = timeConverter(Math.floor((currentTime - new Date(message.postDate)) / 1000 / 60));
     // put string 'age' if date is not 'now'
     let ago = '&nbspago';
     // if date is not 'now' cat 'ago' string from return from function timeConverter
@@ -27,18 +28,19 @@ const loadMessages = async () => {
     }
     // call helper funtion for create HTML code
     const messageH = messageHTML(
-      message.avatar,
-      message.name,
-      message.nickname,
+      message.authorAvatar,
+      message.authorName,
+      message.authorNickName,
       date,
       ago,
       message.content,
       pictureUrl,
-      message.reposts,
-      message.likes,
-      message.shares,
-      message.time,
+      message.repost,
+      message.thumbUp,
+      message.share,
+      message.postDate,
     );
+
     grayMessages.classList.add('hidden');
     document.getElementById('all-posts-id').insertAdjacentHTML('beforeend', messageH);
   });

@@ -12,6 +12,7 @@ const app = express();
 
 const main = fs.readFileSync('public/main.html', 'utf8');
 app.get('/', (req, res) => res.type('html').send(main));
+/*
 
 const index = fs.readFileSync('public/index.html', 'utf8');
 const routes = ['', '/', '/feed', '/profile', '/settings', '/login', '/settings/profile-settings', '/settings/change-password', '/settings/change-email'];
@@ -22,7 +23,7 @@ app.get('/app/profile/:id', (req, res) => {
 
 routes.forEach((route) => {
   app.get(`/app${route}`, (req, res) => res.type('html').send(index));
-});
+}); */
 
 app.use(express.static('public'));
 app.use(cookieParser());
@@ -39,6 +40,12 @@ const pool = new Pool({
     rejectUnauthorized: false,
   },
 });
+
+console.log(process.env.DB_USER);
+console.log(process.env.DB_HOST);
+console.log(process.env.DB_NAME);
+console.log(process.env.DB_PASSWORD);
+console.log(process.env.DB_PORT);
 
 const port = process.env.PORT || 3000;
 

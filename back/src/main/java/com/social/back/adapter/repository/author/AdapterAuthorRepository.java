@@ -1,0 +1,69 @@
+package com.social.back.adapter.repository.author;
+
+import com.social.back.business.exception.EmailAlreadyExistsException;
+import com.social.back.business.exception.NicknameAlreadyExistsException;
+import com.social.back.business.exception.NicknameAndEmailAlreadyExistsException;
+import com.social.back.business.model.author.Author;
+import com.social.back.business.model.author.AuthorFilter;
+import com.social.back.business.model.common.PageableFilter;
+import com.social.back.business.repository.AuthorRepository;
+import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public class AdapterAuthorRepository implements AuthorRepository {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdapterAuthorRepository.class);
+    private StandardAuthorRepository repository;
+    private ModelMapper modelMapper;
+    public AdapterAuthorRepository(StandardAuthorRepository repository) {
+        this.repository = repository;
+        this.modelMapper = new ModelMapper();
+    }
+
+    @Override
+    public List<Author> findAll(AuthorFilter filter, PageableFilter pageableFilter) {
+        Pageable pageable = PageRequest.of(pageableFilter.getQueryIndex(), pageableFilter.getQuerySize());
+        Iterable<AuthorEntity> entities = repository.findAll();
+        List<Author> authors = new ArrayList<>();
+        for (AuthorEntity entity : entities) {
+            authors.add(modelMapper.map(entity, Author.class));
+        }
+        return authors;
+    }
+
+    @Override
+    public Optional<Author> findById(Long id) {
+        return repository.findById(id).map(entity -> modelMapper.map(entity, Author.class));
+    }
+
+    @Override
+    public Author save(Author author) {
+        if (repository.existsByNickName(author.getNickName()) && repository.existsByEmail(author.getEmail())) {
+            throw new NicknameAndEmailAlreadyExistsException("Nickname already exists");
+        }
+
+        if (repository.existsByNickName(author.getNickName())) {
+            throw new NicknameAlreadyExistsException("Nickname already exists");
+        }
+
+        if (repository.existsByEmail(author.getEmail())) {
+            throw new EmailAlreadyExistsException("Email already exists");
+        }
+        AuthorEntity entity = modelMapper.map(author, AuthorEntity.class);
+        AuthorEntity savedEntity = repository.save(entity);
+        return modelMapper.map(savedEntity, Author.class);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
+}

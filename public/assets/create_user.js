@@ -27,7 +27,7 @@ export default function createUser() {
           window.location.href = '/app';
         }
       } catch (error) {
-        if (error.response.status === 400) {
+        if (error.response.status === 406) {
           modalValidateInputDataBase('nick-name', 'invalid-nick-name', 'myModal');
         } else if (error.response.status === 409) {
           modalValidateInputDataBase('email', 'invalid-email', 'myModal');
