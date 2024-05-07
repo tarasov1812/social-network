@@ -37,7 +37,7 @@ function Posts({ postsToView }) {
   }
   return (
     <div className={styles.allPosts}>
-      {(postsToView || messages).map((message) => (
+      {(messages).map((message) => (
         <Post data={message} key={message.id}/>
       ))}
     </div>
