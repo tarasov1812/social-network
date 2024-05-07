@@ -66,4 +66,10 @@ public class AdapterAuthorRepository implements AuthorRepository {
     public void deleteById(Long id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public Author findByEmail(String email) {
+        AuthorEntity entity = repository.findByEmail(email);
+        return modelMapper.map(entity, Author.class);
+    }
 }

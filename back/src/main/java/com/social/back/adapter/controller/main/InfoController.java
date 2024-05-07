@@ -13,7 +13,7 @@ public class InfoController {
     @Autowired
     private InfoService infoService;
 
-    @GetMapping("/getInfo")
+    @GetMapping("/api/getInfo")
     public Map<String, Object> getInfo() {
         Map<String, Object> response = new HashMap<>();
         try {

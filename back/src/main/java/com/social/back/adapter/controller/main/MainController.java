@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 
 @Controller
 public class MainController {
-    @GetMapping("/")
+    @GetMapping("/loginpage")
     @ResponseBody
     public String getMainHtml() throws IOException {
         // Load main.html file from the resources directory

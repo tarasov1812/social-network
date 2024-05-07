@@ -10,7 +10,7 @@ import java.util.HashMap;
 @RestController
 public class ChannelsController {
 
-    @GetMapping("/channels")
+    @GetMapping("/api/channels")
     public Map<String, List<Map<String, Object>>> getChannels() {
         List<Map<String, Object>> channels = new ArrayList<>();
 

@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 @RestController
 public class TagsController {
-    @GetMapping("/tags")
+    @GetMapping("/api/tags")
     public Map<String, List<Map<String, Object>>> getTags() {
         List<Map<String, Object>> tags = new ArrayList<>();
 

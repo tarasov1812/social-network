@@ -19,25 +19,16 @@ export default defineConfig({
 
   server: {
     proxy: {
-      '/get-user-details': 'http://localhost:3000',
-      '/getInfo': 'http://localhost:3000',
-      '/createUser': 'http://localhost:3000',
-      '/login': 'http://localhost:3000',
-      '/tags': 'http://localhost:3000',
-      '/channels': 'http://localhost:3000',
-      '/posts': 'http://localhost:3000',
-      '/app/findAllPosts': 'http://localhost:8086',
-      '/feed': 'http://localhost:3000',
-      '/changePassword': 'http://localhost:3000',
-      '/changeProfileDate': 'http://localhost:3000',
-      '/user-posts': 'http://localhost:3000',
-      '/postUserAndSubs': 'http://localhost:3000',
-      '/unsubscribe': 'http://localhost:3000',
-      '/subscribe': 'http://localhost:3000',
-      '/get-user-with-id': 'http://localhost:3000',
-      '/changeEmail': 'http://localhost:3000',
-      '/getSubscribers': 'http://localhost:3000',
-      '/getSubscribed': 'http://localhost:3000',
+      '/api': {
+        target: 'http://localhost:8088',
+        changeOrigin: true,
+        secure: false,
+      },
+      '/loginpage': {
+        target: 'http://localhost:8088',
+        changeOrigin: true,
+        secure: false,
+      },
     },
   },
 });
