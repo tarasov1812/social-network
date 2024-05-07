@@ -10,7 +10,7 @@ const currentTime = new Date();
 
 const loadMessages = async () => {
   // eslint-disable-next-line no-undef
-  const response = await axios.get('http://localhost:8086/app/findLatesPosts');
+  const response = await axios.get('/api/findLatesPosts');
   response.data.forEach((message) => {
     console.log(message);
     const pictureUrl = message.img ? message.img : '';

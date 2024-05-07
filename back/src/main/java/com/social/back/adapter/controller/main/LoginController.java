@@ -24,7 +24,7 @@ public class LoginController {
     @Autowired
     private SessionRepository sessionRepository;
 
-    @PostMapping("/login")
+    @PostMapping("/api/login")
     public ResponseEntity<Object> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
         Author author = authorRepository.findByEmail(loginRequest.getEmail());
         if (author != null) {

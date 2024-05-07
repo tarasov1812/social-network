@@ -6,7 +6,7 @@
 const loadStatistic = async () => {
   try {
     // eslint-disable-next-line no-undef
-    const response = await axios.get('/getInfo');
+    const response = await axios.get('/api/getInfo');
     const usersCountElement = document.getElementById('usersRegistred');
     usersCountElement.innerHTML = `${response.data.usersCount}`;
 

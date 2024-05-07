@@ -5,7 +5,7 @@
 const grayChannels = document.getElementById('gray-channels');
 const loadChannels = async () => {
   // eslint-disable-next-line no-undef
-  const response = await axios.get('api/channels');
+  const response = await axios.get('/api/channels');
   response.data.channels.forEach((channel) => {
     const interestingChannelsHtml = `
                         <div id ="interesting-channels">

@@ -15,7 +15,7 @@ export default function login() {
     if (email !== '' && password !== '') {
       try {
       // eslint-disable-next-line no-undef
-        const response = await axios.post('/login', { email, password });
+        const response = await axios.post('/api/login', { email, password });
 
         if (response.status === 200) {
           modal.style.visibility = 'hidden';
