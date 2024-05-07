@@ -15,8 +15,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 public class AdapterPostRepository implements PostRepository {
@@ -54,5 +56,13 @@ public class AdapterPostRepository implements PostRepository {
     @Override
     public void deleteById(Long id) {
         repository.deleteById(id);
+    }
+    // todo - rebuild this code (instead of array - number of subscribers)
+    @Override
+    public List<Post> findPostsByAuthorIdOrSubscribedAuthors(Long id) {
+        List<PostEntity> postEntities = repository.findByAuthorIdOrAuthorIdIn(id, Arrays.asList(1L, 2L, 4L));
+        return postEntities.stream()
+                .map(postEntity -> modelMapper.map(postEntity, Post.class))
+                .collect(Collectors.toList());
     }
 }

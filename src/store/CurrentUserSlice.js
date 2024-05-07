@@ -7,15 +7,7 @@ const currentUserSlice = createSlice({
     data: [],
     themes: [],
     channels: [],
-    currentUser: {
-        avatar: 'https://ucarecdn.com/1a244caa-0035-46e8-ba9d-4ff40669d4e8/4200769_user_avatar_profile_people_icon.svg',
-        name: 'Alex',
-        nickName: '@alex',
-        post_count: 3,
-        following_count: 4,
-        followers_count: 10,
-        data: []
-        },
+    currentUser: {},
     isLoadingCurrentUser: true,
     passwordChanged: false,
   },
@@ -45,15 +37,8 @@ const currentUserSlice = createSlice({
       }))
       .addCase(fetchUser.fulfilled, (state, action) => ({
         ...state,
-        currentUser: {
-            avatar: 'https://ucarecdn.com/1a244caa-0035-46e8-ba9d-4ff40669d4e8/4200769_user_avatar_profile_people_icon.svg',
-            name: 'Alex',
-            nickName: '@alex',
-            post_count: 3,
-            following_count: 4,
-            followers_count: 10,
-        },
-        data: [],
+        currentUser: action.payload.userDetails,
+        data: action.payload.posts,
         isLoadingCurrentUser: false,
       }))
        .addCase(changePassword.fulfilled, (state, action) => ({
@@ -74,7 +59,7 @@ export const fetchChannels = createAsyncThunk('posts/fetchChannels', async () =>
   
 export const fetchUser = createAsyncThunk('posts/fetchUser', async () => {
     try {
-      const response = await axios.get('/feed');
+      const response = await axios.get('/api/feed');
       return response.data;
     } catch (error) {
       if (error.response && error.response.status === 401) {

@@ -14,16 +14,16 @@ function Profile() {
       <div className={styles.profileName}>
         <span className={styles.name}>{currentUser.name}</span>
         <br />
-        <span className={styles.nickName}>{currentUser.nickName}</span>
+        <span className={styles.nickName}>{6}</span>
       </div>
       <div className={styles.statistic}>
         <div className={styles.statisticData}>
-          <span className={styles.number}>{currentUser.post_count}</span>
+          <span className={styles.number}>{6}</span>
           <br />
           <span className={styles.word}>Messages</span>
         </div>
         <div className={styles.statisticData}>
-          <span className={styles.number}>{currentUser.following_count}</span>
+          <span className={styles.number}>{6}</span>
           <br />
           <span className={styles.word}>Following</span>
         </div>

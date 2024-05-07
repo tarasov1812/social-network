@@ -7,7 +7,7 @@ function Post({ data, customKey }) {
   const currentTime = new Date();
   const postPictureUrl = data.img ? data.img : '';
 
-  let date = timeConverter(Math.floor((currentTime - new Date(data.time)) / 1000 / 60));
+  let date = timeConverter(Math.floor((currentTime - new Date(data.postDate)) / 1000 / 60));
   // put string 'age' if date is not 'now'
   let ago = '\u00A0ago';
   // if date is not 'now' cat 'ago' string from return from function timeConverter
@@ -21,12 +21,12 @@ function Post({ data, customKey }) {
 
   return (
     <div className={styles.postAll} key={customKey}>
-      <Link to={`/app/profile/${data.author_id}`} id="postLink1"><img className={styles.avatar} src={data.avatar} alt="User Avatar" /></Link>
+      <Link to={`/app/profile/${data.author_id}`} id="postLink1"><img className={styles.avatar} src={data.authorAvatar} alt="User Avatar" /></Link>
       <div className={styles.post}>
         <div className={styles.nickNameDate}>
           <div className={styles.nameNick}>
-            <span className={styles.name}><Link to={`/app/profile/${data.author_id}`} id="postLink1">{data.name}</Link></span>
-            <span className={styles.nick}><Link to={`/app/profile/${data.author_id}`} id="postLink2">{data.nickname}</Link></span>
+            <span className={styles.name}><Link to={`/app/profile/${data.author_id}`} id="postLink1">{data.authorName}</Link></span>
+            <span className={styles.nick}><Link to={`/app/profile/${data.author_id}`} id="postLink2">{data.authorNickName}</Link></span>
           </div>
           <div className={styles.date}>
             <span>{date}</span>
@@ -40,15 +40,15 @@ function Post({ data, customKey }) {
         <div className={styles.counters}>
           <div className={styles.repost}>
             <img src="../../img/repost.svg" alt="Repost Icon" />
-            <span>{data.reposts}</span>
+            <span>{data.repost}</span>
           </div>
           <div>
             <img src="../../img/like.svg" alt="Like Icon" />
-            <span>{data.likes}</span>
+            <span>{data.thumbUp}</span>
           </div>
           <div>
             <img src="../../img/share.svg" alt="Share Icon" />
-            <span>{data.shares}</span>
+            <span>{data.share}</span>
           </div>
         </div>
       </div>
