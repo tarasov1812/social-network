@@ -1,5 +1,7 @@
 package com.social.back.adapter.repository.post;
 
+import com.social.back.adapter.repository.subscription.StandardSubscriptionRepository;
+import com.social.back.adapter.repository.subscription.SubscriptionEntity;
 import com.social.back.business.exception.EmailAlreadyExistsException;
 import com.social.back.business.exception.NicknameAlreadyExistsException;
 import com.social.back.business.exception.NicknameAndEmailAlreadyExistsException;
@@ -24,8 +26,10 @@ import java.util.stream.Collectors;
 public class AdapterPostRepository implements PostRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger(AdapterPostRepository.class);
     private StandardPostRepository repository;
+    private StandardSubscriptionRepository subscriptionRepository;
     private ModelMapper modelMapper;
-    public AdapterPostRepository(StandardPostRepository repository) {
+    public AdapterPostRepository(StandardPostRepository repository, StandardSubscriptionRepository subscriptionRepository) {
+        this.subscriptionRepository = subscriptionRepository;
         this.repository = repository;
         this.modelMapper = new ModelMapper();
     }
@@ -57,10 +61,16 @@ public class AdapterPostRepository implements PostRepository {
     public void deleteById(Long id) {
         repository.deleteById(id);
     }
-    // todo - rebuild this code (instead of array - number of subscribers)
+
     @Override
     public List<Post> findPostsByAuthorIdOrSubscribedAuthors(Long id) {
-        List<PostEntity> postEntities = repository.findByAuthorIdOrAuthorIdIn(id, Arrays.asList(1L, 2L, 4L));
+        List<SubscriptionEntity> subscriptions = subscriptionRepository.findBySubscriberId_Id(id);
+
+        List<Long> subscribedAuthorIds = subscriptions.stream()
+                .map(subscription -> subscription.getTargetId().getId())
+                .collect(Collectors.toList());
+
+        List<PostEntity> postEntities = repository.findByAuthorIdOrAuthorIdIn(id, subscribedAuthorIds);
         return postEntities.stream()
                 .map(postEntity -> modelMapper.map(postEntity, Post.class))
                 .collect(Collectors.toList());
