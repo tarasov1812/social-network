@@ -8,6 +8,7 @@ import com.social.back.business.model.session.Session;
 import com.social.back.business.repository.AuthorRepository;
 import com.social.back.business.repository.PostRepository;
 import com.social.back.business.repository.SessionRepository;
+import com.social.back.business.repository.SubscriptionRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,11 +24,13 @@ public class FeedService {
     private final AuthorRepository authorRepository;
     private final SessionRepository sessionRepository;
     private final PostRepository postRepository;
+    private final SubscriptionRepository subscriptionRepository;
 
-    public FeedService(AuthorRepository authorRepository, SessionRepository sessionRepository, PostRepository postRepository) {
+    public FeedService(AuthorRepository authorRepository, SessionRepository sessionRepository, PostRepository postRepository, SubscriptionRepository subscriptionRepository) {
         this.authorRepository = authorRepository;
         this.sessionRepository = sessionRepository;
         this.postRepository = postRepository;
+        this.subscriptionRepository = subscriptionRepository;
     }
 
     public ResponseEntity<?> getFeed(String email, String token) {
@@ -41,6 +44,13 @@ public class FeedService {
         if (session == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Session finished");
         }
+
+        long followersCount = subscriptionRepository.countByTargetId(author);
+        long subscriptionsCount = subscriptionRepository.countBySubscriberId(author);
+        long postsCount = postRepository.countByAuthorId(author.getId());
+        jsonAuthor.setFollowersCount(followersCount);
+        jsonAuthor.setFollowingCount(subscriptionsCount);
+        jsonAuthor.setPostCount(postsCount);
 
         List<Post> posts = postRepository.findPostsByAuthorIdOrSubscribedAuthors(author.getId());
         List<JsonPost>  jsonPosts = posts.stream()

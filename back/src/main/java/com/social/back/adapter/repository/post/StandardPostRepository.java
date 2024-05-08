@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface StandardPostRepository extends JpaRepository<PostEntity, Long> {
     List<PostEntity> findByAuthorIdOrAuthorIdIn(Long authorId, List<Long> subscribedAuthorIds);
+
+    int countByAuthorId(Long id);
 }

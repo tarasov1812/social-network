@@ -65,4 +65,9 @@ public class AdapterPostRepository implements PostRepository {
                 .map(postEntity -> modelMapper.map(postEntity, Post.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public int countByAuthorId(Long id) {
+        return repository.countByAuthorId(id);
+    }
 }

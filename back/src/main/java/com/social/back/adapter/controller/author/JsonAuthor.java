@@ -29,6 +29,12 @@ public class JsonAuthor {
     private boolean showBirthdate;
     @JsonView(value = {JsonAuthorViews.BasicDataResponse.class, JsonAuthorViews.CheckRequest.class})
     private List<JsonPost> posts;
+    @JsonView(value = {JsonAuthorViews.BasicDataResponse.class, JsonAuthorViews.CheckRequest.class})
+    private Long postCount;
+    @JsonView(value = {JsonAuthorViews.BasicDataResponse.class, JsonAuthorViews.CheckRequest.class})
+    private Long followingCount;
+    @JsonView(value = {JsonAuthorViews.BasicDataResponse.class, JsonAuthorViews.CheckRequest.class})
+    private Long followersCount;
 
     public JsonAuthor() {
         this.posts = new ArrayList<JsonPost>();
@@ -120,5 +126,29 @@ public class JsonAuthor {
 
     public void setShowBirthdate(boolean showBirthdate) {
         this.showBirthdate = showBirthdate;
+    }
+
+    public Long getPostCount() {
+        return postCount;
+    }
+
+    public void setPostCount(Long postCount) {
+        this.postCount = postCount;
+    }
+
+    public Long getFollowingCount() {
+        return followingCount;
+    }
+
+    public void setFollowingCount(Long followingCount) {
+        this.followingCount = followingCount;
+    }
+
+    public Long getFollowersCount() {
+        return followersCount;
+    }
+
+    public void setFollowersCount(Long followersCount) {
+        this.followersCount = followersCount;
     }
 }

@@ -2,10 +2,10 @@ package com.social.back;
 import com.social.back.business.repository.AuthorRepository;
 import com.social.back.business.repository.PostRepository;
 import com.social.back.business.repository.SessionRepository;
+import com.social.back.business.repository.SubscriptionRepository;
 import com.social.back.business.service.author.StandardAuthorManager;
 import com.social.back.business.service.info.FeedService;
 import com.social.back.business.service.post.StandardPostManager;
-import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -22,7 +22,7 @@ public class AppConfiguration {
     }
 
     @Bean
-    public FeedService feedService(AuthorRepository authorRepository, SessionRepository sessionRepository, PostRepository postRepository) {
-        return new FeedService(authorRepository, sessionRepository, postRepository);
+    public FeedService feedService(AuthorRepository authorRepository, SessionRepository sessionRepository, PostRepository postRepository, SubscriptionRepository subscriptionRepository) {
+        return new FeedService(authorRepository, sessionRepository, postRepository, subscriptionRepository);
     }
 }

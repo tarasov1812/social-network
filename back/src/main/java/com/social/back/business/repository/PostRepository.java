@@ -17,4 +17,6 @@ public interface PostRepository {
     void deleteById(Long id);
 
     List<Post> findPostsByAuthorIdOrSubscribedAuthors(Long id);
+
+    int countByAuthorId(Long id);
 }
