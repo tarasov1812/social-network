@@ -126,7 +126,7 @@ export const changeEmail = createAsyncThunk(
 // unsubcribe
 export const unsubscribeUser = (subscriberId, subscribedToId) => async () => {
   try {
-    const response = await axios.delete('/unsubscribe', {
+    const response = await axios.delete('/api/unsubscribe', {
       data: { subscriberId, subscribedToId },
     });
     console.log(response.data);
@@ -138,7 +138,7 @@ export const unsubscribeUser = (subscriberId, subscribedToId) => async () => {
 // subscribe
 export const subscribeUser = (subscriberId, subscribedToId) => async () => {
   try {
-    const response = await axios.post('/subscribe', {
+    const response = await axios.post('/api/subscribe', {
       subscriberId,
       subscribedToId,
     });

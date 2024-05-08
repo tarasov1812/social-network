@@ -44,4 +44,13 @@ public class Subscription {
     public void setSubscriptionDate(Date subscriptionDate) {
         this.subscriptionDate = subscriptionDate;
     }
+
+    public Subscription(Author subscriberId, Author targetId, Date subscriptionDate) {
+        this.subscriberId = subscriberId;
+        this.targetId = targetId;
+        this.subscriptionDate = subscriptionDate;
+    }
+
+    public Subscription() {
+    }
 }

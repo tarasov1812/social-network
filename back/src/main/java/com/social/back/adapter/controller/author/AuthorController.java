@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/app")
+@RequestMapping("/api")
 public class AuthorController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthorController.class);
     private AuthorManager authorManager;

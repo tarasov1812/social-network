@@ -14,6 +14,7 @@ public class AdapterSessionRepository implements SessionRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger(AdapterSessionRepository.class);
     private StandardSessionRepository repository;
     private ModelMapper modelMapper;
+
     public AdapterSessionRepository(StandardSessionRepository repository) {
         this.repository = repository;
         this.modelMapper = new ModelMapper();

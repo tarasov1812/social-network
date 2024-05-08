@@ -13,11 +13,11 @@ public class SubscriptionEntity {
     @Column(name = "id", unique = true)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subscriber_id", referencedColumnName = "id")
     private AuthorEntity subscriberId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "target_id", referencedColumnName = "id")
     private AuthorEntity targetId;
 
