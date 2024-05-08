@@ -1,0 +1,111 @@
+.allPosts{
+    background-color: #FFFFFF;
+}
+
+@media only screen and (min-width: 800px) {
+    .allPosts{
+        width: 632px;
+        height: -47px;
+        border-radius: 10px;
+        margin-bottom: 54px;
+    }
+}
+
+.postAll{
+    padding-top: 16px;
+    margin: 0 16px 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.avatarGray {
+    background-size: cover;
+    border-radius: 50%;
+    min-width: 52px;
+    height: 52px;
+    background-color: #E5E5E5;
+}
+
+.post {
+    width: 100%;
+}
+
+@media only screen and (min-width: 800px) {
+    .avatarGray {
+        min-width: 64px;
+        height: 64px;
+    }
+}
+
+.nickNameDate {
+    display: flex;
+    justify-content: space-between;
+}
+
+.grayNickName {
+    display: flex;
+    flex-direction: column;
+}
+
+@media only screen and (min-width: 800px) {
+    .grayNickName{
+        flex-direction: column;
+    }
+}
+
+.grayName {
+    font-family: 'Lato Black';
+    font-size: 14px;
+    height: 14px;
+    width: 100px;
+    background-color: #E5E5E5;
+    color: #E5E5E5;
+}
+
+@media only screen and (min-width: 800px) {
+    .grayName{
+        margin-right: 16px;
+        font-size: 16px;
+    }
+}
+
+.grayNick {
+    font-size: 14px;
+    line-height: 18px;
+    margin-top: 7px;
+    height: 14px;
+    width: 150px;
+    background-color: #E5E5E5;
+    color: #E5E5E5;
+}
+
+@media only screen and (min-width: 800px) {
+    .grayNick {
+        font-size: 16px;
+    }
+}
+
+.grayMessage {
+    padding: 5px 0;
+    color:#1D1E22;
+    line-height: 18px;
+}
+
+.grayMessage p{
+    margin-top: 30px;
+    background-color: #E5E5E5;
+    width: 100%;
+    height: 14px;
+}
+
+.grayMessage p:last-child{
+    margin-top: 7px;
+    margin-bottom: 30px;
+    width: 70%;
+}
+
+.graySpace {
+    height: 10px;
+    background-color: #E5E5E5;
+}

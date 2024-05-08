@@ -1,0 +1,134 @@
+.container {
+    height: 47px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: space-around;
+    margin-top: auto;
+    position: fixed;
+    bottom: 0;
+    background-color: #FFFFFF;
+    border-top: 2px solid #E9E9E9;
+    z-index: 5;
+}
+
+@media only screen and (min-width: 800px) {
+    .container {
+        justify-content: unset;
+        position: sticky;
+        height: 64px;
+        margin-top: unset;
+        margin-bottom: auto;
+        border-top: 0;
+        top: 0;
+        bottom: unset;
+    }
+}
+
+.container p {
+    display: none;
+}
+
+.container a {
+    width: 25%;
+}
+
+@media only screen and (min-width: 800px) {
+    .container a{
+        color: #1D1E22;
+        font-family: 'Lato';
+        padding-left: 14px;
+        display: block;
+        font-size: 12px;
+        padding-right: 28px;
+        height: 62px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: auto;
+        margin: 0;
+    }
+}
+
+@media only screen and (min-width: 800px) {
+    .container p{
+        font-family: 'Lato';
+        padding-left: 14px;
+        display: block;
+        padding-right: 28px;
+    }
+}
+
+
+.home {
+    width: 20px;
+    height: 20px;
+    background-image: url('../../public/img/home.png');
+    background-size: cover;
+    margin: 12px auto;
+}
+
+.profile {
+    width: 20px;
+    height: 20px;
+    background-image: url('../../public/img/user.svg');
+    margin: 12px auto;
+}
+
+.settings {
+    width: 20px;
+    height: 20px;
+    background-image: url('../../public/img/adjust.svg');
+    margin: 12px auto;
+}
+
+
+@media only screen and (min-width: 800px) {
+    .profile, .settings, .home {
+        margin-left: 21px;
+    }
+}
+
+.avatar {
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+    border-radius: 50%;
+    margin: 12px auto;
+    background-image: url('');
+    background-position: center;
+}
+
+@media only screen and (min-width: 800px) {
+    .avatar {
+        width: 48px;
+        height: 48px;
+        margin-left: auto;
+        margin-right: 16px;
+    }
+}
+
+.logo {
+    display: none;
+}
+
+@media only screen and (min-width: 800px) {
+    .logo {
+        display: block;
+        width: 21px;
+        height: 23px;
+        background-image: url('../../public/img/logo.svg');
+        background-size: cover;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+a:hover {
+    color: #0057FF;
+}
+
+a {
+    text-decoration: none;
+}

@@ -1,0 +1,39 @@
+.stylus {
+    width: 64px;
+    height: 64px;
+    background-image: url('../../public/img/CreateMessage.svg');
+    background-position: center 0px;
+    margin-top: auto;
+    position: fixed;
+    bottom: 71px;
+    right: 24px;
+}
+
+
+
+@media only screen and (min-width: 800px) {
+    .stylus{
+        background-image: none;
+        background-color: #FFFFFF;
+        position: static;
+        width: 632px;
+        margin-top: 32px;
+        margin-bottom: 32px;
+        height: 64px;
+        border-radius: 10px;
+    }
+}
+
+.message {
+    display: none;
+}
+
+@media only screen and (min-width: 800px) {
+    .message{
+        display: block;
+        font-size: 16px;
+        padding-top: 21px;
+        padding-left: 16px;
+        color: #ABACB1;
+    }
+}
