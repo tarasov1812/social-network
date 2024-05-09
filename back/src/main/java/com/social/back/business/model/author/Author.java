@@ -14,8 +14,10 @@ public class Author {
     private String avatar;
     private String about;
     private String location;
+    private String stack;
     private Date birthdate;
     private boolean showBirthdate;
+    private boolean openToWork;
     private List<Post> posts;
 
     public Long getId() {
@@ -104,5 +106,21 @@ public class Author {
 
     public void setPosts(List<Post> posts) {
         this.posts = posts;
+    }
+
+    public String getStack() {
+        return stack;
+    }
+
+    public void setStack(String stack) {
+        this.stack = stack;
+    }
+
+    public boolean isOpenToWork() {
+        return openToWork;
+    }
+
+    public void setOpenToWork(boolean openToWork) {
+        this.openToWork = openToWork;
     }
 }

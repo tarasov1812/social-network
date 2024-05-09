@@ -129,7 +129,7 @@ h2 {
     margin: -20px 17px 0;
     color: #555555;
     padding-left: 16px;
-    padding-right: 16px;
+    padding-right: -16px;
     font-family: 'Lato Regular';
     font-size: 18px;
 }
@@ -171,6 +171,12 @@ h2 {
 
 .checkB {
     display: flex;
-    margin: 16px 0 0 8px;
+    margin: 16px 0 0 18px;
+    flex-direction: column;
+}
+
+.checkOpenToWork {
+    display: flex;
+    margin: 16px 0 0 50px;
     flex-direction: column;
 }

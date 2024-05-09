@@ -24,9 +24,13 @@ public class JsonAuthor {
     @JsonView(value = {JsonAuthorViews.BasicDataResponse.class, JsonAuthorViews.CheckRequest.class})
     private String location;
     @JsonView(value = {JsonAuthorViews.BasicDataResponse.class, JsonAuthorViews.CheckRequest.class})
+    private String stack;
+    @JsonView(value = {JsonAuthorViews.BasicDataResponse.class, JsonAuthorViews.CheckRequest.class})
     private Date birthdate;
     @JsonView(value = {JsonAuthorViews.BasicDataResponse.class, JsonAuthorViews.CheckRequest.class})
     private boolean showBirthdate;
+    @JsonView(value = {JsonAuthorViews.BasicDataResponse.class, JsonAuthorViews.CheckRequest.class})
+    private boolean openToWork;
     @JsonView(value = {JsonAuthorViews.BasicDataResponse.class, JsonAuthorViews.CheckRequest.class})
     private List<JsonPost> posts;
     @JsonView(value = {JsonAuthorViews.BasicDataResponse.class, JsonAuthorViews.CheckRequest.class})
@@ -150,5 +154,21 @@ public class JsonAuthor {
 
     public void setFollowersCount(Long followersCount) {
         this.followersCount = followersCount;
+    }
+
+    public String getStack() {
+        return stack;
+    }
+
+    public void setStack(String stack) {
+        this.stack = stack;
+    }
+
+    public boolean isOpenToWork() {
+        return openToWork;
+    }
+
+    public void setOpenToWork(boolean openToWork) {
+        this.openToWork = openToWork;
     }
 }

@@ -28,10 +28,14 @@ public class AuthorEntity {
     private String about;
     @Column(name = "location")
     private String location;
+    @Column(name = "stack")
+    private String stack;
     @Column(name = "birthdate")
     private Date birthdate;
     @Column(name = "show_birthdate")
     private boolean showBirthdate;
+    @Column(name = "open_to_work")
+    private boolean openToWork;
     @OneToMany(mappedBy = "author", targetEntity = PostEntity.class,  cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<PostEntity> posts;
 
@@ -125,5 +129,21 @@ public class AuthorEntity {
 
     public void setShowBirthdate(boolean showBirthdate) {
         this.showBirthdate = showBirthdate;
+    }
+
+    public String getStack() {
+        return stack;
+    }
+
+    public void setStack(String stack) {
+        this.stack = stack;
+    }
+
+    public boolean isOpenToWork() {
+        return openToWork;
+    }
+
+    public void setOpenToWork(boolean openToWork) {
+        this.openToWork = openToWork;
     }
 }

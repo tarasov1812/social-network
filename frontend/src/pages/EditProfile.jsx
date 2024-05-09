@@ -48,11 +48,13 @@ function EditProfile() {
 
   const [photoUrl, setPhotoUrl] = useState('');
   const [name, setName] = useState(currentUser.name);
-  const [nick, setNick] = useState(currentUser.nickname ? currentUser.nickname.slice(1) : '');
+  const [nick, setNick] = useState(currentUser.nickName ? currentUser.nickName.slice(1) : '');
   const [about, setAbout] = useState(currentUser.about);
   const [location, setLocation] = useState(currentUser.location);
+  const [stack, setStack] = useState(currentUser.stack);
   const [birthdate, setBirthdate] = useState(currentUser.birthdate ? currentUser.birthdate.split('T')[0] : '');
   const [showbirthdate, setShowbirthdate] = useState('not settled');
+  const [openToWork, setOpenToWork] = useState('not settled');
 
   let backgroundStyle = {
     backgroundImage: `url(${photoUrl || currentUser.avatar})`,
@@ -84,24 +86,28 @@ function EditProfile() {
     const { id } = currentUser;
 
     const requestBody = {
-      nickname: nick ? `@${nick}` : currentUser.nickname,
+      nickName: nick ? `@${nick}` : currentUser.nickName,
       name: name || currentUser.name,
       avatar: photoUrl || currentUser.avatar,
       about: about || currentUser.about,
       location: location || currentUser.location,
+      stack: stack || currentUser.stack,
       birthdate: birthdate ? new Date(`${birthdate}T00:00:00.000Z`).toISOString() : currentUser.birthdate,
       showbirthdate: showbirthdate === 'not settled' ? currentUser.showbirthdate : showbirthdate,
+      openToWork: openToWork === 'not settled' ? currentUser.openToWork : openToWork,
     };
 
     const newUserData = {
       id: currentUser.id,
-      nickname: nick ? `@${nick}` : currentUser.nickname,
+      nickName: nick ? `@${nick}` : currentUser.nickName,
       name: name || currentUser.name,
       avatar: photoUrl || currentUser.avatar,
       about: about || currentUser.about,
+      stack: stack || currentUser.stack,
       location: location || currentUser.location,
       birthdate: birthdate ? new Date(`${birthdate}T00:00:00.000Z`).toISOString() : currentUser.birthdate,
       showbirthdate: showbirthdate === 'not settled' ? currentUser.showbirthdate : showbirthdate,
+      openToWork: openToWork === 'not settled' ? currentUser.openToWork : openToWork,
     };
 
     dispatch(changeProfileDate({ id, requestBody }))
@@ -120,48 +126,69 @@ function EditProfile() {
         <div className={styles.nameNickFoto}>
           <div className={styles.nameNick}>
             <span className={styles.nameSpan}>Your name</span>
-            <input className={styles.input} type="text" name="name" defaultValue={currentUser.name} onChange={(e) => setName(e.target.value)} />
+            <input className={styles.input} type="text" name="name" defaultValue={currentUser.name}
+                   onChange={(e) => setName(e.target.value)}/>
             <span className={styles.nickSpan}>Your nick</span>
-            <input className={styles.input} type="text" name="nick" defaultValue={currentUser.nickname ? currentUser.nickname.slice(1) : ''} onChange={(e) => setNick(e.target.value)} />
+            <input className={styles.input} type="text" name="nick"
+                   defaultValue={currentUser.nickName ? currentUser.nickName.slice(1) : ''}
+                   onChange={(e) => setNick(e.target.value)}/>
             {/* <div className={styles.invalid}>The field should not be empty</div> */}
           </div>
           <div className={styles.profileFoto} style={backgroundStyle}>
             <lr-config
-              ctx-name="my-uploader"
-              pubkey="3840ea5c2fc14f7bb59a"
+                ctx-name="my-uploader"
+                pubkey="3840ea5c2fc14f7bb59a"
             />
             <lr-data-output
-              ref={dataOutputRef}
-              use-event
-              hidden
-              class="uploader-cfg"
-              onEvent={handlePhotoUpload}
-              ctx-name="my-uploader"
+                ref={dataOutputRef}
+                use-event
+                hidden
+                class="uploader-cfg"
+                onEvent={handlePhotoUpload}
+                ctx-name="my-uploader"
             />
             <lr-file-uploader-regular
-              ctx-name="my-uploader"
-              css-src={fileUploaderRegularCssSrc}
+                ctx-name="my-uploader"
+                css-src={fileUploaderRegularCssSrc}
             />
           </div>
         </div>
         <span className={styles.aboutMeSpan}>About me</span>
-        <textarea className={styles.aboutMe} type="text" name="about" defaultValue={currentUser.about} onChange={(e) => setAbout(e.target.value)} />
+        <textarea className={styles.aboutMe} type="text" name="about" defaultValue={currentUser.about}
+                  onChange={(e) => setAbout(e.target.value)}/>
+        <span className={styles.nickSpan}>Technological stack</span>
+        <input className={styles.input} type="text" name="stack" defaultValue={currentUser.stack}
+               onChange={(e) => setStack(e.target.value)}/>
         <span className={styles.nickSpan}>Location</span>
-        <input className={styles.input} type="text" name="location" defaultValue={currentUser.location} onChange={(e) => setLocation(e.target.value)} />
+        <input className={styles.input} type="text" name="location" defaultValue={currentUser.location}
+               onChange={(e) => setLocation(e.target.value)}/>
         <div className={styles.dateAndPermission}>
           <div>
             <span className={styles.nameSpan}>Date of birth</span>
-            <input className={styles.inputBirth} type="date" name="date" defaultValue={currentUser.birthdate ? currentUser.birthdate.split('T')[0] : ''} onChange={(e) => setBirthdate(e.target.value)} />
+            <input className={styles.inputBirth} type="date" name="date"
+                   defaultValue={currentUser.birthdate ? currentUser.birthdate.split('T')[0] : ''}
+                   onChange={(e) => setBirthdate(e.target.value)}/>
           </div>
           <div className={styles.checkB}>
             <span className={styles.birth}>Show birthdate</span>
             <input
-              className={styles.inputConfirm}
-              type="checkbox"
-              name="showbd"
-              checked={showbirthdate === 'not settled' ? currentUser.showbirthdate : showbirthdate}
-              // checked={showbirthdate}
-              onChange={(e) => setShowbirthdate(e.target.checked)}
+                className={styles.inputConfirm}
+                type="checkbox"
+                name="showbd"
+                checked={showbirthdate === 'not settled' ? currentUser.showbirthdate : showbirthdate}
+                // checked={showbirthdate}
+                onChange={(e) => setShowbirthdate(e.target.checked)}
+            />
+          </div>
+          <div className={styles.checkOpenToWork}>
+            <span className={styles.birth}>Open to work</span>
+            <input
+                className={styles.inputConfirm}
+                type="checkbox"
+                name="showbd"
+                checked={openToWork === 'not settled' ? currentUser.openToWork : openToWork}
+                // checked={showbirthdate}
+                onChange={(e) => setOpenToWork(e.target.checked)}
             />
           </div>
         </div>
