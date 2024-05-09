@@ -76,8 +76,11 @@ function ProfilePageBanner({
           </div>
           <div className={styles.statisticData} onClick={onFollowingClick}>
             <span className={styles.number}>
-              {userToViewData.followingCount
-            || currentUser.followingCount}
+              {userToViewData.followingCount !== undefined && userToViewData.followingCount !== null
+                  ? userToViewData.followingCount
+                  : currentUser.followingCount !== undefined && currentUser.followingCount !== null
+                      ? currentUser.followingCount
+                      : 0}
 
             </span>
             <br className={styles.br} id="br2" />
@@ -85,8 +88,11 @@ function ProfilePageBanner({
           </div>
           <div className={styles.statisticData} onClick={onFollowersClick}>
             <span className={styles.number}>
-              {userToViewData.followersCount
-            || currentUser.followersCount}
+              {userToViewData.followersCount !== undefined && userToViewData.followersCount !== 0
+                  ? userToViewData.followersCount
+                  : currentUser.followersCount !== undefined
+                      ? currentUser.followersCount
+                      : 0}
 
             </span>
             <br className={styles.br} id="br3" />

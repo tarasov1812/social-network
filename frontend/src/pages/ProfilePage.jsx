@@ -43,7 +43,7 @@ function ProfilePage() {
   }
 
   if (!userDetailsLoading) {
-    userToViewData = { ...userInfo };
+    userToViewData = { ...userInfo};
     subscribersToShow = [...subscribers];
     subscribedToShow = [...subscribed];
   }
