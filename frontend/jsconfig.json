@@ -1,8 +1,13 @@
 {
-    "compilerOptions": {
-      "baseUrl": "http://16.171.44.142:8088",
-      "paths": {
-        "@/*": ["src/*"]
-      }
-    },
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "@api/*": [
+        "api/*"
+      ]
+    }
   }
+}
