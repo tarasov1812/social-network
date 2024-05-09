@@ -1,10 +1,12 @@
 package com.social.back.adapter.repository.post;
 
+import com.social.back.adapter.repository.author.AuthorEntity;
 import com.social.back.adapter.repository.subscription.StandardSubscriptionRepository;
 import com.social.back.adapter.repository.subscription.SubscriptionEntity;
 import com.social.back.business.exception.EmailAlreadyExistsException;
 import com.social.back.business.exception.NicknameAlreadyExistsException;
 import com.social.back.business.exception.NicknameAndEmailAlreadyExistsException;
+import com.social.back.business.model.author.Author;
 import com.social.back.business.model.common.PageableFilter;
 import com.social.back.business.model.post.Post;
 import com.social.back.business.model.post.PostFilter;
@@ -79,5 +81,14 @@ public class AdapterPostRepository implements PostRepository {
     @Override
     public int countByAuthorId(Long id) {
         return repository.countByAuthorId(id);
+    }
+
+    @Override
+    public List<Post> findAllByAuthor(Author author) {
+        AuthorEntity entity = modelMapper.map(author, AuthorEntity.class);
+        List<PostEntity> postEntities = repository.findAllByAuthor(entity);
+        return postEntities.stream()
+                .map(postEntity -> modelMapper.map(postEntity, Post.class))
+                .collect(Collectors.toList());
     }
 }

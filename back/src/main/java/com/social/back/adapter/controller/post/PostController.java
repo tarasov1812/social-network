@@ -57,6 +57,7 @@ public class PostController {
             jsonPost.setThumbUp(post.getThumbUp());
             jsonPost.setShare(post.getShare());
             jsonPost.setImg(post.getImg());
+            jsonPost.setAuthorId(post.getAuthor().getId());
             jsonPost.setAuthorName(post.getAuthor().getName());
             jsonPost.setAuthorNickName(post.getAuthor().getNickName());
             jsonPost.setAuthorAvatar(post.getAuthor().getAvatar());

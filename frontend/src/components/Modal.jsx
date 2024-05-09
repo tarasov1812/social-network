@@ -26,17 +26,17 @@ function Modal({ active, setActive }) {
   };
 
   const handlePost = () => {
-    const author_id = currentUser.id;
+    const authorId = currentUser.id;
 
     const requestBody = {
-      author_id,
+      authorId,
       content: message,
       img: photoUrl,
     };
 
     const newPost = {
       id: Math.random(),
-      author_id: author_id,
+      authorId: authorId,
       avatar: currentUser.avatar,
       name: currentUser.name,
       nickname: currentUser.nickName,

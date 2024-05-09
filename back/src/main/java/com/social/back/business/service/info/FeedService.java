@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class FeedService {
@@ -60,6 +61,34 @@ public class FeedService {
         Map<String, Object> response = new HashMap<>();
         response.put("userDetails", jsonAuthor);
         response.put("posts", jsonPosts);
+
+        return ResponseEntity.ok(response);
+    }
+
+    public ResponseEntity<?> getAnotherUser(Long id, Long currentUserId) {
+        Optional<Author> anotherUser = authorRepository.findById(id);
+        Author aUser = anotherUser.orElse(null);
+        Optional<Author> currentUser = authorRepository.findById(currentUserId);
+        Author cUser = currentUser.orElse(null);
+        JsonAuthor jsonAuthor = this.modelMapper.map(aUser, JsonAuthor.class);
+
+        long followersCount = subscriptionRepository.countByTargetId(aUser);
+        long subscriptionsCount = subscriptionRepository.countBySubscriberId(aUser);
+        long postsCount = postRepository.countByAuthorId(aUser.getId());
+        jsonAuthor.setFollowersCount(followersCount);
+        jsonAuthor.setFollowingCount(subscriptionsCount);
+        jsonAuthor.setPostCount(postsCount);
+
+        List<Post> posts = postRepository.findAllByAuthor(aUser);
+        List<JsonPost>  jsonPosts = posts.stream()
+                .map(post -> modelMapper.map(post, JsonPost.class))
+                .collect(Collectors.toList());
+        String[] empty = new String[1];
+        Map<String, Object> response = new HashMap<>();
+        response.put("userInfo", jsonAuthor);
+        response.put("posts", jsonPosts);
+        response.put("subscribers", empty);
+        response.put("subscribed", empty);
 
         return ResponseEntity.ok(response);
     }

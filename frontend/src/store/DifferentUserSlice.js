@@ -28,7 +28,7 @@ export const fetchUserDetails = createAsyncThunk(
     'user/fetchUserDetails',
     async ({ id, currentUserId }) => {
       try {
-        const response = await axios.get(`/get-user-details/${id}/${currentUserId}`);
+        const response = await axios.get(`/api/get-user-details/${id}/${currentUserId}`);
         return response.data;
       } catch (error) {
         console.error('Error fetching user details:', error);

@@ -81,17 +81,17 @@ function ProfilePage() {
   // dont load messages from server if the selected user is current user
   if (currentUser.id === parsedId) {
     for (let i = 0; i < allMessages.length; i += 1) {
-      if (allMessages[i].author_id === currentUser.id) {
+      if (allMessages[i].authorId === currentUser.id) {
         postsToView.push(allMessages[i]);
       }
     }
   }
-  // if at there is no any parametr in the link - dont load messages from the server
+  // if at there is no any parameter in the link - dont load messages from the server
   if (Number.isNaN(parsedId)) {
     userToViewData = {};
     postsToView = [];
     for (let i = 0; i < allMessages.length; i += 1) {
-      if (allMessages[i].author_id === currentUser.id) {
+      if (allMessages[i].authorId === currentUser.id) {
         postsToView.push(allMessages[i]);
       }
     }
@@ -102,6 +102,7 @@ function ProfilePage() {
     // Load user details if not loading and ID is available
     if (!isLoadingCurrentUser && parsedId) {
       if (id === undefined) {
+
         id = currentUser.id.toString();
       }
       dispatch(fetchUserDetails({ id, currentUserId }));

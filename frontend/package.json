@@ -8,7 +8,7 @@
     "test": "npx mocha tests",
     "lint": "npx eslint ."
   },
-  "author": "Alkesandr Tarasov",
+  "author": "Alexander Tarasov",
   "license": "ISC",
   "devDependencies": {
     "@vitejs/plugin-react": "^4.0.4",

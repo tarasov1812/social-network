@@ -68,16 +68,16 @@ function ProfilePageBanner({
         <div className={styles.statistic2}>
           <div className={styles.statisticData} onClick={onMessagesClick}>
             <span className={styles.number}>
-              {userToViewData.post_count
-            || currentUser.post_count}
+              {userToViewData.postCount
+            || currentUser.postCount}
             </span>
             <br className={styles.br} id="br1" />
             <span className={styles.word}>Messages</span>
           </div>
           <div className={styles.statisticData} onClick={onFollowingClick}>
             <span className={styles.number}>
-              {userToViewData.following_count
-            || currentUser.following_count}
+              {userToViewData.followingCount
+            || currentUser.followingCount}
 
             </span>
             <br className={styles.br} id="br2" />
@@ -85,8 +85,8 @@ function ProfilePageBanner({
           </div>
           <div className={styles.statisticData} onClick={onFollowersClick}>
             <span className={styles.number}>
-              {userToViewData.followers_count
-            || currentUser.followers_count}
+              {userToViewData.followersCount
+            || currentUser.followersCount}
 
             </span>
             <br className={styles.br} id="br3" />
@@ -106,7 +106,7 @@ function ProfilePageBanner({
       </div>
       <div className={styles.profileName}>
         <span className={styles.name}>{userToViewData.name || currentUser.name}</span>
-        <span className={styles.nickName}>{userToViewData.nickname || currentUser.nickname}</span>
+        <span className={styles.nickName}>{userToViewData.nickName || currentUser.nickName}</span>
       </div>
       <p className={styles.about}>{userToViewData.about || currentUser.about}</p>
       <div className={styles.containerDates}>
@@ -116,7 +116,7 @@ function ProfilePageBanner({
         </div>
         <div className={styles.date}>
           <div className={styles.nick} />
-          <p>{userToViewData.nickname || currentUser.nickname}</p>
+          <p>{userToViewData.nickName || currentUser.nickName}</p>
         </div>
         <div className={styles.date}>
           <div className={styles.birthday} />

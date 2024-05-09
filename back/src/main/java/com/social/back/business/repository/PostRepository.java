@@ -1,5 +1,6 @@
 package com.social.back.business.repository;
 
+import com.social.back.business.model.author.Author;
 import com.social.back.business.model.common.PageableFilter;
 import com.social.back.business.model.post.Post;
 import com.social.back.business.model.post.PostFilter;
@@ -19,4 +20,6 @@ public interface PostRepository {
     List<Post> findPostsByAuthorIdOrSubscribedAuthors(Long id);
 
     int countByAuthorId(Long id);
+
+    List<Post> findAllByAuthor(Author author);
 }

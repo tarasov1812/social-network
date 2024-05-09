@@ -5,13 +5,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/feed")
+@RequestMapping("/api")
 public class FeedController {
 
     private final FeedService feedService;
@@ -21,7 +18,7 @@ public class FeedController {
         this.feedService = feedService;
     }
 
-    @GetMapping
+    @GetMapping("/feed")
     public ResponseEntity<?> getFeed(@CookieValue(value = "email", required = false) String email,
                                      @CookieValue(value = "token", required = false) String token,
                                      HttpServletResponse response) {
@@ -30,6 +27,11 @@ public class FeedController {
         }
 
         return feedService.getFeed(email, token);
+    }
+    @GetMapping("/get-user-details/{id}/{currentUserId}")
+    public ResponseEntity<?> getAnotherUser(@PathVariable Long id, @PathVariable Long currentUserId) {
+
+        return feedService.getAnotherUser(id, currentUserId);
     }
 }
 

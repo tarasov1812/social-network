@@ -18,6 +18,9 @@ public class JsonPost {
     private Long thumbUp;
     @JsonView(value = {JsonAuthorViews.BasicDataResponse.class, JsonAuthorViews.CheckRequest.class, JsonPostViews.BasicDataResponse.class, JsonPostViews.CheckRequest.class})
     private Long share;
+
+    @JsonView(value = {JsonAuthorViews.BasicDataResponse.class, JsonAuthorViews.CheckRequest.class, JsonPostViews.BasicDataResponse.class, JsonPostViews.CheckRequest.class})
+    private Long authorId;
     @JsonView(value = {JsonAuthorViews.BasicDataResponse.class, JsonAuthorViews.CheckRequest.class, JsonPostViews.BasicDataResponse.class, JsonPostViews.CheckRequest.class})
     private String img;
 
@@ -108,6 +111,14 @@ public class JsonPost {
 
     public void setAuthorAvatar(String authorAvatar) {
         this.authorAvatar = authorAvatar;
+    }
+
+    public Long getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(Long authorId) {
+        this.authorId = authorId;
     }
 }
 

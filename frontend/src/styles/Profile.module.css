@@ -60,7 +60,7 @@
 @media only screen and (min-width: 960px) {
     .statistic{
         display: block;
-        padding-top: 40px;
+        padding-top: 30px;
         display: flex;
         justify-content: space-around;
     }

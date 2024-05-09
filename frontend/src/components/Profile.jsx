@@ -14,7 +14,7 @@ function Profile() {
       <div className={styles.profileName}>
         <span className={styles.name}>{currentUser.name}</span>
         <br />
-        <span className={styles.nickName}>{currentUser.nickname}</span>
+        <span className={styles.nickName}>{currentUser.nickName}</span>
       </div>
       <div className={styles.statistic}>
         <div className={styles.statisticData}>
