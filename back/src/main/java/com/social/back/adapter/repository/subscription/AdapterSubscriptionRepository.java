@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public class AdapterSubscriptionRepository implements SubscriptionRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger(AdapterSubscriptionRepository.class);
@@ -49,8 +51,13 @@ public class AdapterSubscriptionRepository implements SubscriptionRepository {
     public Subscription findBySubscriberIdAndTargetId(Author cUser, Author aUser) {
         AuthorEntity currentUserEntity = modelMapper.map(cUser, AuthorEntity.class);
         AuthorEntity anothertUserEntity = modelMapper.map(aUser, AuthorEntity.class);
-        SubscriptionEntity entity = repository.findBySubscriberIdAndTargetId(currentUserEntity, anothertUserEntity);
-        Subscription subscription = modelMapper.map(entity, Subscription.class);
-        return subscription;
+        Optional<SubscriptionEntity> entity = repository.findBySubscriberIdAndTargetId(currentUserEntity, anothertUserEntity);
+        SubscriptionEntity sub = entity.orElse(null);
+        if (sub == null) {
+            return null;
+        } else {
+            Subscription subscription = modelMapper.map(sub, Subscription.class);
+            return subscription;
+        }
     }
 }

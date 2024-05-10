@@ -5,6 +5,7 @@ import com.social.back.adapter.controller.post.JsonPost;
 import com.social.back.business.model.author.Author;
 import com.social.back.business.model.post.Post;
 import com.social.back.business.model.session.Session;
+import com.social.back.business.model.subscription.Subscription;
 import com.social.back.business.repository.AuthorRepository;
 import com.social.back.business.repository.PostRepository;
 import com.social.back.business.repository.SessionRepository;
@@ -75,9 +76,16 @@ public class FeedService {
         long followersCount = subscriptionRepository.countByTargetId(aUser);
         long subscriptionsCount = subscriptionRepository.countBySubscriberId(aUser);
         long postsCount = postRepository.countByAuthorId(aUser.getId());
+        Subscription sub = subscriptionRepository.findBySubscriberIdAndTargetId(cUser,aUser);
+        boolean isSubscribed = false;
+        // todo - rewrite it in more optimal way
+        if (sub != null && sub.getId() != null) {
+            isSubscribed = true;
+        }
         jsonAuthor.setFollowersCount(followersCount);
         jsonAuthor.setFollowingCount(subscriptionsCount);
         jsonAuthor.setPostCount(postsCount);
+        jsonAuthor.setSubscribed(isSubscribed);
 
         List<Post> posts = postRepository.findAllByAuthor(aUser);
         List<JsonPost>  jsonPosts = posts.stream()

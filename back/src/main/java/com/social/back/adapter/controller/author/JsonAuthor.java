@@ -40,6 +40,9 @@ public class JsonAuthor {
     @JsonView(value = {JsonAuthorViews.BasicDataResponse.class, JsonAuthorViews.CheckRequest.class})
     private Long followersCount;
 
+    @JsonView(value = {JsonAuthorViews.BasicDataResponse.class, JsonAuthorViews.CheckRequest.class})
+    private boolean isSubscribed;
+
     public JsonAuthor() {
         this.posts = new ArrayList<JsonPost>();
     }
@@ -170,5 +173,13 @@ public class JsonAuthor {
 
     public void setOpenToWork(boolean openToWork) {
         this.openToWork = openToWork;
+    }
+
+    public boolean isSubscribed() {
+        return isSubscribed;
+    }
+
+    public void setSubscribed(boolean subscribed) {
+        isSubscribed = subscribed;
     }
 }

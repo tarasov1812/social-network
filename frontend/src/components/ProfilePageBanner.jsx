@@ -8,7 +8,7 @@ function ProfilePageBanner({
   userToViewData, onFollowersClick, onFollowingClick, onMessagesClick,
 }) {
   const dispatch = useDispatch();
-  const [subscribed, setSubscribed] = useState(userToViewData.issubscribed);
+  const [subscribed, setSubscribed] = useState(userToViewData.isSubscribed);
   const currentUser = useSelector((state) => state.currentUser.currentUser);
   const backgroundStyle = {
     backgroundImage: `url(${userToViewData.avatar || currentUser.avatar})`,
@@ -19,7 +19,7 @@ function ProfilePageBanner({
   useEffect(() => {
     if (userToViewData.isSubscribed !== undefined) {
       console.log('!');
-      setSubscribed(userToViewData.issubscribed);
+      setSubscribed(userToViewData.isSubscribed);
     }
   }, [userToViewData.isSubscribed]);
 
