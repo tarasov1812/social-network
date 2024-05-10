@@ -123,6 +123,22 @@ export const changeEmail = createAsyncThunk(
   },
 );
 
+export const uploadCV = createAsyncThunk(
+    'user/uploadCV',
+    async ({ id, file }) => {
+        const formData = new FormData();
+        formData.append('file', file);
+        console.log(file);
+        const response = await axios.post(`/api/uploadCV/${id}`, formData, {
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        return response.data;
+    },
+);
+
 // unsubcribe
 export const unsubscribeUser = (subscriberId, subscribedToId) => async () => {
   try {

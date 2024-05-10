@@ -72,4 +72,12 @@ public class AdapterAuthorRepository implements AuthorRepository {
         AuthorEntity entity = repository.findByEmail(email);
         return modelMapper.map(entity, Author.class);
     }
+
+    @Override
+    public Author uploadCV(Author author) {
+        AuthorEntity entity = repository.findByEmail(author.getEmail());
+        entity.setCv(author.getCv());
+        repository.save(entity);
+        return author;
+    }
 }

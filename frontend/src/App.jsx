@@ -15,6 +15,7 @@ import ChangePassword from './pages/ChangePassword.jsx';
 import Settings from './components/Settings.jsx';
 import ChangeEmail from './pages/ChangeEmail.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
+import UploadCV from "./pages/UploadCV.jsx";
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path="/app/" element={<Header />}>
@@ -28,6 +29,7 @@ const router = createBrowserRouter(createRoutesFromElements(
       <Route path="profile-settings" element={<EditProfile />} />
       <Route path="change-password" element={<ChangePassword />} />
       <Route path="change-email" element={<ChangeEmail />} />
+        <Route path="upload-cv" element={<UploadCV />} />
     </Route>
   </Route>,
 ));

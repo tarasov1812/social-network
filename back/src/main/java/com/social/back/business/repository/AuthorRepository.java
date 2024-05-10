@@ -18,4 +18,6 @@ public interface AuthorRepository {
     void deleteById(Long id);
 
     Author findByEmail(String email);
+
+    Author uploadCV(Author author);
 }

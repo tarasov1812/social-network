@@ -16,6 +16,7 @@ public class Author {
     private String location;
     private String stack;
     private Date birthdate;
+    private byte[] cv;
     private boolean showBirthdate;
     private boolean openToWork;
     private List<Post> posts;
@@ -119,8 +120,15 @@ public class Author {
     public boolean isOpenToWork() {
         return openToWork;
     }
-
     public void setOpenToWork(boolean openToWork) {
         this.openToWork = openToWork;
+    }
+
+    public byte[] getCv() {
+        return cv;
+    }
+
+    public void setCv(byte[] cv) {
+        this.cv = cv;
     }
 }

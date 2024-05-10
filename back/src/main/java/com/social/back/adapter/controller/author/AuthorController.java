@@ -15,14 +15,19 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -121,10 +126,28 @@ public class AuthorController {
     })
     @PutMapping("/update/{id}")
     public JsonAuthorResult updateFacility(@PathVariable Long id, @RequestBody @Valid JsonAuthor jsonAuthor) {
-        LOGGER.trace("UPDATE Facility INIT");
+        LOGGER.trace("UPDATE user INIT");
         Author post = this.modelMapper.map(jsonAuthor, Author.class);
         AuthorResult postResult = authorManager.updateAuthor(id, post);
         JsonAuthorResult jsonAuthorResult = this.modelMapper.map(postResult, JsonAuthorResult.class);
         return jsonAuthorResult;
+    }
+
+    @PostMapping("/uploadCV/{authorId}")
+    public JsonAuthorResult uploadCV(@PathVariable Long authorId, @RequestParam("file") MultipartFile file) {
+        LOGGER.trace("Uploading PDF INIT");
+        AuthorResult postResult = authorManager.uploadCV(authorId, file);
+        JsonAuthorResult jsonAuthorResult = this.modelMapper.map(postResult, JsonAuthorResult.class);
+        return jsonAuthorResult;
+    }
+
+    @GetMapping("/download-pdf/{authorId}")
+    public ResponseEntity<ByteArrayResource> downloadPdf(@PathVariable Long authorId) {
+        String fileName = "cv.pdf";
+        ByteArrayResource resource = authorManager.downloadCv(authorId);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+                .body(resource);
     }
 }

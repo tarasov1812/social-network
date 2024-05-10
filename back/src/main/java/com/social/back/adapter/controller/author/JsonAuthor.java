@@ -42,7 +42,6 @@ public class JsonAuthor {
 
     @JsonView(value = {JsonAuthorViews.BasicDataResponse.class, JsonAuthorViews.CheckRequest.class})
     private boolean isSubscribed;
-
     public JsonAuthor() {
         this.posts = new ArrayList<JsonPost>();
     }

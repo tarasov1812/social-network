@@ -7,45 +7,48 @@ import com.social.back.business.model.common.PageableFilter;
 import com.social.back.business.repository.AuthorRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 public class StandardAuthorManager implements AuthorManager{
     private static final Logger LOGGER = LoggerFactory.getLogger(StandardAuthorManager.class);
 
-    private AuthorRepository authorManager;
+    private AuthorRepository authorRepository;
 
-    public StandardAuthorManager(AuthorRepository authorManager) {
-        this.authorManager = authorManager;
+    public StandardAuthorManager(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
     }
 
     public List<Author> findAuthors(AuthorFilter filter, PageableFilter pageable) {
-        return (List<Author>) authorManager.findAll(filter, pageable);
+        return (List<Author>) authorRepository.findAll(filter, pageable);
     }
 
     public Author findAuthorById(Long id) {
-        Optional<Author> authorOptional = authorManager.findById(id);
+        Optional<Author> authorOptional = authorRepository.findById(id);
         return authorOptional.orElse(null);
     }
 
     public AuthorResult createAuthor(Author author) {
         AuthorResult authorResult = new AuthorResult();
-        Author savedPost = authorManager.save(author);
+        Author savedAuthor = authorRepository.save(author);
         authorResult.setMessage("author created successfully");
         authorResult.setStatus("OK");
-        authorResult.setId(savedPost.getId());
-        author.setId(savedPost.getId());
+        authorResult.setId(savedAuthor.getId());
+        author.setId(savedAuthor.getId());
         return authorResult;
     }
 
 
     public AuthorResult deleteAuthor(Long id) {
         AuthorResult authorResult = new AuthorResult();
-        Optional<Author> authorOptional = authorManager.findById(id);
+        Optional<Author> authorOptional = authorRepository.findById(id);
         if (authorOptional.isPresent()) {
             LOGGER.info("Delete author: {}", authorOptional);
-            authorManager.deleteById(id);
+            authorRepository.deleteById(id);
             authorResult.setMessage("author deleted successfully");
             authorResult.setStatus("OK");
             authorResult.setId(authorOptional.get().getId());
@@ -60,12 +63,12 @@ public class StandardAuthorManager implements AuthorManager{
     public AuthorResult updateAuthor(Long id, Author author) {
         AuthorResult authorResult = new AuthorResult();
         LOGGER.info("Saving author: {}", author);
-        authorManager.findById(id)
+        authorRepository.findById(id)
                 .map(authorFounded -> {
                     authorFounded.setId(id);
                     authorFounded.setNickName(author.getNickName());
                     authorFounded.setLocation(author.getLocation());
-                    authorManager.save(authorFounded);
+                    authorRepository.save(authorFounded);
                     authorResult.setMessage("author updated successfully");
                     authorResult.setStatus("OK");
                     authorResult.setId(authorFounded.getId());
@@ -73,4 +76,30 @@ public class StandardAuthorManager implements AuthorManager{
                 });
         return authorResult;
     };
+
+    public AuthorResult uploadCV(Long id, MultipartFile file) {
+        AuthorResult authorResult = new AuthorResult();
+        Optional<Author> authorOptional = authorRepository.findById(id);
+        Author author = authorOptional.orElse(null);
+        try {
+            byte[] fileBytes = file.getBytes();
+            author.setCv(fileBytes);
+            Author savedAuthor = authorRepository.uploadCV(author);
+            authorResult.setMessage("CV upload success");
+            authorResult.setStatus("OK");
+            authorResult.setId(authorOptional.get().getId());
+            return authorResult;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public ByteArrayResource downloadCv(Long id) {
+        Optional<Author> optionalAuthor = authorRepository.findById(id);
+        Author author = optionalAuthor.orElse(null);
+        byte[] pdfData = author.getCv();
+        ByteArrayResource resource = new ByteArrayResource(pdfData);
+        return resource;
+    }
 }

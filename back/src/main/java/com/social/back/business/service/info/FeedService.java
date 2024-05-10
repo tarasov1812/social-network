@@ -91,6 +91,7 @@ public class FeedService {
         List<JsonPost>  jsonPosts = posts.stream()
                 .map(post -> modelMapper.map(post, JsonPost.class))
                 .collect(Collectors.toList());
+        // todo - rewrite logic for returning String array
         String[] empty = new String[1];
         Map<String, Object> response = new HashMap<>();
         response.put("userInfo", jsonAuthor);

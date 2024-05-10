@@ -30,6 +30,9 @@ public class AuthorEntity {
     private String location;
     @Column(name = "stack")
     private String stack;
+    @Lob
+    @Column(name = "cv")
+    private byte[] cv;
     @Column(name = "birthdate")
     private Date birthdate;
     @Column(name = "show_birthdate")
@@ -145,5 +148,13 @@ public class AuthorEntity {
 
     public void setOpenToWork(boolean openToWork) {
         this.openToWork = openToWork;
+    }
+
+    public byte[] getCv() {
+        return cv;
+    }
+
+    public void setCv(byte[] cv) {
+        this.cv = cv;
     }
 }

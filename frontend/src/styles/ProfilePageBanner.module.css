@@ -302,3 +302,24 @@
 .br #br1, #br2, #br3{
     line-height: unset;
 }
+
+.cvButton {
+    margin-left: 3px;
+    width: 50px;
+    color: #FFFFFF;
+    border: 1px solid #0057FF;
+    border-radius: 5px;
+    background-color: #0057FF;
+    margin-bottom: 24px;
+    cursor: pointer;
+}
+
+.cvDownload {
+    display: inline-block;
+    margin-right: 5px;
+    margin-left: 16px;
+    width: 16px;
+    height: 16px;
+    background-image: url('../../public/img/nick.svg');
+    background-size: cover;
+}
