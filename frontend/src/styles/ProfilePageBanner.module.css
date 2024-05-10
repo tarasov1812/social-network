@@ -304,13 +304,14 @@
 }
 
 .cvButton {
+    background-image: url('../../public/img/pdf.png');
+    background-size: cover;
+    background-position: center;
     margin-left: 3px;
     width: 50px;
-    color: #FFFFFF;
-    border: 1px solid #0057FF;
-    border-radius: 5px;
-    background-color: #0057FF;
-    margin-bottom: 24px;
+    height: 50px;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
 }
 

@@ -56,7 +56,7 @@ function ProfilePageBanner({
             .then((response) => {
                 // Create a blob object from the file data
                 console.log(downloadedCV);
-                const blob = new Blob([downloadedCV], { type: 'application/pdf' });
+                const blob = new Blob([downloadedCV], {type: 'application/pdf'});
                 const url = window.URL.createObjectURL(blob);
                 const link = document.createElement('a');
                 link.href = url;
@@ -151,9 +151,15 @@ function ProfilePageBanner({
                     <p>{birthD}</p>
                 </div>
             </div>
-            <div>
-                <div className={styles.cvDownload}/>
-                <button className={styles.cvButton} onClick={handleDownloadCV}>CV</button>
+            <div className={styles.containerDates}>
+                <div className={styles.date}>
+                    <div className={styles.nick}/>
+                    <p>{userToViewData.stack || currentUser.stack}</p>
+                </div>
+                <div className={styles.date}>
+                    <button className={styles.cvButton} onClick={handleDownloadCV}></button>
+                    <p> CV</p>
+                </div>
             </div>
         </div>
     );
