@@ -11,6 +11,7 @@ function ProfilePageBanner({
     const dispatch = useDispatch();
     const [subscribed, setSubscribed] = useState(userToViewData.isSubscribed);
     const currentUser = useSelector((state) => state.currentUser.currentUser);
+    const downloadedCV = useSelector((state) => state.differentUser.downloadedCV);
     const backgroundStyle = {
         backgroundImage: `url(${userToViewData.avatar || currentUser.avatar})`,
     };
@@ -54,7 +55,8 @@ function ProfilePageBanner({
         dispatch(downloadCV(userToViewData.id || currentUser.id))
             .then((response) => {
                 // Create a blob object from the file data
-                const blob = new Blob([response.data], { type: 'application/pdf' });
+                console.log(downloadedCV);
+                const blob = new Blob([downloadedCV], { type: 'application/pdf' });
                 const url = window.URL.createObjectURL(blob);
                 const link = document.createElement('a');
                 link.href = url;
