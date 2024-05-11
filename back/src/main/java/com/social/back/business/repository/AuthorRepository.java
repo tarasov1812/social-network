@@ -20,4 +20,7 @@ public interface AuthorRepository {
     Author findByEmail(String email);
 
     Author uploadCV(Author author);
+    public List<Author> findSubscribers(Author author);
+
+    public List<Author> findSubscribed(Author author);
 }

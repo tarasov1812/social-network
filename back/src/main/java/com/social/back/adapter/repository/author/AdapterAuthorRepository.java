@@ -1,5 +1,7 @@
 package com.social.back.adapter.repository.author;
 
+import com.social.back.adapter.repository.subscription.StandardSubscriptionRepository;
+import com.social.back.adapter.repository.subscription.SubscriptionEntity;
 import com.social.back.business.exception.EmailAlreadyExistsException;
 import com.social.back.business.exception.NicknameAlreadyExistsException;
 import com.social.back.business.exception.NicknameAndEmailAlreadyExistsException;
@@ -22,9 +24,11 @@ import java.util.Optional;
 public class AdapterAuthorRepository implements AuthorRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger(AdapterAuthorRepository.class);
     private StandardAuthorRepository repository;
+    private StandardSubscriptionRepository subscriptionRepository;
     private ModelMapper modelMapper;
-    public AdapterAuthorRepository(StandardAuthorRepository repository) {
+    public AdapterAuthorRepository(StandardAuthorRepository repository, StandardSubscriptionRepository subscriptionRepository) {
         this.repository = repository;
+        this.subscriptionRepository = subscriptionRepository;
         this.modelMapper = new ModelMapper();
     }
 
@@ -79,5 +83,32 @@ public class AdapterAuthorRepository implements AuthorRepository {
         entity.setCv(author.getCv());
         repository.save(entity);
         return author;
+    }
+    public List<Author> findSubscribers(Author author) {
+        AuthorEntity authorEntity = modelMapper.map(author, AuthorEntity.class);
+        List<SubscriptionEntity> subscriptions = subscriptionRepository.findAllByTargetId(authorEntity);
+        List<AuthorEntity> targetAuthors = new ArrayList<>();
+        for (SubscriptionEntity subscription : subscriptions) {
+            targetAuthors.add(subscription.getSubscriberId());
+        }
+        List<Author> authors = new ArrayList<>();
+        for (AuthorEntity entity : targetAuthors) {
+            authors.add(modelMapper.map(entity, Author.class));
+        }
+        return authors;
+    }
+
+    public List<Author> findSubscribed(Author author) {
+        AuthorEntity authorEntity = modelMapper.map(author, AuthorEntity.class);
+        List<SubscriptionEntity> subscriptions = subscriptionRepository.findAllTargetId_BySubscriberId(authorEntity);
+        List<AuthorEntity> targetAuthors = new ArrayList<>();
+        for (SubscriptionEntity subscription : subscriptions) {
+            targetAuthors.add(subscription.getTargetId());
+        }
+        List<Author> authors = new ArrayList<>();
+        for (AuthorEntity entity : targetAuthors) {
+            authors.add(modelMapper.map(entity, Author.class));
+        }
+        return authors;
     }
 }

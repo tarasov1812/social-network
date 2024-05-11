@@ -17,7 +17,7 @@ function Subscriber({ userToViewData, data, customKey }) {
 
   const currentUser = useSelector((state) => state.currentUser.currentUser);
   const showSubscribeButton = data.id !== undefined
-  && currentUser.nickname !== data.nickname;
+  && currentUser.nickname !== data.nickName;
   const handleButtonClick = () => {
     const currentUserId = currentUser.id;
     let id;
@@ -57,7 +57,7 @@ function Subscriber({ userToViewData, data, customKey }) {
         <div className={styles.nickNameDate}>
           <div className={styles.nameNick}>
             <span className={styles.name}><Link to={`/app/profile/${data.id}`} id="postLink1">{data.name}</Link></span>
-            <span className={styles.nick}><Link to={`/app/profile/${data.id}`} id="postLink2">{data.nickname}</Link></span>
+            <span className={styles.nick}><Link to={`/app/profile/${data.id}`} id="postLink2">{data.nickName}</Link></span>
           </div>
         </div>
         <div className={styles.message}>

@@ -11,4 +11,7 @@ public interface StandardSubscriptionRepository  extends JpaRepository<Subscript
     long countBySubscriberId(AuthorEntity entity);
     List<SubscriptionEntity> findBySubscriberId_Id(Long id);
     Optional <SubscriptionEntity> findBySubscriberIdAndTargetId(AuthorEntity subscriberId, AuthorEntity targetId);
+    List<SubscriptionEntity> findAllTargetId_BySubscriberId(AuthorEntity authorEntity);
+    List<SubscriptionEntity> findAllByTargetId(AuthorEntity authorEntity);
+
 }

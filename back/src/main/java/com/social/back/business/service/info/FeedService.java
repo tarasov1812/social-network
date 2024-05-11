@@ -91,13 +91,20 @@ public class FeedService {
         List<JsonPost>  jsonPosts = posts.stream()
                 .map(post -> modelMapper.map(post, JsonPost.class))
                 .collect(Collectors.toList());
-        // todo - rewrite logic for returning String array
-        String[] empty = new String[1];
+        // todo - optimize this code to do lees request to database
+        List<Author> subscribers = authorRepository.findSubscribers(aUser);
+        List<JsonAuthor> jsonSubscribers = subscribers.stream()
+                .map(subscriber -> modelMapper.map(subscriber, JsonAuthor.class))
+                .collect(Collectors.toList());
+        List<Author> subscribed = authorRepository.findSubscribed(aUser);
+        List<JsonAuthor> jsonSubscribed = subscribed.stream()
+                .map(subd -> modelMapper.map(subd, JsonAuthor.class))
+                .collect(Collectors.toList());
         Map<String, Object> response = new HashMap<>();
         response.put("userInfo", jsonAuthor);
         response.put("posts", jsonPosts);
-        response.put("subscribers", empty);
-        response.put("subscribed", empty);
+        response.put("subscribers", jsonSubscribers);
+        response.put("subscribed", jsonSubscribed);
 
         return ResponseEntity.ok(response);
     }
