@@ -13,7 +13,7 @@ function ProfilePageBanner({
     const currentUser = useSelector((state) => state.currentUser.currentUser);
     const downloadedCV = useSelector((state) => state.differentUser.downloadedCV);
     const backgroundStyle = {
-        backgroundImage: `url(${userToViewData.avatar || currentUser.avatar})`,
+        backgroundImage: `url(${userToViewData.avatar})`,
     };
     const showSubscribeButton = userToViewData.id !== undefined
         && currentUser.id !== userToViewData.id;
@@ -52,7 +52,7 @@ function ProfilePageBanner({
     };
 
     const handleDownloadCV = () => {
-        dispatch(downloadCV(userToViewData.id || currentUser.id))
+        dispatch(downloadCV(userToViewData.id))
             .then((response) => {
                 // Create a blob object from the file data
                 console.log(downloadedCV);
@@ -90,19 +90,14 @@ function ProfilePageBanner({
                 <div className={styles.statistic2}>
                     <div className={styles.statisticData} onClick={onMessagesClick}>
             <span className={styles.number}>
-              {userToViewData.postCount
-                  || currentUser.postCount}
+              {userToViewData.postCount}
             </span>
                         <br className={styles.br} id="br1"/>
                         <span className={styles.word}>Messages</span>
                     </div>
                     <div className={styles.statisticData} onClick={onFollowingClick}>
             <span className={styles.number}>
-              {userToViewData.followingCount !== undefined && userToViewData.followingCount !== null
-                  ? userToViewData.followingCount
-                  : currentUser.followingCount !== undefined && currentUser.followingCount !== null
-                      ? currentUser.followingCount
-                      : 0}
+              {userToViewData.followingCount}
 
             </span>
                         <br className={styles.br} id="br2"/>
@@ -110,11 +105,7 @@ function ProfilePageBanner({
                     </div>
                     <div className={styles.statisticData} onClick={onFollowersClick}>
             <span className={styles.number}>
-              {userToViewData.followersCount !== undefined && userToViewData.followersCount !== 0
-                  ? userToViewData.followersCount
-                  : currentUser.followersCount !== undefined
-                      ? currentUser.followersCount
-                      : 0}
+              {userToViewData.followersCount}
 
             </span>
                         <br className={styles.br} id="br3"/>
@@ -133,18 +124,18 @@ function ProfilePageBanner({
                 )}
             </div>
             <div className={styles.profileName}>
-                <span className={styles.name}>{userToViewData.name || currentUser.name}</span>
-                <span className={styles.nickName}>{userToViewData.nickName || currentUser.nickName}</span>
+                <span className={styles.name}>{userToViewData.name}</span>
+                <span className={styles.nickName}>{userToViewData.nickName}</span>
             </div>
-            <p className={styles.about}>{userToViewData.about || currentUser.about}</p>
+            <p className={styles.about}>{userToViewData.about}</p>
             <div className={styles.containerDates}>
                 <div className={styles.date}>
                     <div className={styles.location}/>
-                    <p>{userToViewData.location || currentUser.location}</p>
+                    <p>{userToViewData.location}</p>
                 </div>
                 <div className={styles.date}>
                     <div className={styles.nick}/>
-                    <p>{userToViewData.nickName || currentUser.nickName}</p>
+                    <p>{userToViewData.nickName}</p>
                 </div>
                 <div className={styles.date}>
                     <div className={styles.birthday}/>
@@ -154,7 +145,7 @@ function ProfilePageBanner({
             <div className={styles.containerDates}>
                 <div className={styles.date}>
                     <div className={styles.nick}/>
-                    <p>{userToViewData.stack || currentUser.stack}</p>
+                    <p>{userToViewData.stack}</p>
                 </div>
                 <div className={styles.date}>
                     <button className={styles.cvButton} onClick={handleDownloadCV}></button>

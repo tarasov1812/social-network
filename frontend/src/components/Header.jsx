@@ -19,7 +19,7 @@ function Header() {
           <div className={styles.home} />
           <p>Feed</p>
         </NavLink>
-        <NavLink to="/app/profile" id="link1">
+        <NavLink to={`/app/profile/${currentUser.id}`} id="link1">
           <div className={styles.profile} />
           <p>Profile</p>
         </NavLink>
