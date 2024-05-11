@@ -65,6 +65,10 @@ public class AdapterAuthorRepository implements AuthorRepository {
         AuthorEntity savedEntity = repository.save(entity);
         return modelMapper.map(savedEntity, Author.class);
     }
+    public void update(Author author) {
+        AuthorEntity entity = modelMapper.map(author, AuthorEntity.class);
+        AuthorEntity savedEntity = repository.save(entity);
+    }
 
     @Override
     public void deleteById(Long id) {

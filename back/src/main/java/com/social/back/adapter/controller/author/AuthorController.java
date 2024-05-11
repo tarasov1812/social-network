@@ -2,6 +2,9 @@ package com.social.back.adapter.controller.author;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.social.back.adapter.controller.common.AppErrorResponse;
+import com.social.back.adapter.reqests.ChangeEmailRequest;
+import com.social.back.adapter.reqests.ChangePasswordRequest;
+import com.social.back.adapter.reqests.LoginRequest;
 import com.social.back.business.exception.EmailAlreadyExistsException;
 import com.social.back.business.exception.NicknameAlreadyExistsException;
 import com.social.back.business.exception.NicknameAndEmailAlreadyExistsException;
@@ -125,10 +128,26 @@ public class AuthorController {
             @ApiResponse(responseCode = "500", description = "Error",content = { @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = AppErrorResponse.class)) }),
     })
     @PutMapping("/update/{id}")
-    public JsonAuthorResult updateFacility(@PathVariable Long id, @RequestBody @Valid JsonAuthor jsonAuthor) {
-        LOGGER.trace("UPDATE user INIT");
-        Author post = this.modelMapper.map(jsonAuthor, Author.class);
-        AuthorResult postResult = authorManager.updateAuthor(id, post);
+    public JsonAuthorResult updateAuthor(@PathVariable Long id, @RequestBody @Valid JsonAuthor jsonAuthor) {
+        LOGGER.trace("UPDATE author INIT");
+        Author author = this.modelMapper.map(jsonAuthor, Author.class);
+        AuthorResult postResult = authorManager.updateAuthor(id, author);
+        JsonAuthorResult jsonAuthorResult = this.modelMapper.map(postResult, JsonAuthorResult.class);
+        return jsonAuthorResult;
+    }
+
+    @PutMapping("/changePassword/{id}")
+    public JsonAuthorResult updatePassword(@PathVariable Long id, @RequestBody ChangePasswordRequest changePasswordRequest) {
+        LOGGER.trace("UPDATE password INIT");
+        AuthorResult postResult = authorManager.updatePassword(id, changePasswordRequest.getOldPassword(), changePasswordRequest.getNewPassword());
+        JsonAuthorResult jsonAuthorResult = this.modelMapper.map(postResult, JsonAuthorResult.class);
+        return jsonAuthorResult;
+    }
+
+    @PutMapping("/changeEmail/{id}")
+    public JsonAuthorResult updateEmail(@PathVariable Long id, @RequestBody ChangeEmailRequest changeEmailRequest) {
+        LOGGER.trace("UPDATE email INIT");
+        AuthorResult postResult = authorManager.updateEmail(id, changeEmailRequest.getEmail(), changeEmailRequest.getPassword());
         JsonAuthorResult jsonAuthorResult = this.modelMapper.map(postResult, JsonAuthorResult.class);
         return jsonAuthorResult;
     }

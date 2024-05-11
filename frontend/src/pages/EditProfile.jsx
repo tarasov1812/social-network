@@ -53,7 +53,7 @@ function EditProfile() {
   const [location, setLocation] = useState(currentUser.location);
   const [stack, setStack] = useState(currentUser.stack);
   const [birthdate, setBirthdate] = useState(currentUser.birthdate ? currentUser.birthdate.split('T')[0] : '');
-  const [showbirthdate, setShowbirthdate] = useState('not settled');
+  const [showBirthdate, setShowbirthdate] = useState('not settled');
   const [openToWork, setOpenToWork] = useState('not settled');
 
   let backgroundStyle = {
@@ -93,7 +93,7 @@ function EditProfile() {
       location: location || currentUser.location,
       stack: stack || currentUser.stack,
       birthdate: birthdate ? new Date(`${birthdate}T00:00:00.000Z`).toISOString() : currentUser.birthdate,
-      showbirthdate: showbirthdate === 'not settled' ? currentUser.showbirthdate : showbirthdate,
+      showBirthdate: showBirthdate === 'not settled' ? currentUser.showBirthdate : showBirthdate,
       openToWork: openToWork === 'not settled' ? currentUser.openToWork : openToWork,
     };
 
@@ -106,7 +106,7 @@ function EditProfile() {
       stack: stack || currentUser.stack,
       location: location || currentUser.location,
       birthdate: birthdate ? new Date(`${birthdate}T00:00:00.000Z`).toISOString() : currentUser.birthdate,
-      showbirthdate: showbirthdate === 'not settled' ? currentUser.showbirthdate : showbirthdate,
+      showBirthdate: showBirthdate === 'not settled' ? currentUser.showBirthdate : showBirthdate,
       openToWork: openToWork === 'not settled' ? currentUser.openToWork : openToWork,
     };
 
@@ -175,7 +175,7 @@ function EditProfile() {
                 className={styles.inputConfirm}
                 type="checkbox"
                 name="showbd"
-                checked={showbirthdate === 'not settled' ? currentUser.showbirthdate : showbirthdate}
+                checked={showBirthdate === 'not settled' ? currentUser.showBirthdate : showBirthdate}
                 // checked={showbirthdate}
                 onChange={(e) => setShowbirthdate(e.target.checked)}
             />

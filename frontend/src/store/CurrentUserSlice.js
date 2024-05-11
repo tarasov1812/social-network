@@ -29,7 +29,7 @@ const currentUserSlice = createSlice({
     builder
       .addCase(fetchThemes.fulfilled, (state, action) => ({
         ...state,
-        themes: action.payload,
+        themes: action.payload
       }))
       .addCase(fetchChannels.fulfilled, (state, action) => ({
         ...state,
@@ -42,7 +42,8 @@ const currentUserSlice = createSlice({
         isLoadingCurrentUser: false,
       }))
        .addCase(changePassword.fulfilled, (state, action) => ({
-        passwordChanged: true,
+           ...state,
+           passwordChanged: true,
       }));
   },
 });
@@ -84,7 +85,7 @@ export const createPostAsync = createAsyncThunk(
 export const changeProfileDate = createAsyncThunk(
   'user/changeProfileDate',
   async ({ id, requestBody }) => {
-    const response = await axios.put(`/changeProfileDate/${id}`, requestBody, {
+    const response = await axios.put(`/api/update/${id}`, requestBody, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -96,7 +97,7 @@ export const changeProfileDate = createAsyncThunk(
 export const changePassword = createAsyncThunk(
   'user/changePassword',
   async ({ id, oldPassword, newPassword }) => {
-    const response = await axios.put(`/changePassword/${id}`, {
+    const response = await axios.put(`/api/changePassword/${id}`, {
       oldPassword,
       newPassword,
     }, {
@@ -111,7 +112,7 @@ export const changePassword = createAsyncThunk(
 export const changeEmail = createAsyncThunk(
   'user/changeEmail',
   async ({ id, password, email }) => {
-    const response = await axios.put(`/changeEmail/${id}`, {
+    const response = await axios.put(`/api/changeEmail/${id}`, {
       password,
       email,
     }, {

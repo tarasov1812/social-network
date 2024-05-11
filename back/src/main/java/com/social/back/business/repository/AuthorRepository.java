@@ -15,6 +15,8 @@ public interface AuthorRepository {
 
     Author save(Author post);
 
+    void update(Author author);
+
     void deleteById(Long id);
 
     Author findByEmail(String email);

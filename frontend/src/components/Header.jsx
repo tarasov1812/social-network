@@ -28,7 +28,7 @@ function Header() {
           <p>Settings</p>
         </NavLink>
         <div className={styles.logo} />
-        <NavLink to="/app/login">
+        <NavLink to={`/app/profile/${currentUser.id}`}>
           <div className={styles.avatar} style={backgroundStyle} />
         </NavLink>
       </nav>

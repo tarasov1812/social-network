@@ -4,13 +4,12 @@ import { changePassword } from '../store/CurrentUserSlice.js';
 import styles from '../styles/ChangePassword.module.css';
 
 function ChangePassword() {
+  console.log('!');
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.currentUser.currentUser);
   const passwordChanged = useSelector((state) => state.currentUser.passwordChanged);
-  let id;
-  if (currentUser) {
-    id = currentUser.id;
-  }
+  const { id } = currentUser;
+
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');

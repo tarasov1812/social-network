@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-public class StandardAuthorManager implements AuthorManager{
+public class StandardAuthorManager implements AuthorManager {
     private static final Logger LOGGER = LoggerFactory.getLogger(StandardAuthorManager.class);
 
     private AuthorRepository authorRepository;
@@ -65,17 +65,25 @@ public class StandardAuthorManager implements AuthorManager{
         LOGGER.info("Saving author: {}", author);
         authorRepository.findById(id)
                 .map(authorFounded -> {
-                    authorFounded.setId(id);
                     authorFounded.setNickName(author.getNickName());
+                    authorFounded.setName(author.getName());
+                    authorFounded.setAbout(author.getAbout());
+                    authorFounded.setStack(author.getStack());
+                    authorFounded.setBirthdate(author.getBirthdate());
+                    authorFounded.setShowBirthdate(author.isShowBirthdate());
+                    authorFounded.setOpenToWork(author.isOpenToWork());
                     authorFounded.setLocation(author.getLocation());
-                    authorRepository.save(authorFounded);
+                    authorFounded.setAvatar(author.getAvatar());
+                    authorRepository.update(authorFounded);
                     authorResult.setMessage("author updated successfully");
                     authorResult.setStatus("OK");
                     authorResult.setId(authorFounded.getId());
                     return authorResult;
                 });
         return authorResult;
-    };
+    }
+
+    ;
 
     public AuthorResult uploadCV(Long id, MultipartFile file) {
         AuthorResult authorResult = new AuthorResult();
@@ -101,5 +109,45 @@ public class StandardAuthorManager implements AuthorManager{
         byte[] pdfData = author.getCv();
         ByteArrayResource resource = new ByteArrayResource(pdfData);
         return resource;
+    }
+
+    @Override
+    public AuthorResult updateEmail(Long id, String email, String password) {
+        AuthorResult authorResult = new AuthorResult();
+        Optional<Author> authorOptional = authorRepository.findById(id);
+        Author author = authorOptional.orElse(null);
+        if (author.getPassword().equals(password)) {
+            author.setEmail(email);
+            authorRepository.update(author);
+            authorResult.setMessage("author updated successfully");
+            authorResult.setStatus("OK");
+            authorResult.setId(author.getId());
+            return authorResult;
+        } else {
+            authorResult.setMessage("can not delete author");
+            authorResult.setStatus("KO");
+            authorResult.setId(authorOptional.get().getId());
+        }
+        return authorResult;
+    }
+
+    @Override
+    public AuthorResult updatePassword(Long id, String oldPassword, String newPassword) {
+        AuthorResult authorResult = new AuthorResult();
+        Optional<Author> authorOptional = authorRepository.findById(id);
+        Author author = authorOptional.orElse(null);
+        if (author.getPassword().equals(oldPassword)) {
+            author.setPassword(newPassword);
+            authorRepository.update(author);
+            authorResult.setMessage("author updated successfully");
+            authorResult.setStatus("OK");
+            authorResult.setId(author.getId());
+            return authorResult;
+        } else {
+            authorResult.setMessage("can not delete author");
+            authorResult.setStatus("KO");
+            authorResult.setId(authorOptional.get().getId());
+        }
+        return authorResult;
     }
 }

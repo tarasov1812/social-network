@@ -17,4 +17,6 @@ public interface AuthorManager {
     List<Author> findAuthors(AuthorFilter filter, PageableFilter pageableFilter);
     public AuthorResult uploadCV(Long id, MultipartFile file);
     ByteArrayResource downloadCv(Long id);
+    AuthorResult updateEmail(Long id, String email, String password);
+    AuthorResult updatePassword(Long id, String oldPassword, String newPassword);
 }
