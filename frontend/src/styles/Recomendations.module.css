@@ -36,6 +36,7 @@
 }
 
 .channelNick {
+    cursor: pointer;
     line-height: 16px;
     font-size: 12px;
     color: #ABACB1;
@@ -49,6 +50,7 @@
 }
 
 .read {
+    cursor: pointer;
     width: 69px;
     color: #0057FF;
     line-height: 14px;
