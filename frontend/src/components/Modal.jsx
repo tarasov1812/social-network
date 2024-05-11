@@ -29,28 +29,31 @@ function Modal({ active, setActive }) {
     const authorId = currentUser.id;
 
     const requestBody = {
-      authorId,
+      authorId: authorId,
       content: message,
+      postDate: new Date().toISOString().slice(0, -5),
+      thumbUp: 0,
+      repost: 0,
+      share: 0,
       img: photoUrl,
     };
 
     const newPost = {
       id: Math.random(),
       authorId: authorId,
-      avatar: currentUser.avatar,
+      authorAvatar: currentUser.avatar,
       name: currentUser.name,
-      nickname: currentUser.nickName,
+      nickName: currentUser.nickName,
       content: message,
-      time: new Date().toISOString().slice(0, -5),
-      likes: 0,
-      reposts: 0,
-      shares: 0,
+      postDate: new Date().toISOString().slice(0, -5),
+      thumbUp: 0,
+      repost: 0,
+      share: 0,
       img: photoUrl,
     };
 
     dispatch(createPostAsync(requestBody))
       .then((response) => {
-        console.log(response);
         setActive(false);
         dispatch(createPost(newPost));
       })

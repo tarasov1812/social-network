@@ -70,10 +70,10 @@ export const fetchUser = createAsyncThunk('posts/fetchUser', async () => {
     }
   });
 
-export const createPostAsync = createAsyncThunk(
+    export const createPostAsync = createAsyncThunk(
   'posts/createPost',
   async (requestBody) => {
-    const response = await axios.post('/posts.json', requestBody, {
+    const response = await axios.post('/api/createPost', requestBody, {
       headers: {
         'Content-Type': 'application/json',
       },
