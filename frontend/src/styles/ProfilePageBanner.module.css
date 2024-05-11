@@ -181,6 +181,10 @@
     cursor: pointer;
 }
 
+.subscribed:hover {
+    background-color: rgb(185, 202, 211);
+}
+
 @media only screen and (min-width: 800px) {
     .subscribed{
         margin-left: auto;
@@ -203,6 +207,10 @@
     padding: 14px 0;
     margin-bottom: 24px;
     cursor: pointer;
+}
+
+.unSubscribed:hover {
+    background-color: rgb(185, 202, 211);
 }
 
 @media only screen and (min-width: 800px) {
@@ -313,6 +321,10 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+}
+
+.cvButton:hover {
+    background-color: rgb(185, 202, 211);
 }
 
 .cvDownload {

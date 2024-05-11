@@ -36,7 +36,6 @@
 }
 
 .channelNick {
-    cursor: pointer;
     line-height: 16px;
     font-size: 12px;
     color: #ABACB1;
@@ -61,6 +60,10 @@
     font-weight: 500;
     font-family: 'Roboto';
     font-size: 10px;
+}
+
+.read:hover {
+    background-color: rgb(185, 202, 211);
 }
 
 h4{

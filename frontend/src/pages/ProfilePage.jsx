@@ -38,7 +38,7 @@ function ProfilePage() {
 
 
 
-  if (!userDetailsLoading && currentUser.id !== parsedId) {
+  if (!userDetailsLoading) {
     postsToView = [...postsFoundById];
   }
 
@@ -77,25 +77,6 @@ function ProfilePage() {
     setSubscribedToShowProps([]);
     setShowSubscribers(false);
   };
-
-  // dont load messages from server if the selected user is current user
-  if (currentUser.id === parsedId) {
-    for (let i = 0; i < allMessages.length; i += 1) {
-      if (allMessages[i].authorId === currentUser.id) {
-        postsToView.push(allMessages[i]);
-      }
-    }
-  }
-  // if at there is no any parameter in the link - dont load messages from the server
-  if (Number.isNaN(parsedId)) {
-    userToViewData = {};
-    postsToView = [];
-    for (let i = 0; i < allMessages.length; i += 1) {
-      if (allMessages[i].authorId === currentUser.id) {
-        postsToView.push(allMessages[i]);
-      }
-    }
-  }
 
   const currentUserId = currentUser.id;
   useEffect(() => {
