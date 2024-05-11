@@ -4,13 +4,13 @@ import styles from '../styles/Profile.module.css';
 
 function Profile() {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
-  const backgroundStyle = {
+  const avatarStyle = {
     backgroundImage: `url(${currentUser.avatar})`,
   };
   return (
     <div className={styles.container}>
       <div className={styles.logo} />
-      <div className={styles.profileFoto} style={backgroundStyle} />
+      <div className={styles.profileFoto} style={avatarStyle} />
       <div className={styles.profileName}>
         <span className={styles.name}>{currentUser.name}</span>
         <br />

@@ -12,6 +12,7 @@ public class Author {
     private String name;
     private String password;
     private String avatar;
+    private String background;
     private String about;
     private String location;
     private String stack;
@@ -130,5 +131,13 @@ public class Author {
 
     public void setCv(byte[] cv) {
         this.cv = cv;
+    }
+
+    public String getBackground() {
+        return background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
     }
 }

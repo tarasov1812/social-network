@@ -24,6 +24,8 @@ public class AuthorEntity {
     private String password;
     @Column(name = "avatar")
     private String avatar;
+    @Column(name = "background")
+    private String background;
     @Column(name = "about")
     private String about;
     @Column(name = "location")
@@ -156,5 +158,13 @@ public class AuthorEntity {
 
     public void setCv(byte[] cv) {
         this.cv = cv;
+    }
+
+    public String getBackground() {
+        return background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
     }
 }

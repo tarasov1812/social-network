@@ -12,8 +12,11 @@ function ProfilePageBanner({
     const [subscribed, setSubscribed] = useState(userToViewData.isSubscribed);
     const currentUser = useSelector((state) => state.currentUser.currentUser);
     const downloadedCV = useSelector((state) => state.differentUser.downloadedCV);
-    const backgroundStyle = {
+    const avaterStyle = {
         backgroundImage: `url(${userToViewData.avatar})`,
+    };
+    const backgroundStyle = {
+        backgroundImage: `url(${userToViewData.background})`,
     };
     const showSubscribeButton = userToViewData.id !== undefined
         && currentUser.id !== userToViewData.id;
@@ -84,8 +87,8 @@ function ProfilePageBanner({
     return (
         <div className={styles.container}>
             <div className={styles.logo}/>
-            <div className={styles.background}/>
-            <div className={styles.profileFoto} style={backgroundStyle}/>
+            <div className={styles.background} style={backgroundStyle}/>
+            <div className={styles.profileFoto} style={avaterStyle}/>
             <div className={styles.statistic}>
                 <div className={styles.statistic2}>
                     <div className={styles.statisticData} onClick={onMessagesClick}>

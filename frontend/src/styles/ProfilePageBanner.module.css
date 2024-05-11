@@ -17,7 +17,7 @@
 .background{
     display: block;
     height: 160px;
-    background-image: url('../../public/img/backgroundProfile.png');
+    background-image: url('../../public/img/empty.png');
     background-size: cover;
 }
 
@@ -41,7 +41,7 @@
     background-size: cover;
     background-position: center;
     box-shadow: 0 0 0 3px white;
-    background-image: url('../../public/img/travolta.png');
+    background-image: url('../../public/img/empty.png');
 }
 
 @media only screen and (min-width: 800px) {
@@ -53,7 +53,7 @@
         height: 120px;
         border-radius: 50%;
         box-shadow: 0 0 0 5px white;
-        background-image: url('../../public/img/travolta.png');
+        background-image: url('../../public/img/empty.png');
     }
 }
 
