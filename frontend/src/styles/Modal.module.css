@@ -145,3 +145,18 @@
     }
 }
 
+.close {
+    display: none;
+}
+
+@media only screen and (min-width: 800px) {
+    .close {
+        position: absolute;
+        cursor: pointer;
+        display: block;
+        margin-left: 610px;
+        font-weight: bold;
+        color: #000000;
+    }
+}
+
