@@ -5,6 +5,7 @@ import com.social.back.adapter.controller.common.AppErrorResponse;
 import com.social.back.adapter.reqests.ChangeEmailRequest;
 import com.social.back.adapter.reqests.ChangePasswordRequest;
 import com.social.back.adapter.reqests.LoginRequest;
+import com.social.back.adapter.reqests.UploadBackgroundRequest;
 import com.social.back.business.exception.EmailAlreadyExistsException;
 import com.social.back.business.exception.NicknameAlreadyExistsException;
 import com.social.back.business.exception.NicknameAndEmailAlreadyExistsException;
@@ -148,6 +149,14 @@ public class AuthorController {
     public JsonAuthorResult updateEmail(@PathVariable Long id, @RequestBody ChangeEmailRequest changeEmailRequest) {
         LOGGER.trace("UPDATE email INIT");
         AuthorResult postResult = authorManager.updateEmail(id, changeEmailRequest.getEmail(), changeEmailRequest.getPassword());
+        JsonAuthorResult jsonAuthorResult = this.modelMapper.map(postResult, JsonAuthorResult.class);
+        return jsonAuthorResult;
+    }
+
+    @PutMapping("/uploadBackground/{id}")
+    public JsonAuthorResult updateBackground(@PathVariable Long id, @RequestBody UploadBackgroundRequest uploadBackgroundRequest) {
+        LOGGER.trace("UPDATE background INIT");
+        AuthorResult postResult = authorManager.updateBackgorund(id, uploadBackgroundRequest.getBackground());
         JsonAuthorResult jsonAuthorResult = this.modelMapper.map(postResult, JsonAuthorResult.class);
         return jsonAuthorResult;
     }

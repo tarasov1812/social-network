@@ -124,6 +124,19 @@ export const changeEmail = createAsyncThunk(
   },
 );
 
+export const changeBackground = createAsyncThunk(
+    'user/changeBackground',
+    async ({id, background}) => {
+        const response = await axios.put(`/api/uploadBackground/${id}`, {
+            background,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        return response.data;
+    },
+);
+
 export const uploadCV = createAsyncThunk(
     'user/uploadCV',
     async ({ id, file }) => {

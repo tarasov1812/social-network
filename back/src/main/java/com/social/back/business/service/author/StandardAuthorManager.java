@@ -150,4 +150,17 @@ public class StandardAuthorManager implements AuthorManager {
         }
         return authorResult;
     }
+
+    @Override
+    public AuthorResult updateBackgorund(Long id, String backgorund) {
+        AuthorResult authorResult = new AuthorResult();
+        Optional<Author> authorOptional = authorRepository.findById(id);
+        Author author = authorOptional.orElse(null);
+        author.setBackground(backgorund);
+        authorRepository.update(author);
+        authorResult.setMessage("author updated successfully");
+        authorResult.setStatus("OK");
+        authorResult.setId(author.getId());
+        return authorResult;
+    }
 }

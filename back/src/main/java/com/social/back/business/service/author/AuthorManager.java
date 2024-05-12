@@ -19,4 +19,5 @@ public interface AuthorManager {
     ByteArrayResource downloadCv(Long id);
     AuthorResult updateEmail(Long id, String email, String password);
     AuthorResult updatePassword(Long id, String oldPassword, String newPassword);
+    AuthorResult updateBackgorund(Long id, String backgorund);
 }
