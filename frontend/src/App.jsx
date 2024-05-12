@@ -1,10 +1,10 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {
-  Route, RouterProvider, createBrowserRouter, createRoutesFromElements,
+    Route, RouterProvider, createBrowserRouter, createRoutesFromElements,
 } from 'react-router-dom';
 import {
-  fetchUser, fetchThemes, fetchChannels
+    fetchUser, fetchThemes, fetchChannels
 } from './store/CurrentUserSlice.js';
 import './App.css';
 
@@ -16,33 +16,35 @@ import Settings from './components/Settings.jsx';
 import ChangeEmail from './pages/ChangeEmail.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
 import UploadCV from "./pages/UploadCV.jsx";
+import UploadBackground from "./pages/UploadBackground.jsx";
 
 const router = createBrowserRouter(createRoutesFromElements(
-  <Route path="/app/" element={<Header />}>
-    <Route index element={<Feed />} />
-    <Route path="feed" element={<Feed />} />
-    <Route path="profile" element={<ProfilePage />} />
-    <Route path="profile/:id" element={<ProfilePage />} />
-    <Route path="login" element={<ProfilePage />} />
-    <Route path="settings/" element={<Settings />}>
-      <Route index element={<EditProfile />} />
-      <Route path="profile-settings" element={<EditProfile />} />
-      <Route path="change-password" element={<ChangePassword />} />
-      <Route path="change-email" element={<ChangeEmail />} />
-        <Route path="upload-cv" element={<UploadCV />} />
-    </Route>
-  </Route>,
+    <Route path="/app/" element={<Header/>}>
+        <Route index element={<Feed/>}/>
+        <Route path="feed" element={<Feed/>}/>
+        <Route path="profile" element={<ProfilePage/>}/>
+        <Route path="profile/:id" element={<ProfilePage/>}/>
+        <Route path="login" element={<ProfilePage/>}/>
+        <Route path="settings/" element={<Settings/>}>
+            <Route index element={<EditProfile/>}/>
+            <Route path="profile-settings" element={<EditProfile/>}/>
+            <Route path="change-password" element={<ChangePassword/>}/>
+            <Route path="change-email" element={<ChangeEmail/>}/>
+            <Route path="background" element={<UploadBackground/>}/>
+            <Route path="upload-cv" element={<UploadCV/>}/>
+        </Route>
+    </Route>,
 ));
 
 function App() {
-  const dispatch = useDispatch();
-  dispatch(fetchUser());
-  dispatch(fetchThemes());
-  dispatch(fetchChannels());
+    const dispatch = useDispatch();
+    dispatch(fetchUser());
+    dispatch(fetchThemes());
+    dispatch(fetchChannels());
 
-  return (
-    <RouterProvider router={router} />
-  );
+    return (
+        <RouterProvider router={router}/>
+    );
 }
 
 export default App;
