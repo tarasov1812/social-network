@@ -11,14 +11,18 @@ function UploadCV() {
     const [selectedFile, setSelectedFile] = useState(null);
 
     const handleSelectFile = () => {
-        const file = event.target.files[0]; // Get the selected file from the input
-        setSelectedFile(file); // Update selectedFile state
+        const file = event.target.files[0];
+        setSelectedFile(file);
 
     };
 
     const handleFileUpload = () => {
         if (!selectedFile) {
             console.error('No file selected');
+            return;
+        }
+        if (selectedFile.type !== 'application/pdf') {
+            console.error('Only PDF files are allowed');
             return;
         }
         dispatch(uploadCV({ id: currentUser.id, file: selectedFile }));
@@ -34,6 +38,7 @@ function UploadCV() {
                     name="cv"
                     onChange={handleSelectFile}
                 />
+                <p>Only PDF files are allowed</p>
                 <button className={styles.button} type="button" onClick={handleFileUpload}>Upload</button>
             </div>
         </div>
