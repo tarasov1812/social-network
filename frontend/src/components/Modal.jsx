@@ -71,7 +71,7 @@ function Modal({ active, setActive }) {
       <div className={styles.modal}>
         <div className={styles.container}>
           <div className={styles.line} />
-          <div className={styles.content}><span className={styles.close} onClick={close}>X</span>
+          <div className={styles.content}><span className={styles.close} onClick={close}>&times;</span>
             <textarea name="message" placeholder={`What is new, ${currentUser.name}?`} onChange={handleChange} className={styles.text} maxLength={140} />
             <div className={styles.buttons}>
               <div className={styles.counter}>
