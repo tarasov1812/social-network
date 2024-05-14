@@ -4,8 +4,8 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 
-// https://vitejs.dev/config/
 export default defineConfig({
+  base: 'http://twittertestf.s3-website.eu-north-1.amazonaws.com',
   build: {
     outDir: './build',
     emptyOutDir: false,
@@ -23,11 +23,13 @@ export default defineConfig({
         target: 'http://16.171.44.142:8088',
         changeOrigin: true,
         secure: false,
+        ws: true,
       },
       '/loginpage': {
         target: 'http://16.171.44.142:8088',
         changeOrigin: true,
         secure: false,
+        ws: true,
       },
     },
   },
