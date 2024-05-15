@@ -1,5 +1,6 @@
 package com.social.back.adapter.controller.main;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
+@CrossOrigin
 @RestController
 public class ChannelsController {
 

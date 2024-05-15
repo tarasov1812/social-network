@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api")
 public class PostController {
     private static final Logger LOGGER = LoggerFactory.getLogger(PostController.class);

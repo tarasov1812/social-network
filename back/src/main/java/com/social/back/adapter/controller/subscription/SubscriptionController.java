@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api")
 public class SubscriptionController {
     private static final Logger LOGGER = LoggerFactory.getLogger(SubscriptionController.class);

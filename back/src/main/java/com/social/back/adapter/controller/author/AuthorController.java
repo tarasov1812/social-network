@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api")
 public class AuthorController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthorController.class);

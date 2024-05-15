@@ -2,12 +2,14 @@ package com.social.back.adapter.controller.main;
 
 import com.social.back.business.service.info.InfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 import java.util.HashMap;
 
 @RestController
+@CrossOrigin
 public class InfoController {
 
     @Autowired
