@@ -5,6 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "build": "vite build",
+    "serve": "vite preview",
     "test": "npx mocha tests",
     "lint": "npx eslint ."
   },
