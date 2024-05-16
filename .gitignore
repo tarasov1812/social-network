@@ -28,3 +28,4 @@ back/mvnw.cmd
 back/myapplication.log
 back/myapplication.log.2024-05-06.0.gz
 back/.mvn/wrapper/maven-wrapper.jar
+.vercel
