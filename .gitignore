@@ -9,3 +9,6 @@
 /.idea/cody_history.xml
 /back/.gitignore
 *.tmp
+*.com
+*.jar
+*.jar
