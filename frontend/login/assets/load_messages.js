@@ -12,7 +12,6 @@ const loadMessages = async () => {
   // eslint-disable-next-line no-undef
   const response = await axios.get('/api/findLatesPosts');
   response.data.forEach((message) => {
-    console.log(message);
     const pictureUrl = message.img ? message.img : '';
     // get time difference from the post time and current time
     let date = timeConverter(Math.floor((currentTime - new Date(message.postDate)) / 1000 / 60));

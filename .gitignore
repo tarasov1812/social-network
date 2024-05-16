@@ -1,4 +1,11 @@
-
+/frontend/dist
 /frontend/build
 .idea
 .github
+/.idea
+*.gz
+*.log
+/back/.mvn
+/.idea/cody_history.xml
+/back/.gitignore
+*.tmp
