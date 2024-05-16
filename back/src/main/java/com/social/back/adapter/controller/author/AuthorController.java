@@ -79,7 +79,7 @@ public class AuthorController {
         JsonAuthor jsonAuthor = this.modelMapper.map(post, JsonAuthor.class);
         return jsonAuthor;
     }
-    @Operation(summary = "Create an post")
+    @Operation(summary = "Create an author")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Success", content = { @Content(mediaType = MediaType.APPLICATION_JSON_VALUE , schema = @Schema(implementation = JsonAuthorResult.class)) }),
             @ApiResponse(responseCode = "400", description = "Bad Request - Validation error",
@@ -96,9 +96,11 @@ public class AuthorController {
         try {
             String empltyAvatar = "https://ucarecdn.com/117dd0e7-4525-4fe4-ba5a-55f0e4a21b25/5208421_avatar_person_profile_user_icon.png";
             jsonAuthor.setAvatar(empltyAvatar);
-            Author post = this.modelMapper.map(jsonAuthor, Author.class);
-            AuthorResult postResult = authorManager.createAuthor(post);
-            JsonAuthorResult jsonAuthorResult = this.modelMapper.map(postResult, JsonAuthorResult.class);
+            String standardBackgrount = "https://ucarecdn.com/18b2ac46-43ba-4196-b74b-ed7da5baf6b2/matrix.png";
+            jsonAuthor.setBackground(standardBackgrount);
+            Author author = this.modelMapper.map(jsonAuthor, Author.class);
+            AuthorResult authorResult = authorManager.createAuthor(author);
+            JsonAuthorResult jsonAuthorResult = this.modelMapper.map(authorResult, JsonAuthorResult.class);
             return jsonAuthorResult;
         } catch (NicknameAlreadyExistsException e) {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Nickname already exists", e);

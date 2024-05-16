@@ -1,5 +1,6 @@
 /frontend/dist
 /frontend/build
+/frontend/.node_modules
 .idea
 .github
 /.idea
@@ -12,3 +13,12 @@
 *.com
 *.jar
 *.jar
+/dist
+/.idea
+/node_modules
+/.vercel
+/.idea
+*.xml
+.idea/cody_history.xml
+/dist
+/node_modules

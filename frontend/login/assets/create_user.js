@@ -18,7 +18,7 @@ export default function createUser() {
     if (nickname !== '' && email !== '' && password !== '' && password === repeatPassword) {
       try {
       // eslint-disable-next-line no-undef
-        const response = await axios.post('/createUser', {
+        const response = await axios.post('/api/create', {
           nickname, email, password, repeatPassword,
         });
         if (response.status === 200) {
