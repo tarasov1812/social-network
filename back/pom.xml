@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.social</groupId>
 	<artifactId>back</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.8-SNAPSHOT</version>
 	<name>back</name>
 	<description>Back end for social</description>
 	<properties>

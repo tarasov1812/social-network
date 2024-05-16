@@ -13,6 +13,8 @@ import com.social.back.business.model.author.Author;
 import com.social.back.business.model.author.AuthorFilter;
 import com.social.back.business.model.author.AuthorResult;
 import com.social.back.business.model.common.PageableFilter;
+import com.social.back.business.model.session.Session;
+import com.social.back.business.repository.SessionRepository;
 import com.social.back.business.service.author.AuthorManager;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -20,10 +22,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -35,6 +40,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -44,6 +50,9 @@ public class AuthorController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthorController.class);
     private AuthorManager authorManager;
     private final ModelMapper modelMapper;
+
+    @Autowired
+    private SessionRepository sessionRepository;
 
     public AuthorController(AuthorManager authorManager) {
         this.authorManager = authorManager;
@@ -91,7 +100,7 @@ public class AuthorController {
             @ApiResponse(responseCode = "410", description = "Gone - Email and nickname already exists", content = { @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = AppErrorResponse.class)) }),
     })
     @PostMapping("/create")
-    public JsonAuthorResult createAuthor(@RequestBody @Valid JsonAuthor jsonAuthor) {
+    public JsonAuthorResult createAuthor(@RequestBody @Valid JsonAuthor jsonAuthor, HttpServletResponse response) {
         LOGGER.trace("CREATE Author INIT");
         try {
             String empltyAvatar = "https://ucarecdn.com/117dd0e7-4525-4fe4-ba5a-55f0e4a21b25/5208421_avatar_person_profile_user_icon.png";
@@ -99,7 +108,27 @@ public class AuthorController {
             String standardBackgrount = "https://ucarecdn.com/18b2ac46-43ba-4196-b74b-ed7da5baf6b2/matrix.png";
             jsonAuthor.setBackground(standardBackgrount);
             Author author = this.modelMapper.map(jsonAuthor, Author.class);
+
+
+
             AuthorResult authorResult = authorManager.createAuthor(author);
+
+            String token = UUID.randomUUID().toString();
+
+            // Create session
+            Session session = new Session();
+            session.setAuthor(author);
+            session.setToken(token);
+            sessionRepository.save(session);
+
+            // Save token in cookie
+            Cookie emailCookie = new Cookie("email", jsonAuthor.getEmail());
+            Cookie tokenCookie = new Cookie("token", token);
+            emailCookie.setMaxAge(7 * 24 * 60 * 60); // expires in 7 days
+            tokenCookie.setMaxAge(7 * 24 * 60 * 60); // expires in 7 days
+            response.addCookie(emailCookie);
+            response.addCookie(tokenCookie);
+
             JsonAuthorResult jsonAuthorResult = this.modelMapper.map(authorResult, JsonAuthorResult.class);
             return jsonAuthorResult;
         } catch (NicknameAlreadyExistsException e) {
