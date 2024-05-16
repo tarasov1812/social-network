@@ -39,6 +39,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -106,11 +107,10 @@ public class AuthorController {
             String empltyAvatar = "https://ucarecdn.com/117dd0e7-4525-4fe4-ba5a-55f0e4a21b25/5208421_avatar_person_profile_user_icon.png";
             jsonAuthor.setAvatar(empltyAvatar);
             String standardBackgrount = "https://ucarecdn.com/18b2ac46-43ba-4196-b74b-ed7da5baf6b2/matrix.png";
+            jsonAuthor.setBirthdate(new Date());
             jsonAuthor.setBackground(standardBackgrount);
             Author author = this.modelMapper.map(jsonAuthor, Author.class);
-
-
-
+            
             AuthorResult authorResult = authorManager.createAuthor(author);
 
             String token = UUID.randomUUID().toString();

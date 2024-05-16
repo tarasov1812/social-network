@@ -57,7 +57,8 @@ function ProfilePageBanner({
     const handleDownloadCV = () => {
         dispatch(downloadCV(userToViewData.id))
             .then((response) => {
-                // Create a blob object from the file data
+                setTimeout(() => {
+                }, 10000);
                 console.log(downloadedCV);
                 const blob = new Blob([downloadedCV], {type: 'application/pdf'});
                 const url = window.URL.createObjectURL(blob);
