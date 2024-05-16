@@ -25,5 +25,7 @@ export default defineConfig({
         ws: true,
       }
     },
+    host: true,
+    port: 3000,
   },
 });
