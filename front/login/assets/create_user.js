@@ -24,7 +24,7 @@ export default function createUser() {
         if (response.status === 200) {
           modal.style.visibility = 'hidden';
           modal.style.opacity = 0;
-          window.location.href = '/app';
+          window.location.href = '/app/settings';
         }
       } catch (error) {
         if (error.response.status === 406) {

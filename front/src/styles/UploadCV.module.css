@@ -49,6 +49,11 @@ h2 {
     cursor: pointer;
 }
 
+.button:hover {
+    background-color: rgb(185, 202, 211);
+}
+
+
 .input {
     font-size: 18px;
     margin: 0 17px 0 17px;
@@ -60,4 +65,8 @@ h2 {
     .input {
         margin: 0 217px 0 17px;
     }
+}
+
+p {
+    margin-left: 16px;
 }

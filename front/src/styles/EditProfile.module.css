@@ -162,6 +162,10 @@ h2 {
     cursor: pointer;
 }
 
+.button:hover {
+    background-color: rgb(185, 202, 211);
+}
+
 .photoSetting{
     margin: 0 auto;
     width: 25px;
