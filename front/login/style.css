@@ -556,14 +556,14 @@ button:hover {
 .avatar {
     background-size: cover;
     border-radius: 50%;
-    min-width: 52px;
+    width: 52px;
     height: 52px;
 }
 
 
 @media only screen and (min-width: 800px) {
     .avatar{
-        min-width: 64px;
+        width: 64px;
         height: 64px;
     }
 }
