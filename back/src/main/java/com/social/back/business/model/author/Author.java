@@ -1,6 +1,8 @@
 package com.social.back.business.model.author;
 
+import com.social.back.adapter.repository.subscription.SubscriptionEntity;
 import com.social.back.business.model.post.Post;
+import com.social.back.business.model.subscription.Subscription;
 
 import java.util.Date;
 import java.util.List;
@@ -21,6 +23,8 @@ public class Author {
     private boolean showBirthdate;
     private boolean openToWork;
     private List<Post> posts;
+    private List<Subscription> subscriptions;
+    private List<Subscription> subscribers;
 
     public Long getId() {
         return id;
@@ -139,5 +143,21 @@ public class Author {
 
     public void setBackground(String background) {
         this.background = background;
+    }
+
+    public List<Subscription> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(List<Subscription> subscriptions) {
+        this.subscriptions = subscriptions;
+    }
+
+    public List<Subscription> getSubscribers() {
+        return subscribers;
+    }
+
+    public void setSubscribers(List<Subscription> subscribers) {
+        this.subscribers = subscribers;
     }
 }

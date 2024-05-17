@@ -1,6 +1,8 @@
 package com.social.back.adapter.controller.author;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.social.back.adapter.controller.post.JsonPost;
+import com.social.back.adapter.controller.subscription.JsonSubscription;
+import com.social.back.business.model.subscription.Subscription;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,6 +38,10 @@ public class JsonAuthor {
     @JsonView(value = {JsonAuthorViews.BasicDataResponse.class, JsonAuthorViews.CheckRequest.class})
     private List<JsonPost> posts;
     @JsonView(value = {JsonAuthorViews.BasicDataResponse.class, JsonAuthorViews.CheckRequest.class})
+    private List<JsonSubscription> subscriptions;
+    @JsonView(value = {JsonAuthorViews.BasicDataResponse.class, JsonAuthorViews.CheckRequest.class})
+    private List<JsonSubscription> subscribers;
+    @JsonView(value = {JsonAuthorViews.BasicDataResponse.class, JsonAuthorViews.CheckRequest.class})
     private Long postCount;
     @JsonView(value = {JsonAuthorViews.BasicDataResponse.class, JsonAuthorViews.CheckRequest.class})
     private Long followingCount;
@@ -46,6 +52,8 @@ public class JsonAuthor {
     private boolean isSubscribed;
     public JsonAuthor() {
         this.posts = new ArrayList<JsonPost>();
+        this.subscribers = new ArrayList<JsonSubscription>();
+        this.subscriptions = new ArrayList<JsonSubscription>();
     }
 
     public List<JsonPost> getPosts() {
@@ -190,5 +198,21 @@ public class JsonAuthor {
 
     public void setBackground(String background) {
         this.background = background;
+    }
+
+    public List<JsonSubscription> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(List<JsonSubscription> subscriptions) {
+        this.subscriptions = subscriptions;
+    }
+
+    public List<JsonSubscription> getSubscribers() {
+        return subscribers;
+    }
+
+    public void setSubscribers(List<JsonSubscription> subscribers) {
+        this.subscribers = subscribers;
     }
 }

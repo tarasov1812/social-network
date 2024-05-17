@@ -1,6 +1,7 @@
 package com.social.back.adapter.repository.author;
 
 import com.social.back.adapter.repository.post.PostEntity;
+import com.social.back.adapter.repository.subscription.SubscriptionEntity;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -43,9 +44,15 @@ public class AuthorEntity {
     private boolean openToWork;
     @OneToMany(mappedBy = "author", targetEntity = PostEntity.class,  cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<PostEntity> posts;
+    @OneToMany(mappedBy = "subscriberId", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SubscriptionEntity> subscriptions = new ArrayList<>();
+    @OneToMany(mappedBy = "targetId", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SubscriptionEntity> subscribers = new ArrayList<>();
 
     public AuthorEntity() {
         this.posts = new ArrayList<PostEntity>();
+        this.subscribers = new ArrayList<SubscriptionEntity>();
+        this.subscriptions = new ArrayList<SubscriptionEntity>();
     }
 
     public List<PostEntity> getPosts() {
@@ -54,6 +61,22 @@ public class AuthorEntity {
 
     public void setPosts(List<PostEntity> posts) {
         this.posts = posts;
+    }
+
+    public List<SubscriptionEntity> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(List<SubscriptionEntity> subscriptions) {
+        this.subscriptions = subscriptions;
+    }
+
+    public List<SubscriptionEntity> getSubscribers() {
+        return subscribers;
+    }
+
+    public void setSubscribers(List<SubscriptionEntity> subscribers) {
+        this.subscribers = subscribers;
     }
 
     public Long getId() {
