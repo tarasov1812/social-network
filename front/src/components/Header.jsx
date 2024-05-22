@@ -15,20 +15,20 @@ function Header() {
   return (
     <>
       <nav id="container" className={styles.container}>
-        <NavLink to="/app/feed" id="link1">
+        <NavLink to="/feed" id="link1">
           <div className={styles.home} />
           <p>Feed</p>
         </NavLink>
-        <NavLink to={`/app/profile/${currentUser.id}`} id="link1">
+        <NavLink to={`/profile/${currentUser.id}`} id="link1">
           <div className={styles.profile} />
           <p>Profile</p>
         </NavLink>
-        <NavLink to="/app/settings" id="link1">
+        <NavLink to="/settings" id="link1">
           <div className={styles.settings} />
           <p>Settings</p>
         </NavLink>
         <div className={styles.logo} />
-        <NavLink to={`/app/profile/${currentUser.id}`}>
+        <NavLink to={`/profile/${currentUser.id}`}>
           <div className={styles.avatar} style={backgroundStyle} />
         </NavLink>
       </nav>

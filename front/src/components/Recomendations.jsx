@@ -16,7 +16,7 @@ function Recomendations() {
                             <span className={styles.channelName}>{item.channelName}</span>
                             <span className={styles.channelNick}>{item.channelNick}</span>
                     </div>
-                    <NavLink to={`/app/profile/${item.id}`}>
+                    <NavLink to={`/profile/${item.id}`}>
                         <button type="button" className={styles.read}>Read</button>
                     </NavLink>
                 </div>

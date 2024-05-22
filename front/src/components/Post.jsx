@@ -21,12 +21,12 @@ function Post({ data, customKey }) {
 
   return (
     <div className={styles.postAll} key={customKey}>
-      <Link to={`/app/profile/${data.authorId}`} id="postLink1"><img className={styles.avatar} src={data.authorAvatar} alt="User Avatar" /></Link>
+      <Link to={`/profile/${data.authorId}`} id="postLink1"><img className={styles.avatar} src={data.authorAvatar} alt="User Avatar" /></Link>
       <div className={styles.post}>
         <div className={styles.nickNameDate}>
           <div className={styles.nameNick}>
-            <span className={styles.name}><Link to={`/app/profile/${data.authorId}`} id="postLink1">{data.authorName}</Link></span>
-            <span className={styles.nick}><Link to={`/app/profile/${data.authorId}`} id="postLink2">{data.authorNickName}</Link></span>
+            <span className={styles.name}><Link to={`/profile/${data.authorId}`} id="postLink1">{data.authorName}</Link></span>
+            <span className={styles.nick}><Link to={`/profile/${data.authorId}`} id="postLink2">{data.authorNickName}</Link></span>
           </div>
           <div className={styles.date}>
             <span>{date}</span>

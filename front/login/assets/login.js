@@ -20,7 +20,7 @@ export default function login() {
         if (response.status === 200) {
           modal.style.visibility = 'hidden';
           modal.style.opacity = 0;
-          window.location.href = '/app';
+          window.location.href = '/';
         }
       } catch (error) {
         if (error.response.status === 400) {

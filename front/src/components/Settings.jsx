@@ -19,19 +19,19 @@ function Settings() {
             </label>
             <nav className={styles.nav} id="setting-nav">
                 <span className={styles.header}>Settings</span>
-                <NavLink to="/app/settings/profile-settings"
-                         className={(initialPath.startsWith('/app/settings/profile-settings') || initialPath === '/app/settings') ? styles.active : ''}>Profile
+                <NavLink to="/settings/profile-settings"
+                         className={(initialPath.startsWith('/settings/profile-settings') || initialPath === '/settings') ? styles.active : ''}>Profile
                     Settings</NavLink>
-                <NavLink to="/app/settings/change-password"
-                         className={initialPath === '/app/settings/change-password' ? styles.active : ''}>Change
+                <NavLink to="/settings/change-password"
+                         className={initialPath === '/settings/change-password' ? styles.active : ''}>Change
                     password</NavLink>
-                <NavLink to="/app/settings/change-email"
-                         className={initialPath === '/app/settings/change-email' ? styles.active : ''}>Change
+                <NavLink to="/settings/change-email"
+                         className={initialPath === '/settings/change-email' ? styles.active : ''}>Change
                     email</NavLink>
-                <NavLink to="/app/settings/background"
-                         className={initialPath === '/app/settings/background' ? styles.active : ''}>Background</NavLink>
-                <NavLink to="/app/settings/upload-cv"
-                         className={initialPath === '/app/settings/upload-cv' ? styles.active : ''}>Upload CV</NavLink>
+                <NavLink to="/settings/background"
+                         className={initialPath === '/settings/background' ? styles.active : ''}>Background</NavLink>
+                <NavLink to="/settings/upload-cv"
+                         className={initialPath === '/settings/upload-cv' ? styles.active : ''}>Upload CV</NavLink>
             </nav>
             <Outlet/>
         </div>
