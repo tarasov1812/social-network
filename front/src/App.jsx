@@ -19,7 +19,7 @@ import UploadCV from "./pages/UploadCV.jsx";
 import UploadBackground from "./pages/UploadBackground.jsx";
 
 const router = createBrowserRouter(createRoutesFromElements(
-        <Route path="/app/" element={<Header/>}>
+        <Route path="/" element={<Header/>}>
             <Route index element={<Feed/>}/>
             <Route path="feed" element={<Feed/>}/>
             <Route path="profile" element={<ProfilePage/>}/>
