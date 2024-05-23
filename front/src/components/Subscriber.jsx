@@ -7,13 +7,13 @@ import styles from '../styles/Subscriber.module.css';
 
 function Subscriber({ userToViewData, data, customKey }) {
   const dispatch = useDispatch();
-  const [subscribed, setSubscribed] = useState(data.issubscribed);
+  const [subscribed, setSubscribed] = useState(data.isSubscribed);
 
   useEffect(() => {
-    if (data.issubscribed !== undefined) {
-      setSubscribed(data.issubscribed);
+    if (data.isSubscribed !== undefined) {
+      setSubscribed(data.isSubscribed);
     }
-  }, [data.issubscribed]);
+  }, [data.isSubscribed]);
 
   const currentUser = useSelector((state) => state.currentUser.currentUser);
   const showSubscribeButton = data.id !== undefined
@@ -52,12 +52,12 @@ function Subscriber({ userToViewData, data, customKey }) {
 
   return (
     <div className={styles.postAll} key={customKey}>
-      <Link to={`/app/profile/${data.id}`} id="postLink1"><img className={styles.avatar} src={data.avatar} alt="User Avatar" /></Link>
+      <Link to={`/profile/${data.id}`} id="postLink1"><img className={styles.avatar} src={data.avatar} alt="User Avatar" /></Link>
       <div className={styles.post}>
         <div className={styles.nickNameDate}>
           <div className={styles.nameNick}>
-            <span className={styles.name}><Link to={`/app/profile/${data.id}`} id="postLink1">{data.name}</Link></span>
-            <span className={styles.nick}><Link to={`/app/profile/${data.id}`} id="postLink2">{data.nickName}</Link></span>
+            <span className={styles.name}><Link to={`/profile/${data.id}`} id="postLink1">{data.name}</Link></span>
+            <span className={styles.nick}><Link to={`/profile/${data.id}`} id="postLink2">{data.nickName}</Link></span>
           </div>
         </div>
         <div className={styles.message}>

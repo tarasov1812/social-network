@@ -24,7 +24,7 @@ const router = createBrowserRouter(createRoutesFromElements(
             <Route path="feed" element={<Feed/>}/>
             <Route path="profile" element={<ProfilePage/>}/>
             <Route path="profile/:id" element={<ProfilePage/>}/>
-            <Route path="login" element={<ProfilePage/>}/>
+            <Route path="author" element={<ProfilePage/>}/>
             <Route path="settings/" element={<Settings/>}>
                 <Route index element={<EditProfile/>}/>
                 <Route path="profile-settings" element={<EditProfile/>}/>
@@ -45,7 +45,6 @@ function App() {
     return (
         <div className="App">
             <RouterProvider router={router}/>
-            {location.pathname === "/" && <a href="/login/">Login</a>}
         </div>
     );
 }

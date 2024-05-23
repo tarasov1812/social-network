@@ -60,13 +60,16 @@ export const fetchChannels = createAsyncThunk('posts/fetchChannels', async () =>
   
 export const fetchUser = createAsyncThunk('posts/fetchUser', async () => {
     try {
-      const response = await axios.get('/api/feed');
-      return response.data;
+        const response = await axios.get('/api/feed');
+        return response.data;
     } catch (error) {
-      if (error.response && error.response.status === 401) {
-  
-      }
-      throw error;
+        if (error.response && error.response.status === 401) {
+            console.log(error.status);
+            window.location.href = '/login/';
+        } else {
+            console.log('An unexpected error occurred');
+        }
+        throw error;
     }
   });
 
