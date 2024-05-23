@@ -47,15 +47,15 @@ export default function messageHTML(
         </div>
         <div class="counters">
             <div class="repost">
-                <img src="public/img/repost.svg">
+                <img src="https://ucarecdn.com/7ed6ab1d-68f7-4878-ae65-7a8a8b8f5a4c/repost.svg">
                 <span>${reposts}</span>
             </div>
             <div class="like">
-                <img src="public/img/like.svg">
+                <img src="https://ucarecdn.com/5f9ba37b-33cf-4598-ae6e-f8744e12d03f/like.svg">
                 <span>${likes}</span>
             </div>
             <div class="share">
-                <img src="public/img/share.svg">
+                <img src="https://ucarecdn.com/3ceac7aa-b8c1-4d59-b6cc-578815e188d3/share.svg">
                 <span>${shares}</span>
             </div>
         </div>
