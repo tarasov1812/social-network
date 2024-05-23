@@ -47,15 +47,15 @@ export default function messageHTML(
         </div>
         <div class="counters">
             <div class="repost">
-                <img src="img/repost.svg">
+                <img src="public/img/repost.svg">
                 <span>${reposts}</span>
             </div>
             <div class="like">
-                <img src="img/like.svg">
+                <img src="public/img/like.svg">
                 <span>${likes}</span>
             </div>
             <div class="share">
-                <img src="img/share.svg">
+                <img src="public/img/share.svg">
                 <span>${shares}</span>
             </div>
         </div>
