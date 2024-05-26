@@ -23,6 +23,7 @@ function UploadBackground() {
         <div className={styles.container}>
             <h2>Background</h2>
             <div className={styles.form}>
+                <div className={styles.empty}></div>
                 <span className={styles.empty}></span>
                 <Widget
                     localeTranslations={{
@@ -37,7 +38,12 @@ function UploadBackground() {
                     publicKey="3840ea5c2fc14f7bb59a"
                     onChange={handlePhotoUpload}
                 />
+                <span className={styles.empty}>Choose a photo</span>
+                <br/>
                 <button className={styles.button} type="button" onClick={handleBackgorund}>Upload</button>
+                <input
+                    className={styles.input}
+                />
             </div>
         </div>
     );

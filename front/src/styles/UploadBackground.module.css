@@ -26,7 +26,6 @@ h2 {
 .form {
     background-color: #FFFFFF;
     border-radius: 10px;
-    width: 632px;
 }
 
 .span {
@@ -35,6 +34,12 @@ h2 {
     font-size: 9px;
     position: relative;
     top: 20px;
+    padding-top:20px;
+
+}
+
+.empty {
+    padding-top: 20px;
 }
 
 .button {
@@ -57,9 +62,15 @@ h2 {
 
 .input {
     font-size: 18px;
+    height: 0px;
+    width: -webkit-fill-available;
+    border-radius: 10px;
+    border: 1px solid rgba(223, 223, 223, 1);
     margin: 0 17px 0 17px;
-    padding-top: 20px;
+    color: #555555;
+    padding-left: 16px;
     font-family: 'Lato Regular';
+    visibility: hidden;
 }
 
 @media only screen and (min-width: 800px) {

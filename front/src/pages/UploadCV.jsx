@@ -38,7 +38,7 @@ function UploadCV() {
                     name="cv"
                     onChange={handleSelectFile}
                 />
-                <p>Only PDF files are allowed</p>
+                <br/>
                 <button className={styles.button} type="button" onClick={handleFileUpload}>Upload</button>
             </div>
         </div>
