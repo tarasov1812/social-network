@@ -16,13 +16,8 @@ export default function formValidation() {
   if (nickName.value.length > 0 && emailAdress.value.length > 0 && password.value.length > 0
          && reapeatPassword.value.length > 0 && password.value === reapeatPassword.value
          && validateEmail(emailAdress.value)) {
-    console.log(`Nick name is - ${nickName.value}`);
-    console.log(`Email adress is - ${emailAdress.value}`);
-    console.log(`Password is - ${password.value}`);
-    console.log(`Repeat password is - ${reapeatPassword.value}`);
     // If any input field is not filled in, we highlight it using the imported function
   } else {
-    console.log('Oops');
     if (nickName.value < 1) {
       modalValidateInput('nick-name', 'invalid-nick-name', 'myModal');
     }
