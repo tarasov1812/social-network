@@ -60,6 +60,25 @@ h2 {
     font-family: 'Lato Regular';
 }
 
+.inputHidden {
+    font-size: 18px;
+    height: 0px;
+    width: -webkit-fill-available;
+    border-radius: 10px;
+    border: 1px solid rgba(223, 223, 223, 1);
+    margin: 0 17px 0 17px;
+    color: #555555;
+    padding-left: 16px;
+    font-family: 'Lato Regular';
+    visibility: hidden;
+}
+
+@media only screen and (min-width: 800px) {
+    .inputHidden {
+        margin: 0 217px 0 17px;
+    }
+}
+
 @media only screen and (min-width: 800px) {
     .input {
         margin: 0 217px 0 17px;

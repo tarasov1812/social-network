@@ -41,6 +41,9 @@ function UploadCV() {
                 />
                 <br/>
                 <button className={styles.button} type="button" onClick={handleFileUpload}>Upload</button>
+                <input
+                    className={styles.inputHidden}
+                />
             </div>
         </div>
     );
