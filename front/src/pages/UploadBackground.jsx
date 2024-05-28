@@ -15,8 +15,8 @@ function UploadBackground() {
     };
 
     const handleBackgorund = () => {
-        console.log()
         dispatch(changeBackground({ id, background: photoUrl }));
+        alert('Background was changed');
     };
 
     return (

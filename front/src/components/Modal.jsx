@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Widget } from '@uploadcare/react-widget';
 import styles from '../styles/Modal.module.css';
 import postSize from '/public/assets/post_size.js';
+import lightHashtag from '/public/assets/light_hashtag.js';
 import Circle from './Circle.jsx';
 import { createPost, createPostAsync } from '../store/CurrentUserSlice.js';
 

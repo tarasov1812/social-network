@@ -15,7 +15,7 @@ function ChangePassword() {
   const [repeatPassword, setRepeatPassword] = useState('');
 
   if (passwordChanged) {
-    alert('Password was changed');
+
   }
 
   const handleSave = () => {
@@ -25,6 +25,7 @@ function ChangePassword() {
       setOldPassword('');
       setNewPassword('');
       setRepeatPassword('');
+      alert('Password was changed');
     } else {
       alert('The entered passwords do not match');
     }

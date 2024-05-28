@@ -16,6 +16,7 @@ function ChangeEmail() {
     // Reset values after saving
     setNewEmail('');
     setPassword('');
+    alert('Email was changed');
   };
   return (
     <div className={styles.container}>

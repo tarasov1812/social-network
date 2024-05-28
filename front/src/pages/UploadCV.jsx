@@ -26,6 +26,7 @@ function UploadCV() {
             return;
         }
         dispatch(uploadCV({ id: currentUser.id, file: selectedFile }));
+        alert('CV was uploaded');
     };
 
     return (

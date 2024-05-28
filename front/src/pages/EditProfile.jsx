@@ -113,6 +113,7 @@ function EditProfile() {
     dispatch(changeProfileDate({ id, requestBody }))
       .then((response) => {
         dispatch(setCurrentUser(newUserData));
+        alert('Your profile has been updated');
       })
       .catch((error) => {
         console.log(error);
