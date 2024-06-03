@@ -4,7 +4,7 @@ import styles from '../styles/Post.module.css';
 import timeConverter from '/public/assets/time_converter.js';
 
 function Post({ data, customKey }) {
-  const currentTime = new Date();
+  const currentTime = new Date() - 7200000;
   const postPictureUrl = data.img ? data.img : '';
 
   let date = timeConverter(Math.floor((currentTime - new Date(data.postDate)) / 1000 / 60));
